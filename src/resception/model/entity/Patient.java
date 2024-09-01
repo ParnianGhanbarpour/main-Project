@@ -1,4 +1,4 @@
 package resception.model.entity;
 
-public class Patient {
+public class Patient extends  Person{
 }
