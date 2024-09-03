@@ -1,9 +1,6 @@
 package resception.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -11,12 +8,19 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public abstract class Person {
-    int id;
-    String nationalId;
-    String name;
-    String family;
-    String phoneNumber;
 
+public abstract class Person {
+
+    private String username;
+    private String password;
+    private String nationalId;
+    private String name;
+    private String family;
+    private String phoneNumber;
+    private boolean active;
+    private String accessLevel;
 
 }
+
+
+
