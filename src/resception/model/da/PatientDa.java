@@ -43,7 +43,7 @@ public class PatientDa implements AutoCloseable{
     public void edit(Patient patient) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PATIENT SET PASSWORD=?,NATIONALID=?,NAME=?, FAMILY=?,PHONENUMBER=?,disease=?,ACTIVE=?,ACCESSLEVEL=? WHERE USERNAME=?"
+                "UPDATE PATIENT SET PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,disease=?,ACTIVE=?,ACCESS_LEVEL=? WHERE USERNAME=?"
         );
 
         preparedStatement.setString(1, patient.getPassword());
@@ -82,10 +82,11 @@ public class PatientDa implements AutoCloseable{
                             .builder()
                             .username(resultSet.getString("USERNAME"))
                             .password(resultSet.getString("PASSWORD"))
-                            .nationalId(resultSet.getString("NATIONALID"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
-                            .phoneNumber(resultSet.getString("PHONENUMBER"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .disease(resultSet.getString("DISEASE"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -109,10 +110,11 @@ public class PatientDa implements AutoCloseable{
                             .builder()
                             .username(resultSet.getString("USERNAME"))
                             .password(resultSet.getString("PASSWORD"))
-                            .nationalId(resultSet.getString("NATIONALID"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
-                            .phoneNumber(resultSet.getString("PHONENUMBER"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .disease(resultSet.getString("DISEASE"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
