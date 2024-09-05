@@ -12,4 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class Rooms {
+    private int roomNumber;
+    private String roomLocation;
+    private String equipments;
 }

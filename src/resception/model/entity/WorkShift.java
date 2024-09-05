@@ -11,5 +11,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public class WorkShift {
+public class WorkShift  {
+
+    private String Date;
+    private String stringTime;
+    private String finishingTime;
 }

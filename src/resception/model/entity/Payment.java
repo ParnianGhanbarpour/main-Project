@@ -11,6 +11,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public class Payment {
+public class Payment  {
+    private String payment_method;
+    private String payment_time;
+    private double payment_amount;
 
 }

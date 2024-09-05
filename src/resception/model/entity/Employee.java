@@ -10,5 +10,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public class Employee extends Person{
+public class  Employee extends Person{
+    private String workDepartment;
 }

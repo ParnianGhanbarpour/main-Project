@@ -12,4 +12,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class VisitTime {
+    private String dateTime;
+    private String duration;
 }

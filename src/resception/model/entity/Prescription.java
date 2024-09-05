@@ -12,4 +12,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class Prescription {
+    private String medicineName;
+    private String drugDose;
+    private String duration;
+    private String explanation;
+
 }

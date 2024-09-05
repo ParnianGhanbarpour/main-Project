@@ -11,5 +11,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class Doctor extends Person{
-   String skill;
+   private String skill;
 }
