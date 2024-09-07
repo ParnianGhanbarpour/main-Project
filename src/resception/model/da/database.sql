@@ -50,7 +50,13 @@ create table EMPLOYEE(
 );
 CREATE SEQUENCE EMPLOYEE_SEQ START WITH 1 INCREMENT BY 1;
 
-
+create table PAYMENT(
+                       id number primary key,
+                       payment_method nvarchar2(20),
+                       payment_time nvarchar2(20),
+                       payment_amount number
+);
+CREATE SEQUENCE PAYMENT_SEQ START WITH 1 INCREMENT BY 1;
 
 
 

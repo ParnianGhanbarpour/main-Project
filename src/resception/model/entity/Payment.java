@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class Payment  {
+    private int id;
     private String payment_method;
     private String payment_time;
     private double payment_amount;
