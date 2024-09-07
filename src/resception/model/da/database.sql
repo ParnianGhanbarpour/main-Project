@@ -29,11 +29,11 @@ create table DOCTOR(
                        password nvarchar2(20) not null,
                        nationalId nvarchar2(20) not null ,
                        name nvarchar2(20) not null,
-                        family nvarchar2(20) not null,
-                        phoneNumber nvarchar2(20) not null ,
-                        SKILL nvarchar2(20),
-                        active number(1),
-                        access_level char(4) default '0000'
+                       family nvarchar2(20) not null,
+                       phoneNumber nvarchar2(20) not null ,
+                       skill nvarchar2(20),
+                       active number(1),
+                       access_level char(4) default '0000'
 );
 CREATE SEQUENCE DOCTOR_SEQ START WITH 1 INCREMENT BY 1;
 
@@ -59,12 +59,17 @@ create table PAYMENT(
 CREATE SEQUENCE PAYMENT_SEQ START WITH 1 INCREMENT BY 1;
 
 create table PRESCRIPTION(
-                        id number primary key,
-                        MEDICINE_NAME nvarchar2(20),
-                        DRUG_DOSE nvarchar2(20),
-                        DURATION nvarchar2(20),
-                        EXPLANATION nvarchar2(50)
+                       id number primary key,
+                       medicine_name nvarchar2(20),
+                       drug_dose nvarchar2(20),
+                       duration nvarchar2(20),
+                       explanation nvarchar2(50)
 );
 CREATE SEQUENCE PRESCRIPTION_SEQ START WITH 1 INCREMENT BY 1;
 
-
+create table ROOMS(
+                       room_number number primary key,
+                       room_location nvarchar2(20),
+                       equipments nvarchar2(20)
+);
+CREATE SEQUENCE ROOMS_SEQ START WITH 1 INCREMENT BY 1;
