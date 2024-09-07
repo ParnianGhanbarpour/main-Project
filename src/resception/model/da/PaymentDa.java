@@ -38,7 +38,7 @@ public class PaymentDa implements AutoCloseable {
         );
 
         preparedStatement.setString(1, payment.getPayment_method());
-        preparedStatement.setDate(3, Date.valueOf(payment.getPayment_time()));
+        preparedStatement.setDate(2, Date.valueOf(payment.getPayment_time()));
         preparedStatement.setDouble(3, payment.getPayment_amount());
         preparedStatement.setInt(4,payment.getId());
         preparedStatement.execute();
