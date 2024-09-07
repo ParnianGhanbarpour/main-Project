@@ -58,5 +58,13 @@ create table PAYMENT(
 );
 CREATE SEQUENCE PAYMENT_SEQ START WITH 1 INCREMENT BY 1;
 
+create table PRESCRIPTION(
+                        id number primary key,
+                        MEDICINE_NAME nvarchar2(20),
+                        DRUG_DOSE nvarchar2(20),
+                        DURATION nvarchar2(20),
+                        EXPLANATION nvarchar2(50)
+);
+CREATE SEQUENCE PRESCRIPTION_SEQ START WITH 1 INCREMENT BY 1;
 
 
