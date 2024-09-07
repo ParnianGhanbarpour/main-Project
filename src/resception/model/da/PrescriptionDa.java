@@ -1,6 +1,5 @@
 package resception.model.da;
 
-import resception.model.entity.Payment;
 import resception.model.entity.Prescription;
 import resception.model.tools.JdbcProvider;
 
