@@ -3,10 +3,7 @@ package resception.model.da;
 import resception.model.entity.Payment;
 import resception.model.tools.JdbcProvider;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +26,7 @@ public class PaymentDa implements AutoCloseable {
         );
         preparedStatement.setInt(1, payment.getId());
         preparedStatement.setString(2, payment.getPayment_method());
-        preparedStatement.setString(3, payment.getPayment_time());
+        preparedStatement.setDate(3, Date.valueOf(payment.getPayment_time()));
         preparedStatement.setDouble(4, payment.getPayment_amount());
         preparedStatement.execute();
     }
@@ -41,7 +38,7 @@ public class PaymentDa implements AutoCloseable {
         );
 
         preparedStatement.setString(1, payment.getPayment_method());
-        preparedStatement.setString(2, payment.getPayment_time());
+        preparedStatement.setDate(3, Date.valueOf(payment.getPayment_time()));
         preparedStatement.setDouble(3, payment.getPayment_amount());
         preparedStatement.setInt(4,payment.getId());
         preparedStatement.execute();
@@ -70,7 +67,7 @@ public class PaymentDa implements AutoCloseable {
                             .builder()
                             .id(resultSet.getInt("ID"))
                             .payment_method(resultSet.getString("PAYMENT_METHOD"))
-                            .payment_time(resultSet.getString("PAYMENT_TIME"))
+                            .payment_time(resultSet.getDate("PAYMENT_TIME").toLocalDate())
                             .payment_amount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .build();
             paymentList.add(payment);
@@ -93,7 +90,7 @@ public class PaymentDa implements AutoCloseable {
                             .builder()
                             .id(resultSet.getInt("ID"))
                             .payment_method(resultSet.getString("PAYMENT_METHOD"))
-                            .payment_time(resultSet.getString("PAYMENT_TIME"))
+                            .payment_time(resultSet.getDate("PAYMENT_TIME").toLocalDate())
                             .payment_amount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .build();
 
