@@ -11,5 +11,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class  Employee extends Person{
+    private int employeeId;
     private String workDepartment;
 }

@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class Patient extends  Person{
+    private int patientId;
     private String  disease;
 
 }
