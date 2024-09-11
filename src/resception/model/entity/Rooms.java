@@ -15,4 +15,7 @@ public class Rooms {
     private int roomNumber;
     private String roomLocation;
     private String equipments;
+
+    private Room room;
+
 }

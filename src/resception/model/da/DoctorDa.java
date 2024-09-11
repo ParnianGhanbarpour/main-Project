@@ -35,7 +35,7 @@ public class DoctorDa implements AutoCloseable {
         preparedStatement.setString(5, doctor.getFamily());
         preparedStatement.setString(6, doctor.getPhoneNumber());
         preparedStatement.setString(7, doctor.getSkill());
-        preparedStatement.setBoolean(8,doctor.isActive());
+        preparedStatement.setBoolean(8, doctor.isActive());
         preparedStatement.setString(9, doctor.getAccessLevel());
         preparedStatement.execute();
     }
@@ -51,7 +51,7 @@ public class DoctorDa implements AutoCloseable {
         preparedStatement.setString(4, doctor.getFamily());
         preparedStatement.setString(5, doctor.getPhoneNumber());
         preparedStatement.setString(6, doctor.getSkill());
-        preparedStatement.setBoolean(7,doctor.isActive());
+        preparedStatement.setBoolean(7, doctor.isActive());
         preparedStatement.setString(8, doctor.getAccessLevel());
         preparedStatement.setString(9, doctor.getUsername());
         preparedStatement.execute();
@@ -97,7 +97,7 @@ public class DoctorDa implements AutoCloseable {
     public Optional<Doctor> findByUsernameAndPassword(String username, String password) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("SELECT * FROM PATIENT WHERE USERNAME=? AND PASSWORD=? AND ACTIVE=1");
+        preparedStatement = connection.prepareStatement("SELECT * FROM DOCTOR WHERE USERNAME=? AND PASSWORD=? AND ACTIVE=1");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet resultSet = preparedStatement.executeQuery();
