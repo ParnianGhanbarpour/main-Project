@@ -15,38 +15,38 @@ public class PaymentDa implements AutoCloseable {
     public void save(Payment payment) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT PAYMENT_SEQ.NEXTVAL AS NEXT_ID FROM DUAL"
+                "SELECT PAYMENT_SEQ.NEXTVAL AS NEXT_PAYMENT_ID FROM DUAL"
         );
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
-        payment.setId(resultSet.getInt("NEXT_ID"));
+        payment.setPaymentId(resultSet.getInt("NEXT_PAYMENT_ID"));
 
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO PAYMENT VALUES (?,?,?,?)"
         );
-        preparedStatement.setInt(1, payment.getId());
-        preparedStatement.setString(2, payment.getPayment_method());
-        preparedStatement.setDate(3, Date.valueOf(payment.getPayment_time()));
-        preparedStatement.setDouble(4, payment.getPayment_amount());
+        preparedStatement.setInt(1, payment.getPaymentId());
+        preparedStatement.setString(2, payment.getPaymentMethod());
+        preparedStatement.setTimestamp(3, Timestamp.valueOf(payment.getPaymentTime()));
+        preparedStatement.setDouble(4, payment.getPaymentAmount());
         preparedStatement.execute();
     }
 
     public void edit(Payment payment) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PAYMENT SET PAYMENT_METHOD=?,PAYMENT_TIME=?,PAYMENT_AMOUNT=? WHERE ID=?"
+                "UPDATE PAYMENT SET PAYMENT_METHOD=?,PAYMENT_TIME=?,PAYMENT_AMOUNT=? WHERE PAYMENT_ID=?"
         );
 
-        preparedStatement.setString(1, payment.getPayment_method());
-        preparedStatement.setDate(2, Date.valueOf(payment.getPayment_time()));
-        preparedStatement.setDouble(3, payment.getPayment_amount());
-        preparedStatement.setInt(4,payment.getId());
+        preparedStatement.setString(1, payment.getPaymentMethod());
+        preparedStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentTime()));
+        preparedStatement.setDouble(3, payment.getPaymentAmount());
+        preparedStatement.setInt(4,payment.getPaymentId());
         preparedStatement.execute();
     }
 
     public void remove(int id) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("DELETE FROM PAYMENT WHERE ID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM PAYMENT WHERE PAYMENT_ID=?");
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }
@@ -65,10 +65,10 @@ public class PaymentDa implements AutoCloseable {
             Payment payment =
                     Payment
                             .builder()
-                            .id(resultSet.getInt("ID"))
-                            .payment_method(resultSet.getString("PAYMENT_METHOD"))
-                            .payment_time(resultSet.getDate("PAYMENT_TIME").toLocalDate())
-                            .payment_amount(resultSet.getDouble("PAYMENT_AMOUNT"))
+                            .paymentId(resultSet.getInt("PAYMENT_ID"))
+                            .paymentMethod(resultSet.getString("PAYMENT_METHOD"))
+                            .paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
+                            .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .build();
             paymentList.add(payment);
         }
@@ -79,7 +79,7 @@ public class PaymentDa implements AutoCloseable {
     public Optional<Payment> findById(int id) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("SELECT * FROM PAYMENT WHERE ID=?");
+        preparedStatement = connection.prepareStatement("SELECT * FROM PAYMENT WHERE PAYMENT_ID=?");
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -88,10 +88,10 @@ public class PaymentDa implements AutoCloseable {
             Payment payment =
                     Payment
                             .builder()
-                            .id(resultSet.getInt("ID"))
-                            .payment_method(resultSet.getString("PAYMENT_METHOD"))
-                            .payment_time(resultSet.getDate("PAYMENT_TIME").toLocalDate())
-                            .payment_amount(resultSet.getDouble("PAYMENT_AMOUNT"))
+                            .paymentId(resultSet.getInt("PAYMENT_ID"))
+                            .paymentMethod(resultSet.getString("PAYMENT_METHOD"))
+                            .paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
+                            .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .build();
 
             optionalPayment = Optional.of(payment);

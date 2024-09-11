@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public class Prescription {
-    private int id;
+    private int prescriptionId;
     private String medicineName;
     private String drugDose;
     private String drugDuration;

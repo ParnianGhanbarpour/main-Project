@@ -18,19 +18,19 @@ public class PrescriptionDa implements AutoCloseable {
     public void save(Prescription prescription) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT PRESCRIPTION_SEQ.NEXTVAL AS NEXT_ID FROM DUAL"
+                "SELECT PRESCRIPTION_SEQ.NEXTVAL AS NEXT_PRESCRIPTION_ID FROM DUAL"
         );
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
-        prescription.setId(resultSet.getInt("NEXT_ID"));
+        prescription.setPrescriptionId(resultSet.getInt("NEXT_PRESCRIPTION_ID"));
 
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO PRESCRIPTION VALUES (?,?,?,?,?)"
         );
-        preparedStatement.setInt(1, prescription.getId());
+        preparedStatement.setInt(1, prescription.getPrescriptionId());
         preparedStatement.setString(2, prescription.getMedicineName());
         preparedStatement.setString(3, prescription.getDrugDose());
-        preparedStatement.setString(4, prescription.getDuration());
+        preparedStatement.setString(4, prescription.getDrugDuration());
         preparedStatement.setString(5, prescription.getExplanation());
         preparedStatement.execute();
     }
@@ -38,20 +38,20 @@ public class PrescriptionDa implements AutoCloseable {
     public void edit(Prescription prescription) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PRESCRIPTION SET MEDICINE_NAME=?,DRUG_DOSE=?,DURATION=?,EXPLANATION=? WHERE ID=?"
+                "UPDATE PRESCRIPTION SET MEDICINE_NAME=?,DRUG_DOSE=?,DRUG_DURATION=?,EXPLANATION=? WHERE PRESCRIPTION_ID=?"
         );
 
         preparedStatement.setString(1, prescription.getMedicineName());
         preparedStatement.setString(2, prescription.getDrugDose());
-        preparedStatement.setString(3, prescription.getDuration());
+        preparedStatement.setString(3, prescription.getDrugDuration());
         preparedStatement.setString(4, prescription.getExplanation());
-        preparedStatement.setInt(5, prescription.getId());
+        preparedStatement.setInt(5, prescription.getPrescriptionId());
         preparedStatement.execute();
     }
 
     public void remove(int id) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("DELETE FROM PRESCRIPTION WHERE ID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM PRESCRIPTION WHERE PRESCRIPTION_ID=?");
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }
@@ -70,10 +70,10 @@ public class PrescriptionDa implements AutoCloseable {
             Prescription prescription =
                     Prescription
                             .builder()
-                            .id(resultSet.getInt("ID"))
+                            .prescriptionId(resultSet.getInt("PRESCRIPTION_ID"))
                             .medicineName(resultSet.getString("MEDICINE_NAME"))
                             .drugDose(resultSet.getString("DRUG_DOSE"))
-                            .duration(resultSet.getString("DURATION"))
+                            .drugDuration(resultSet.getString("DRUG_DURATION"))
                             .explanation(resultSet.getString("EXPLANATION"))
                             .build();
             prescriptionList.add(prescription);
@@ -84,7 +84,7 @@ public class PrescriptionDa implements AutoCloseable {
     public Optional<Prescription> findById(int id) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("SELECT * FROM PRESCRIPTION WHERE ID=?");
+        preparedStatement = connection.prepareStatement("SELECT * FROM PRESCRIPTION WHERE PRESCRIPTION_ID=?");
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -93,10 +93,10 @@ public class PrescriptionDa implements AutoCloseable {
             Prescription prescription =
                     Prescription
                             .builder()
-                            .id(resultSet.getInt("ID"))
+                            .prescriptionId(resultSet.getInt("PRESCRIPTION_ID"))
                             .medicineName(resultSet.getString("MEDICINE_NAME"))
                             .drugDose(resultSet.getString("DRUG_DOSE"))
-                            .duration(resultSet.getString("DURATION"))
+                            .drugDuration(resultSet.getString("DRUG_DURATION"))
                             .explanation(resultSet.getString("EXPLANATION"))
                             .build();
 
