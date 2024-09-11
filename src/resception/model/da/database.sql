@@ -73,3 +73,26 @@ create table ROOMS(
                        equipments nvarchar2(20)
 );
 CREATE SEQUENCE ROOMS_SEQ START WITH 1 INCREMENT BY 1;
+
+create TABLE WORK_SHIFT(
+                           Work_Shift_Id number primary key ,
+                           Shift_Doctor_Id number unique ,
+                           Shift_Employee_Id number unique ,
+                           Shift_Date timestamp ,
+                           Shift_Starting_Time timestamp,
+                           Shift_Finishing_Time timestamp
+);
+CREATE SEQUENCE Work_Shift_SEQ START WITH 1 INCREMENT BY 1;
+
+create TABLE Visit_Time(
+                           Visit_Time_Id number primary key ,
+                           Visit_Work_Shift_Id number not null ,
+                           Visit_Patient_Id number not null,
+                           Visit_Payment_Id number not null,
+                           Visit_Room_Number number not null,
+                           Visit_Prescription_Id number not null,
+                           Visit_Date_Time timestamp,
+                           Visit_Duration nvarchar2(20) not null
+);
+
+CREATE SEQUENCE Visit_Time_SEQ START WITH 1 INCREMENT BY 1;

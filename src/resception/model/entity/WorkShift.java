@@ -6,14 +6,22 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @SuperBuilder
 @ToString
 public class WorkShift  {
+    private int workShiftId;
+    private int ShiftDoctorId;
+    private int shiftEmployeeId;
+    private LocalDateTime ShiftDate;
+    private LocalDateTime ShiftStartingTime;
+    private LocalDateTime ShiftFinishingTime;
 
-    private String Date;
-    private String stringTime;
-    private String finishingTime;
+    private Doctor doctor;
+    private Employee employee;
+
 }
