@@ -1,10 +1,10 @@
 create table PERSON(
                        username nvarchar2(20) primary key,
-                       password nvarchar2(20) not null,
-                       nationalId nvarchar2(20) not null ,
+                       password nvarchar2(20) not null ,
+                       nationalId nvarchar2(20) unique ,
                        name nvarchar2(20) not null,
                        family nvarchar2(20) not null,
-                       phoneNumber nvarchar2(20) not null ,
+                       phoneNumber nvarchar2(20) unique ,
                        active number(1),
                        access_level char(4) default '0000'
 );
@@ -12,12 +12,12 @@ CREATE SEQUENCE PERSON_SEQ START WITH 1 INCREMENT BY 1;
 
 create table PATIENT(
                        patient_id number primary key,
-                       username nvarchar2(20) not null,
+                       username nvarchar2(20) unique ,
                        password nvarchar2(20) not null,
-                       national_id nvarchar2(20) not null ,
+                       national_id nvarchar2(20) unique ,
                        name nvarchar2(20) not null,
                        family nvarchar2(20) not null,
-                       phone_number nvarchar2(20) not null ,
+                       phone_number nvarchar2(20) unique ,
                        disease nvarchar2(20),
                        active number(1),
                        access_level char(4) default '0000'
@@ -26,12 +26,12 @@ CREATE SEQUENCE PATIENT_SEQ START WITH 1 INCREMENT BY 1;
 
 create table DOCTOR(
                        doctor_id number primary key,
-                       username nvarchar2(20) not null,
+                       username nvarchar2(20) unique ,
                        password nvarchar2(20) not null,
-                       national_id nvarchar2(20) not null ,
+                       national_id nvarchar2(20) unique ,
                        name nvarchar2(20) not null,
                        family nvarchar2(20) not null,
-                       phone_number nvarchar2(20) not null ,
+                       phone_number nvarchar2(20) unique ,
                        skill nvarchar2(20),
                        active number(1),
                        access_level char(4) default '0000'
@@ -40,12 +40,12 @@ CREATE SEQUENCE DOCTOR_SEQ START WITH 1 INCREMENT BY 1;
 
 create table EMPLOYEE(
                        employee_id number primary key,
-                       username nvarchar2(20) not null,
+                       username nvarchar2(20) unique ,
                        password nvarchar2(20) not null,
-                       national_id nvarchar2(20) not null ,
+                       national_id nvarchar2(20) unique ,
                        name nvarchar2(20) not null,
                        family nvarchar2(20) not null,
-                       phone_number nvarchar2(20) not null ,
+                       phone_number nvarchar2(20) unique ,
                        work_department nvarchar2(20),
                        active number(1),
                        access_level char(4) default '0000'
@@ -76,7 +76,7 @@ create table ROOMS(
 );
 CREATE SEQUENCE ROOMS_SEQ START WITH 1 INCREMENT BY 1;
 
-create TABLE WORK_SHIFT(
+create table WORK_SHIFT(
                            Work_Shift_Id number primary key ,
                            Shift_Doctor_Id number unique ,
                            Shift_Employee_Id number unique ,
@@ -84,17 +84,17 @@ create TABLE WORK_SHIFT(
                            Shift_Starting_Time timestamp,
                            Shift_Finishing_Time timestamp
 );
-CREATE SEQUENCE Work_Shift_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE WORK_SHIFT_SEQ START WITH 1 INCREMENT BY 1;
 
-create TABLE Visit_Time(
+create table VISIT_TIME(
                            Visit_Time_Id number primary key ,
-                           Visit_Work_Shift_Id number not null ,
-                           Visit_Patient_Id number not null,
-                           Visit_Payment_Id number not null,
-                           Visit_Room_Number number not null,
-                           Visit_Prescription_Id number not null,
+                           Visit_Work_Shift_Id number unique ,
+                           Visit_Patient_Id number unique ,
+                           Visit_Payment_Id number unique ,
+                           Visit_Room_Number number unique ,
+                           Visit_Prescription_Id number unique ,
                            Visit_Date_Time timestamp,
                            Visit_Duration nvarchar2(20) not null
 );
 
-CREATE SEQUENCE Visit_Time_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE VISIT_TIME_SEQ START WITH 1 INCREMENT BY 1;
