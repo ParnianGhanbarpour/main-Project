@@ -1,4 +1,4 @@
-package resception.model.entity;
+package reception.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package resception.model.entity;
+package reception.model.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
