@@ -13,4 +13,5 @@ import lombok.experimental.SuperBuilder;
 public class  Employee extends Person{
     private int employeeId;
     private String workDepartment;
+
 }

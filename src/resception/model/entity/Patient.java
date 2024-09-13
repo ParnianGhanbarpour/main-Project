@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public class Patient extends Person{
+public class Patient extends  Person{
     private int patientId;
     private String  disease;
 

@@ -5,5 +5,5 @@ public enum Expertise {
     cardiologist,
     generalPractitioner,
     dermatologist,
-    otorhinolaryngologist;
+    otolaryngologist;
 }

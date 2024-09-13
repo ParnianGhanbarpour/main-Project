@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class Doctor extends Person{
    private int doctorId;
    private String skill;
+   private Expertise expertise;
    WorkShift workShift;
 
-   private Expertise expertise;
 }

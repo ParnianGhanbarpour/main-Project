@@ -26,6 +26,7 @@ public class VisitTime {
     private WorkShift workShift;
     private Patient patient;
     private Payment payment;
+    private Employee employee;
     private Room room;
     private Prescription prescription;
 }
