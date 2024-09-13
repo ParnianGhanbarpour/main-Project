@@ -1,7 +1,7 @@
 package reception.model.da;
 
 import reception.model.entity.Doctor;
-import reception.model.tools.JdbcProvider;
+import reception.model.utils.JdbcProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,7 +1,7 @@
 package reception.model.da;
 
 import reception.model.entity.Payment;
-import reception.model.tools.JdbcProvider;
+import reception.model.utils.JdbcProvider;
 
 import java.sql.*;
 import java.util.ArrayList;

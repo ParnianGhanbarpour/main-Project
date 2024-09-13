@@ -2,7 +2,7 @@ package reception.model.da;
 
 
 import reception.model.entity.Employee;
-import reception.model.tools.JdbcProvider;
+import reception.model.utils.JdbcProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
