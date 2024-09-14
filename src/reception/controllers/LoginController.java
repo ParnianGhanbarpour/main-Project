@@ -9,13 +9,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import reception.model.da.DoctorDa;
+import reception.model.da.EmployeeDa;
+import reception.model.da.PatientDa;
 import reception.model.entity.Doctor;
 import reception.model.entity.Employee;
 import reception.model.entity.Patient;
-import reception.model.entity.Person;
-import reception.model.tools.LoginManager;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -24,63 +26,79 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordTxt;
     @FXML
-    private Button loginBtn;
+    private Button loginBtn,signUpBtn;
+
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loginBtn.setOnAction(e -> {
+        loginBtn.setOnAction(event -> {
+            String username = usernameTxt.getText();
+            String password = passwordTxt.getText();
+
             try {
 
-                LoginManager loginManager = new LoginManager();
-                Person person = loginManager.authenticate(usernameTxt.getText(), passwordTxt.getText());
-
-                if (person instanceof Doctor) {
-
-                    openDoctorPanel();
-                } else if (person instanceof Patient) {
-
-                    openPatientPanel();
-                } else if (person instanceof Employee) {
-
-                    openEmployeePanel();
+                PatientDa patientDa = new PatientDa();
+                Optional<Patient> patientOptional = patientDa.findByUsernameAndPassword(username, password);
+                if (patientOptional.isPresent()) {
+                    openPanel("PatientPanel.fxml", "Patient Panel");
+                    return;
                 }
 
-                loginBtn.getScene().getWindow().hide();
+                DoctorDa doctorDa = new DoctorDa();
+                Optional<Doctor> doctorOptional = doctorDa.findByUsernameAndPassword(username, password);
+                if (doctorOptional.isPresent()) {
+                    openPanel("DoctorPanel.fxml", "Doctor Panel");
+                    return;
+                }
+
+                EmployeeDa employeeDa = new EmployeeDa();
+                Optional<Employee> employeeOptional = employeeDa.findByUsernameAndPassword(username, password);
+                if (employeeOptional.isPresent()) {
+                    openPanel("EmployeePanel.fxml", "Employee Panel");
+                    return;
+                }
+
+                showAlert("Login Failed", "Username or Password is incorrect.");
 
             } catch (Exception ex) {
                 ex.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage());
-                alert.show();
+                showAlert("Error", "An error occurred during login: " + ex.getMessage());
+            }
+        });
+
+
+        signUpBtn.setOnAction(event -> {
+            try {
+                Stage stage = new Stage();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/SelectSignUp.fxml")));
+                stage.setScene(scene);
+                stage.setTitle("Select Sign Up");
+                stage.show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                showAlert("Error", "An error occurred while opening the Sign Up page: " + ex.getMessage());
             }
         });
     }
 
-    private void openDoctorPanel() {
-       //داخل "  "  باید مسیر هر کدوم از fxml هارو بنویسیم  بعد از ساختنش
-        loadPanel("  ");
+    private void openPanel(String fxmlFile, String title) throws Exception {
+        Stage stage = new Stage();
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/" + fxmlFile)));
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.show();
+
+        loginBtn.getScene().getWindow().hide();
     }
 
-    private void openPatientPanel() {
-
-        loadPanel(" ");
-    }
-
-    private void openEmployeePanel() {
-
-        loadPanel(" ");
-    }
-
-    private void loadPanel(String fxmlPath) {
-        try {
-            Stage stage = new Stage();
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlPath)));
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
