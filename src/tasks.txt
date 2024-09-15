@@ -1,0 +1,28 @@
+DA, Bl, Controller ...
+
+
+Patient, Doctor, Employee :
+    - save, edit, remove
+    - findAll, findById, findByNameAndFamily,findByNID, findByPhone
+
+
+Payment:
+
+
+Prescription :
+    - save, edit, remove
+    - findAll, findById, findByPatientId, findByDoctorId
+
+Room :
+    - save, edit, remove
+    - findAll, findByEquip, findByLocation, findByNumber
+
+
+WorkShit :
+    - save, edit, remove
+    - findAll, findByDate, findByDateTime, findByDateRange, findByDoctorId, findByExpertise, findByExpertiseAndDateRange
+
+
+VisitTime :
+    - save, edit, remove
+    - findAll, findAllAvailable, findBySaved, findByPatient, findByDate, findByDateTime, findByDateRange, findByDoctor, findByExpertise, findByExpertiseAndDateRange
