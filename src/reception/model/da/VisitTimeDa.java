@@ -2,6 +2,7 @@ package reception.model.da;
 import reception.model.entity.VisitTime;
 import reception.model.utils.JdbcProvider;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -91,6 +92,34 @@ public class VisitTimeDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "SELECT * FROM VISIT_TIME WHERE VISIT_TIME_ID=?");
         preparedStatement.setInt(1, visitTimeId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<VisitTime> optionalVisitTime = Optional.empty();
+        if (resultSet.next()) {
+            VisitTime visitTime =
+                    VisitTime
+                            .builder()
+                            .visitTimeId(resultSet.getInt("Visit_Time_id"))
+                            .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
+                            .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
+                            .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
+                            .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
+                            .visitDuration(resultSet.getString("Visit_Duration"))
+                            .build();
+            optionalVisitTime = Optional.of(visitTime);
+        }
+        return optionalVisitTime;
+    }
+
+    public Optional<VisitTime> findValidTime(LocalDateTime visitDateTime, int duration) throws Exception {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE_TIME BETWEEN ? AND ?");
+        preparedStatement.setTimestamp(1, Timestamp.valueOf(visitDateTime));
+        preparedStatement.setTimestamp(2, Timestamp.valueOf(visitDateTime.plusMinutes(duration)));
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<VisitTime> optionalVisitTime = Optional.empty();
