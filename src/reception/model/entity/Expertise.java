@@ -1,4 +1,4 @@
-package resception.model.entity;
+package reception.model.entity;
 
 public enum Expertise {
     neurologist,

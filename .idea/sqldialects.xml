@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/resception/model/da/DoctorDa.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/resception/model/da/EmployeeDa.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/resception/model/da/PatientDa.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/resception/model/da/database.sql" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/src/reception/model/da/DoctorDa.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/reception/model/da/EmployeeDa.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/reception/model/da/PatientDa.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/reception/model/da/VisitTimeDa.java" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/src/reception/model/da/database.sql" dialect="Oracle" />
+  </component>
+  <component name="SqlResolveMappings">
+    <file url="file://$PROJECT_DIR$/src/reception/model/da/VisitTimeDa.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
   </component>
 </project>

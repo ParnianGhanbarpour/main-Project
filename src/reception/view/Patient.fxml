@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="779.0" style="-fx-background-color: #ACB29A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="saveBtn" layoutX="167.0" layoutY="409.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="58.0" text="Save" />
+      <Button fx:id="editBtn" layoutX="255.0" layoutY="409.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="removeBtn" layoutX="333.0" layoutY="409.0" mnemonicParsing="false" text="Remove" />
+      <GridPane layoutX="42.0" layoutY="49.0" prefHeight="327.0" prefWidth="365.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="131.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="234.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="PatientIdTxt" prefHeight="31.0" prefWidth="164.0" promptText="Enter National ID" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="patientNameTxt" promptText="Enter Name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="patientFamilyTxt" promptText="Enter Family " GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label prefHeight="21.0" prefWidth="122.0" text="Family             :" GridPane.rowIndex="4" />
+            <Label prefHeight="21.0" prefWidth="119.0" text="Name             :" GridPane.rowIndex="3" />
+            <Label prefHeight="21.0" prefWidth="114.0" text="National ID    :" GridPane.rowIndex="2" />
+            <Label text="Phone Number :" GridPane.rowIndex="5" />
+            <TextField fx:id="patientPhoneTxt" promptText="Enter Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="diseaseTxt" promptText="Enter your Disease" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label prefHeight="21.0" prefWidth="112.0" text="Disease            :" GridPane.rowIndex="6" />
+            <Label prefHeight="21.0" prefWidth="130.0" text="Username      :" />
+            <Label prefHeight="21.0" prefWidth="130.0" text="Password       :" GridPane.rowIndex="1" />
+            <TextField fx:id="usenameTxt" promptText="Enter Username" GridPane.columnIndex="1" />
+            <PasswordField fx:id="passwordTxt" promptText="Enter Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <ImageView fitHeight="317.0" fitWidth="319.0" layoutX="430.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@image/patient.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

@@ -1,6 +1,6 @@
-package resception.model.da;
-import resception.model.entity.VisitTime;
-import resception.model.tools.JdbcProvider;
+package reception.model.da;
+import reception.model.entity.VisitTime;
+import reception.model.utils.JdbcProvider;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
-package resception.model.da;
+package reception.model.da;
 
 
-import resception.model.entity.Employee;
-import resception.model.tools.JdbcProvider;
+import reception.model.entity.Employee;
+import reception.model.utils.JdbcProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

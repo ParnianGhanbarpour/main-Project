@@ -1,7 +1,7 @@
-package resception.model.da;
+package reception.model.da;
 
-import resception.model.entity.Payment;
-import resception.model.tools.JdbcProvider;
+import reception.model.entity.Payment;
+import reception.model.utils.JdbcProvider;
 
 import java.sql.*;
 import java.util.ArrayList;

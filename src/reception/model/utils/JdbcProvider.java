@@ -1,4 +1,4 @@
-package resception.model.tools;
+package reception.model.utils;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 

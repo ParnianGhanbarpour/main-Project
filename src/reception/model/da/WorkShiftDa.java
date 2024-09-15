@@ -1,6 +1,6 @@
-package resception.model.da;
-import resception.model.entity.WorkShift;
-import resception.model.tools.JdbcProvider;
+package reception.model.da;
+import reception.model.entity.WorkShift;
+import reception.model.utils.JdbcProvider;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

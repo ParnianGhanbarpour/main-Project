@@ -1,5 +1,5 @@
-package resception.model.entity;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+package reception.model.entity;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,10 +11,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public class Doctor extends Person{
-   private int doctorId;
-   private String skill;
-   private Expertise expertise;
+public class Rooms {
+    private int roomNumber;
+    private String roomLocation;
+    private String equipments;
 
+    private Room room;
 
 }

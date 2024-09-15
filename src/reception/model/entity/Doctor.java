@@ -1,4 +1,4 @@
-package resception.model.entity;
+package reception.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +10,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public class Patient extends  Person{
-    private int patientId;
-    private String  disease;
+public class Doctor extends Person{
+   private int doctorId;
+   private String skill;
+   private Expertise expertise;
+
 
 }
