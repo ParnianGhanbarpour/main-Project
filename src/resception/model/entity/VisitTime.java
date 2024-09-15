@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import  java.util.List;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -29,5 +28,5 @@ public class VisitTime {
     private Payment payment;
     private Employee employee;
     private Room room;
-    private  List<Prescription> prescription;
+    private List<Prescription> prescription;
 }
