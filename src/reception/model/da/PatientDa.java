@@ -59,7 +59,6 @@ public class PatientDa implements AutoCloseable{
         preparedStatement.execute();
     }
 
-
     public void remove(int patientId) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("UPDATE PATIENT SET ACTIVE=0 WHERE PATIENT_ID=?");
