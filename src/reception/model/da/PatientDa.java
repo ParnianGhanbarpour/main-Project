@@ -125,6 +125,37 @@ public class PatientDa implements AutoCloseable{
 
         return optionalPatient;
     }
+    public Optional<Patient> findByNameAndFamily(String name, String family) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM PATIENT WHERE NAME=? AND FAMILY=? AND ACTIVE=1");
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, family);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Patient> optionalPatient = Optional.empty();
+        if (resultSet.next()) {
+            Patient patient =
+                    Patient
+                            .builder()
+                            .patientId(resultSet.getInt("PATIENT_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .disease(resultSet.getString("DISEASE"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalPatient = Optional.of(patient);
+        }
+
+        return optionalPatient;
+    }
+
 
     public Optional<Patient> findByUsernameAndPassword(String username, String password) throws SQLException {
 
@@ -132,6 +163,64 @@ public class PatientDa implements AutoCloseable{
         preparedStatement = connection.prepareStatement("SELECT * FROM PATIENT WHERE USERNAME=? AND PASSWORD=? AND ACTIVE=1");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Patient> optionalPatient = Optional.empty();
+        if (resultSet.next()) {
+            Patient patient =
+                    Patient
+                            .builder()
+                            .patientId(resultSet.getInt("PATIENT_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .disease(resultSet.getString("DISEASE"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalPatient = Optional.of(patient);
+        }
+
+        return optionalPatient;
+    }
+    public Optional<Patient> findByNationalId(String nationalId) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM PATIENT WHERE NATIONAL_ID=?  AND ACTIVE=1");
+        preparedStatement.setString(1, nationalId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Patient> optionalPatient = Optional.empty();
+        if (resultSet.next()) {
+            Patient patient =
+                    Patient
+                            .builder()
+                            .patientId(resultSet.getInt("PATIENT_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .disease(resultSet.getString("DISEASE"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalPatient = Optional.of(patient);
+        }
+
+        return optionalPatient;
+    }
+    public Optional<Patient> findByPhoneNumber(String phoneNumber) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM PATIENT WHERE PHONE_NUMBER=? AND ACTIVE=1");
+        preparedStatement.setString(1, phoneNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<Patient> optionalPatient = Optional.empty();
