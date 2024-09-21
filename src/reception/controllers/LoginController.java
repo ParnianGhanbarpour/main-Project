@@ -9,15 +9,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import reception.model.da.DoctorDa;
-import reception.model.da.EmployeeDa;
-import reception.model.da.PatientDa;
+import reception.controllers.Exception.UserNotFoundException;
+import reception.model.bl.DoctorBl;
+import reception.model.bl.EmployeeBl;
+import reception.model.bl.PatientBl;
 import reception.model.entity.Doctor;
 import reception.model.entity.Employee;
 import reception.model.entity.Patient;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -35,37 +35,40 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         loginBtn.setOnAction(event -> {
-            String username = usernameTxt.getText();
-            String password = passwordTxt.getText();
-
             try {
 
-                PatientDa patientDa = new PatientDa();
-                Optional<Patient> patientOptional = patientDa.findByUsernameAndPassword(username, password);
-                if (patientOptional.isPresent()) {
-                    openPanel("PatientPanel.fxml", "Patient Panel");
-                    return;
-                }
+                Patient patient = PatientBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
+                openPanel("PatientPanel.fxml", "Patient Panel");
+                return;
 
-                DoctorDa doctorDa = new DoctorDa();
-                Optional<Doctor> doctorOptional = doctorDa.findByUsernameAndPassword(username, password);
-                if (doctorOptional.isPresent()) {
-                    openPanel("DoctorPanel.fxml", "Doctor Panel");
-                    return;
-                }
-
-                EmployeeDa employeeDa = new EmployeeDa();
-                Optional<Employee> employeeOptional = employeeDa.findByUsernameAndPassword(username, password);
-                if (employeeOptional.isPresent()) {
-                    openPanel("EmployeePanel.fxml", "Employee Panel");
-                    return;
-                }
-
-                showAlert("Login Failed", "Username or Password is incorrect.");
-
+            } catch (UserNotFoundException ignored) {
+                // اگر بیمار پیدا نشد، به دکتر ادامه می‌دهیم
             } catch (Exception ex) {
-                ex.printStackTrace();
-                showAlert("Error", "An error occurred during login: " + ex.getMessage());
+                handleError(ex);
+                return;
+            }
+
+            try {
+                Doctor doctor = DoctorBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
+                openPanel("DoctorPanel.fxml", "Doctor Panel");
+                return;
+
+            } catch (UserNotFoundException ignored) {
+                // اگر دکتر پیدا نشد، به کارمند ادامه می‌دهیم
+            } catch (Exception ex) {
+                handleError(ex);
+                return;
+            }
+
+            try {
+                Employee employee = EmployeeBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
+                openPanel("EmployeePanel.fxml", "Employee Panel");
+                return;
+
+            } catch (UserNotFoundException ignored) {
+                showAlert("Login Failed", "Username or Password is incorrect.");
+            } catch (Exception ex) {
+                handleError(ex);
             }
         });
 
@@ -78,8 +81,7 @@ public class LoginController implements Initializable {
                 stage.setTitle("Select Sign Up");
                 stage.show();
             } catch (Exception ex) {
-                ex.printStackTrace();
-                showAlert("Error", "An error occurred while opening the Sign Up page: " + ex.getMessage());
+                handleError(ex);
             }
         });
     }
@@ -92,6 +94,11 @@ public class LoginController implements Initializable {
         stage.show();
 
         loginBtn.getScene().getWindow().hide();
+    }
+    private void handleError(Exception ex) {
+
+        ex.printStackTrace();
+        showAlert("Error", "An error occurred: " + ex.getMessage());
     }
 
     private void showAlert(String title, String message) {
