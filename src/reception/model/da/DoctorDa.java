@@ -1,6 +1,7 @@
 package reception.model.da;
 
 import reception.model.entity.Doctor;
+import reception.model.entity.Expertise;
 import reception.model.utils.JdbcProvider;
 
 import java.sql.Connection;
@@ -35,7 +36,7 @@ public class DoctorDa implements AutoCloseable {
         preparedStatement.setString(5, doctor.getName());
         preparedStatement.setString(6, doctor.getFamily());
         preparedStatement.setString(7, doctor.getPhoneNumber());
-        preparedStatement.setString(8, doctor.getSkill());
+        preparedStatement.setString(8, doctor.getExpertise().name());
         preparedStatement.setBoolean(9, doctor.isActive());
         preparedStatement.setString(10, doctor.getAccessLevel());
         preparedStatement.execute();
@@ -51,7 +52,7 @@ public class DoctorDa implements AutoCloseable {
         preparedStatement.setString(4, doctor.getName());
         preparedStatement.setString(5, doctor.getFamily());
         preparedStatement.setString(6, doctor.getPhoneNumber());
-        preparedStatement.setString(7, doctor.getSkill());
+        preparedStatement.setString(7, doctor.getExpertise().name());
         preparedStatement.setBoolean(8, doctor.isActive());
         preparedStatement.setString(9, doctor.getAccessLevel());
         preparedStatement.setInt(10, doctor.getDoctorId());
@@ -66,6 +67,12 @@ public class DoctorDa implements AutoCloseable {
         preparedStatement.executeUpdate();
     }
 
+    public void removeByUsername (String username) throws SQLException {
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("UPDATE DOCTOR SET ACTIVE=0 WHERE USERNAME=?");
+        preparedStatement.setString(1, username);
+        preparedStatement.executeUpdate();
+    }
     public List<Doctor> findAll() throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
@@ -87,7 +94,7 @@ public class DoctorDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .skill(resultSet.getString("SKILL"))
+                            .expertise(Expertise.valueOf(resultSet.getString("EXPERTISE")))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -115,7 +122,7 @@ public class DoctorDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .skill(resultSet.getString("SKILL"))
+                            .expertise(Expertise.valueOf(resultSet.getString("EXPERTISE")))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -146,7 +153,7 @@ public class DoctorDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .skill(resultSet.getString("SKILL"))
+                            .expertise(Expertise.valueOf(resultSet.getString("EXPERTISE")))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -176,7 +183,7 @@ public class DoctorDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .skill(resultSet.getString("SKILL"))
+                            .expertise(Expertise.valueOf(resultSet.getString("EXPERTISE")))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -205,7 +212,7 @@ public class DoctorDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .skill(resultSet.getString("SKILL"))
+                            .expertise(Expertise.valueOf(resultSet.getString("EXPERTISE")))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -234,7 +241,7 @@ public class DoctorDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .skill(resultSet.getString("SKILL"))
+                            .expertise(Expertise.valueOf(resultSet.getString("EXPERTISE")))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
