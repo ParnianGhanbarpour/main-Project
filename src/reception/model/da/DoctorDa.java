@@ -156,6 +156,94 @@ public class DoctorDa implements AutoCloseable {
 
         return optionalDoctor;
     }
+    public Optional<Doctor> findByNameAndFamily(String name, String family) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM DOCTOR WHERE NAME=? AND FAMILY=? AND ACTIVE=1");
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, family);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Doctor> optionalDoctor = Optional.empty();
+        if (resultSet.next()) {
+            Doctor doctor =
+                    Doctor
+                            .builder()
+                            .doctorId(resultSet.getInt("DOCTOR_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .skill(resultSet.getString("SKILL"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalDoctor = Optional.of(doctor);
+        }
+
+        return optionalDoctor;
+    }
+    public Optional<Doctor> findByNationalId(String nationalId) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM DOCTOR WHERE NATIONAL_ID=? AND ACTIVE=1");
+        preparedStatement.setString(1, nationalId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Doctor> optionalDoctor = Optional.empty();
+        if (resultSet.next()) {
+            Doctor doctor =
+                    Doctor
+                            .builder()
+                            .doctorId(resultSet.getInt("DOCTOR_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .skill(resultSet.getString("SKILL"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalDoctor = Optional.of(doctor);
+        }
+
+        return optionalDoctor;
+    }
+    public Optional<Doctor> findByPhoneNumber(String phoneNumber) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM DOCTOR WHERE PHONE_NUMBER=? AND ACTIVE=1");
+        preparedStatement.setString(1, phoneNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Doctor> optionalDoctor = Optional.empty();
+        if (resultSet.next()) {
+            Doctor doctor =
+                    Doctor
+                            .builder()
+                            .doctorId(resultSet.getInt("DOCTOR_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .skill(resultSet.getString("SKILL"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalDoctor = Optional.of(doctor);
+        }
+
+        return optionalDoctor;
+    }
 
 
     @Override

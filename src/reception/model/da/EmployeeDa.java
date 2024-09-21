@@ -157,6 +157,95 @@ public class EmployeeDa implements AutoCloseable {
 
         return optionalEmployee;
     }
+    public Optional<Employee> findByNameAndFamily(String name, String family) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE NAME=? AND FAMILY=? AND ACTIVE=1");
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, family);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Employee> optionalEmployee = Optional.empty();
+        if (resultSet.next()) {
+            Employee employee =
+                    Employee
+                            .builder()
+                            .employeeId(resultSet.getInt("EMPLOYEE_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalEmployee = Optional.of(employee);
+        }
+
+        return optionalEmployee;
+    }
+    public Optional<Employee> findByNationalId(String nationalId) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE NATIONAL_ID=? AND ACTIVE=1");
+        preparedStatement.setString(1, nationalId);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Employee> optionalEmployee = Optional.empty();
+        if (resultSet.next()) {
+            Employee employee =
+                    Employee
+                            .builder()
+                            .employeeId(resultSet.getInt("EMPLOYEE_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalEmployee = Optional.of(employee);
+        }
+
+        return optionalEmployee;
+    }
+    public Optional<Employee> findByPhoneNumber(String phoneNumber) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE PHONE_NUMBER=?  AND ACTIVE=1");
+        preparedStatement.setString(1, phoneNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Employee> optionalEmployee = Optional.empty();
+        if (resultSet.next()) {
+            Employee employee =
+                    Employee
+                            .builder()
+                            .employeeId(resultSet.getInt("EMPLOYEE_ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
+                            .nationalId(resultSet.getString("NATIONAL_ID"))
+                            .name(resultSet.getString("NAME"))
+                            .family(resultSet.getString("FAMILY"))
+                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
+                            .build();
+
+            optionalEmployee = Optional.of(employee);
+        }
+
+        return optionalEmployee;
+    }
 
 
 
