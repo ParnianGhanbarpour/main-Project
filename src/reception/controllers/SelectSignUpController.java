@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SelectSignUpController implements Initializable {
-    @FXML
-    private Button patientSignUpBtn;
 
     @FXML
     private Button doctorSignUpBtn;
@@ -23,7 +21,7 @@ public class SelectSignUpController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        patientSignUpBtn.setOnAction(event -> openSignUp("Patient.fxml", "Patient Sign Up"));
+
         doctorSignUpBtn.setOnAction(event -> openSignUp("Doctor.fxml", "Doctor Sign Up"));
         employeeSignUpBtn.setOnAction(event -> openSignUp("Employee.fxml", "Employee Sign Up"));
     }

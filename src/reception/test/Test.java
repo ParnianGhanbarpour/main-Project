@@ -1,9 +1,8 @@
-package reception;
+package reception.test;
 
 import reception.model.da.VisitTimeDa;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoField;
 
 public class Test {
     public static void main(String[] args) throws Exception {

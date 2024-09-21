@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import reception.controllers.Exception.UserNotFoundException;
 import reception.model.bl.DoctorBl;
@@ -26,7 +23,9 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordTxt;
     @FXML
-    private Button loginBtn,signUpBtn;
+    private Button loginBtn;
+    @FXML
+    private Hyperlink signUpPatientLink,signUpAdminLink;
 
 
 
@@ -72,8 +71,17 @@ public class LoginController implements Initializable {
             }
         });
 
+        signUpPatientLink.setOnAction(event -> {
+            try {
+                openPanel("Patient.fxml", "Patient Sign Up");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        signUpBtn.setOnAction(event -> {
+
+
+        signUpAdminLink.setOnAction(event -> {
             try {
                 Stage stage = new Stage();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/SelectSignUp.fxml")));
