@@ -41,10 +41,10 @@ public class DoctorController implements Initializable {
                                 .builder()
                                 .username(usernameTxt.getText())
                                 .password(passwordTxt.getText())
-                                .nationalId(nationalIdTxt.getText())
+                                .nationalId(validation.nationalIdValidator(nationalIdTxt.getText()))
                                 .name(validation.NameValidator(nameTxt.getText()))
                                 .family(validation.familyValidator(familyTxt.getText()))
-                                .phoneNumber(phoneTxt.getText())
+                                .phoneNumber(validation.phoneNumberValidator(phoneTxt.getText()))
                                 .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 doctorDa.save(doctor);
@@ -66,10 +66,10 @@ public class DoctorController implements Initializable {
                                 .builder()
                                 .username(usernameTxt.getText())
                                 .password(passwordTxt.getText())
-                                .nationalId(nationalIdTxt.getText())
+                                .nationalId(validation.nationalIdValidator(nationalIdTxt.getText()))
                                 .name(validation.NameValidator(nameTxt.getText()))
                                 .family(validation.familyValidator(familyTxt.getText()))
-                                .phoneNumber(phoneTxt.getText())
+                                .phoneNumber(validation.phoneNumberValidator(phoneTxt.getText()))
                                 .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 doctorDa.edit(doctor);
