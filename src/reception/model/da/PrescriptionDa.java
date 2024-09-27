@@ -106,6 +106,70 @@ public class PrescriptionDa implements AutoCloseable {
         return optionalPrescription;
     }
 
+    public Optional<Prescription> findByDoctorId(int prescriptionId, int doctorId) throws Exception {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+
+                "SELECT * FROM PRESCRIPTION WHERE PRESCRIPTION_ID =?");
+        preparedStatement.setInt(1, (prescriptionId));
+        preparedStatement = connection.prepareStatement(
+
+                "SELECT * FROM DOCTOR WHERE DOCTOR_ID =?");
+        preparedStatement.setInt(1, (doctorId));
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Prescription> optionalPrescription = Optional.empty();
+        if (resultSet.next()) {
+            Prescription prescription =
+                    Prescription
+                            .builder()
+                            .prescriptionId(resultSet.getInt("PRESCRIPTION_ID"))
+                            .medicineName(resultSet.getString("MEDICINE_NAME"))
+                            .drugDose(resultSet.getString("DRUG_DOSE"))
+                            .drugDuration(resultSet.getString("DRUG_DURATION"))
+                            .explanation(resultSet.getString("EXPLANATION"))
+                            .build();
+            optionalPrescription = Optional.of(prescription);
+        }
+
+
+        return optionalPrescription;
+    }
+
+    public Optional<Prescription> findByPatientId(int prescriptionId, int patientId) throws Exception {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+
+                "SELECT * FROM PRESCRIPTION WHERE PRESCRIPTION_ID =?");
+        preparedStatement.setInt(1, (prescriptionId));
+        preparedStatement = connection.prepareStatement(
+
+                "SELECT * FROM PATIENT WHERE PATIENT_ID =?");
+        preparedStatement.setInt(1, (patientId));
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Prescription> optionalPrescription = Optional.empty();
+        if (resultSet.next()) {
+            Prescription prescription =
+                    Prescription
+                            .builder()
+                            .prescriptionId(resultSet.getInt("PRESCRIPTION_ID"))
+                            .medicineName(resultSet.getString("MEDICINE_NAME"))
+                            .drugDose(resultSet.getString("DRUG_DOSE"))
+                            .drugDuration(resultSet.getString("DRUG_DURATION"))
+                            .explanation(resultSet.getString("EXPLANATION"))
+                            .build();
+            optionalPrescription = Optional.of(prescription);
+        }
+
+
+        return optionalPrescription;
+    }
+
     @Override
     public void close() throws Exception {
         preparedStatement.close();
