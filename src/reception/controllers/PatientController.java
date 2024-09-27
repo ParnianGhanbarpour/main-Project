@@ -2,11 +2,11 @@ package reception.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import reception.model.da.DoctorDa;
 import reception.model.da.PatientDa;
+import reception.model.entity.Doctor;
+import reception.model.entity.Expertise;
 import reception.model.entity.Patient;
 import reception.model.utils.Validation;
 
@@ -48,6 +48,48 @@ public class PatientController implements Initializable {
                 resetForm();
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Person Save Error\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        editBtn.setOnAction(event -> {
+            try (PatientDa patientDa = new PatientDa()) {
+                Patient patient =
+                        Patient
+                                .builder()
+                                .username(usernameTxt.getText())
+                                .password(passwordTxt.getText())
+                                .name(validation.NameValidator(nameTxt.getText()))
+                                .family(validation.familyValidator(familyTxt.getText()))
+                                .disease(validation.diseaseValidator(diseaseTxt.getText()))
+                                .nationalId(validation.nationalIdValidator(nationalIdTxt.getText()))
+                                .phoneNumber(validation.phoneNumberValidator(phoneNumberTxt.getText()))
+                                .build();
+                patientDa.editByUsername(patient);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Patient Edited\n" + patient);
+                alert.show();
+                resetForm();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Patient Edit Error\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        removeBtn.setOnAction(event -> {
+
+            try (PatientDa patientDa = new PatientDa()) {
+                Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure To Remove Patient?");
+                if (confirmAlert.showAndWait().get() == ButtonType.OK) {
+                    String username = usernameTxt.getText();
+                    patientDa.removeByUsername(username);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, " Removed Patient With Username : " + username.toString());
+                    alert.show();
+                    resetForm();
+                }
+
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Doctor Remove Error\n" + e.getMessage());
                 alert.show();
             }
         });
