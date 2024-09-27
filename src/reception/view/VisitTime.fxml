@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dda0dd;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.VisitTimeController">
+   <children>
+      <Label layoutX="46.0" layoutY="27.0" text="Visit Time" textFill="#cd48ac">
+         <font>
+            <Font name="System Bold Italic" size="48.0" />
+         </font>
+      </Label>
+      <Line endX="367.0" layoutX="147.0" layoutY="96.0" startX="-100.0" stroke="#cd48ac" />
+   </children>
+</Pane>
