@@ -98,6 +98,52 @@ public class RoomsDa implements AutoCloseable {
         return optionalRooms;
     }
 
+    public Optional<Rooms> findByRoomLocation(int roomLocation) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE ROOM_LOCATION=?");
+        preparedStatement.setInt(1, roomLocation);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Rooms> optionalRooms = Optional.empty();
+        if (resultSet.next()) {
+            Rooms rooms =
+                    Rooms
+                            .builder()
+                            .roomNumber(resultSet.getInt("ROOM_NUMBER"))
+                            .roomLocation(resultSet.getString("ROOM_LOCATION"))
+                            .equipments(resultSet.getString("EQUIPMENTS"))
+                            .build();
+
+            optionalRooms = Optional.of(rooms);
+        }
+
+        return optionalRooms;
+    }
+
+    public Optional<Rooms> findByEquip(int equipments) throws SQLException {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE EQUIPMENTS=?");
+        preparedStatement.setInt(1, equipments);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<Rooms> optionalRooms = Optional.empty();
+        if (resultSet.next()) {
+            Rooms rooms =
+                    Rooms
+                            .builder()
+                            .roomNumber(resultSet.getInt("ROOM_NUMBER"))
+                            .roomLocation(resultSet.getString("ROOM_LOCATION"))
+                            .equipments(resultSet.getString("EQUIPMENTS"))
+                            .build();
+
+            optionalRooms = Optional.of(rooms);
+        }
+
+        return optionalRooms;
+    }
+
     @Override
     public void close() throws Exception {
         preparedStatement.close();
