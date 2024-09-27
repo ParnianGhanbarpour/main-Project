@@ -58,11 +58,34 @@ public class PatientDa implements AutoCloseable{
         preparedStatement.setInt(10, patient.getPatientId());
         preparedStatement.execute();
     }
+    public void editByUsername(Patient patient) throws Exception {
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+                "UPDATE PATIENT SET PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,disease=?,ACTIVE=?,ACCESS_LEVEL=? WHERE USERNAME=?"
+        );
 
+        preparedStatement.setString(1, patient.getPassword());
+        preparedStatement.setString(2, patient.getNationalId());
+        preparedStatement.setString(3, patient.getName());
+        preparedStatement.setString(4, patient.getFamily());
+        preparedStatement.setString(5, patient.getPhoneNumber());
+        preparedStatement.setString(6, patient.getDisease());
+        preparedStatement.setBoolean(7,patient.isActive());
+        preparedStatement.setString(8, patient.getAccessLevel());
+        preparedStatement.setString(9, patient.getUsername());
+        preparedStatement.execute();
+    }
     public void remove(int patientId) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("UPDATE PATIENT SET ACTIVE=0 WHERE PATIENT_ID=?");
         preparedStatement.setInt(1, patientId);
+        preparedStatement.executeUpdate();
+    }
+
+    public void removeByUsername(String username) throws SQLException {
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("DELETE PATIENT WHERE USERNAME=?");
+        preparedStatement.setString(1, username);
         preparedStatement.executeUpdate();
     }
 
