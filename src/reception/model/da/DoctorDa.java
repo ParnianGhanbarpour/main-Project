@@ -59,6 +59,22 @@ public class DoctorDa implements AutoCloseable {
         preparedStatement.execute();
     }
 
+    public void editByUsername(Doctor doctor) throws Exception {
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+                "UPDATE DOCTOR SET PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,SKILL=?,ACTIVE=?,ACCESS_LEVEL=? WHERE USERNAME=?"
+        );
+        preparedStatement.setString(1, doctor.getPassword());
+        preparedStatement.setString(2, doctor.getNationalId());
+        preparedStatement.setString(3, doctor.getName());
+        preparedStatement.setString(4, doctor.getFamily());
+        preparedStatement.setString(5, doctor.getPhoneNumber());
+        preparedStatement.setString(6, doctor.getExpertise().name());
+        preparedStatement.setBoolean(7, doctor.isActive());
+        preparedStatement.setString(8, doctor.getAccessLevel());
+        preparedStatement.setString(9, doctor.getUsername());
+        preparedStatement.execute();
+    }
 
     public void remove(int doctorId) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
@@ -69,7 +85,7 @@ public class DoctorDa implements AutoCloseable {
 
     public void removeByUsername (String username) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("UPDATE DOCTOR SET ACTIVE=0 WHERE USERNAME=?");
+        preparedStatement = connection.prepareStatement("DELETE DOCTOR WHERE USERNAME=?");
         preparedStatement.setString(1, username);
         preparedStatement.executeUpdate();
     }

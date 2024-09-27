@@ -41,10 +41,8 @@
             <PasswordField fx:id="passwordTxt" promptText="Enter your Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Phone Number :" textFill="WHITE" GridPane.rowIndex="5" />
             <Label layoutX="10.0" layoutY="135.0" text="National ID :" textFill="WHITE" GridPane.rowIndex="2" />
-            <Label layoutX="10.0" layoutY="165.0" text="Work Depatment :" textFill="WHITE" GridPane.rowIndex="6" />
             <TextField fx:id="nationalIdTxt" layoutX="110.0" layoutY="100.0" promptText="Enter your National ID " GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="phoneTxt" layoutX="110.0" layoutY="70.0" promptText="Enter  your Phone Number " GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox fx:id="roomCmd" prefHeight="52.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
          <opaqueInsets>
             <Insets />

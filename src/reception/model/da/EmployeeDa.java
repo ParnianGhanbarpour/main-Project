@@ -1,6 +1,7 @@
 package reception.model.da;
 
 
+
 import reception.model.entity.Employee;
 import reception.model.utils.JdbcProvider;
 
@@ -27,7 +28,7 @@ public class EmployeeDa implements AutoCloseable {
         employee.setEmployeeId(resultSet.getInt("NEXT_EMPLOYEE_ID"));
 
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?,?,?,?)"
+                "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?,?,?)"
         );
         preparedStatement.setInt(1, employee.getEmployeeId());
         preparedStatement.setString(2, employee.getUsername());
@@ -36,15 +37,14 @@ public class EmployeeDa implements AutoCloseable {
         preparedStatement.setString(5, employee.getName());
         preparedStatement.setString(6, employee.getFamily());
         preparedStatement.setString(7, employee.getPhoneNumber());
-        preparedStatement.setString(8, employee.getWorkDepartment());
-        preparedStatement.setBoolean(9,employee.isActive());
-        preparedStatement.setString(10, employee.getAccessLevel());
+        preparedStatement.setBoolean(8,employee.isActive());
+        preparedStatement.setString(9, employee.getAccessLevel());
         preparedStatement.execute();
     }
     public void edit(Employee employee) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE EMPLOYEE SET USERNAME=?,PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,WORK_DEPARTMENT=?,ACTIVE=?,ACCESS_LEVEL=? WHERE EMPLOYEE_ID=?"
+                "UPDATE EMPLOYEE SET USERNAME=?,PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,ACTIVE=?,ACCESS_LEVEL=? WHERE EMPLOYEE_ID=?"
         );
         preparedStatement.setString(1, employee.getUsername());
         preparedStatement.setString(2, employee.getPassword());
@@ -52,10 +52,25 @@ public class EmployeeDa implements AutoCloseable {
         preparedStatement.setString(4, employee.getName());
         preparedStatement.setString(5, employee.getFamily());
         preparedStatement.setString(6, employee.getPhoneNumber());
-        preparedStatement.setString(7, employee.getWorkDepartment());
-        preparedStatement.setBoolean(8,employee.isActive());
-        preparedStatement.setString(9, employee.getAccessLevel());
-        preparedStatement.setInt(10, employee.getEmployeeId());
+        preparedStatement.setBoolean(7,employee.isActive());
+        preparedStatement.setString(8, employee.getAccessLevel());
+        preparedStatement.setInt(9, employee.getEmployeeId());
+        preparedStatement.execute();
+    }
+
+    public void editByUsername(Employee employee) throws Exception {
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+                "UPDATE EMPLOYEE SET PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,ACTIVE=?,ACCESS_LEVEL=? WHERE USERNAME=?"
+        );
+        preparedStatement.setString(1, employee.getPassword());
+        preparedStatement.setString(2, employee.getNationalId());
+        preparedStatement.setString(3, employee.getName());
+        preparedStatement.setString(4, employee.getFamily());
+        preparedStatement.setString(5, employee.getPhoneNumber());
+        preparedStatement.setBoolean(6,employee.isActive());
+        preparedStatement.setString(7, employee.getAccessLevel());
+        preparedStatement.setString(8, employee.getUsername());
         preparedStatement.execute();
     }
 
@@ -64,6 +79,13 @@ public class EmployeeDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("UPDATE EMPLOYEE SET ACTIVE=0 WHERE EMPLOYEE_ID=?");
         preparedStatement.setInt(1,employeeId );
+        preparedStatement.executeUpdate();
+    }
+
+    public void removeByUsername (String username) throws SQLException {
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("DELETE EMPLOYEE WHERE USERNAME=?");
+        preparedStatement.setString(1, username);
         preparedStatement.executeUpdate();
     }
 
@@ -88,7 +110,6 @@ public class EmployeeDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -116,7 +137,6 @@ public class EmployeeDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -147,7 +167,6 @@ public class EmployeeDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -177,7 +196,6 @@ public class EmployeeDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -207,7 +225,6 @@ public class EmployeeDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
@@ -236,7 +253,6 @@ public class EmployeeDa implements AutoCloseable {
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .workDepartment(resultSet.getString("WORK_DEPARTMENT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
                             .build();
