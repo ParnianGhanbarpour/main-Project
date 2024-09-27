@@ -1,6 +1,7 @@
 package reception.model.da;
 
 import reception.model.entity.Prescription;
+import reception.model.entity.VisitTime;
 import reception.model.utils.JdbcProvider;
 
 import java.sql.Connection;
@@ -25,28 +26,32 @@ public class PrescriptionDa implements AutoCloseable {
         prescription.setPrescriptionId(resultSet.getInt("NEXT_PRESCRIPTION_ID"));
 
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO PRESCRIPTION VALUES (?,?,?,?,?)"
+                "INSERT INTO PRESCRIPTION VALUES (?,?,?,?,?,?,?)"
         );
         preparedStatement.setInt(1, prescription.getPrescriptionId());
-        preparedStatement.setString(2, prescription.getMedicineName());
-        preparedStatement.setString(3, prescription.getDrugDose());
-        preparedStatement.setString(4, prescription.getDrugDuration());
-        preparedStatement.setString(5, prescription.getExplanation());
+        preparedStatement.setInt(2, prescription.getDoctorId());
+        preparedStatement.setInt(3, prescription.getPatientId());
+        preparedStatement.setString(4, prescription.getMedicineName());
+        preparedStatement.setString(5, prescription.getDrugDose());
+        preparedStatement.setString(6, prescription.getDrugDuration());
+        preparedStatement.setString(7, prescription.getExplanation());
         preparedStatement.execute();
     }
 
     public void edit(Prescription prescription) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PRESCRIPTION SET MEDICINE_NAME=?,DRUG_DOSE=?,DRUG_DURATION=?,EXPLANATION=? WHERE PRESCRIPTION_ID=?"
+                "UPDATE PRESCRIPTION SET MEDICINE_NAME=?,DRUG_DOSE=?,DRUG_DURATION=?,EXPLANATION=?,DOCTOR_ID=?,PATIENT_ID=? WHERE PRESCRIPTION_ID=?"
         );
 
-        preparedStatement.setString(1, prescription.getMedicineName());
-        preparedStatement.setString(2, prescription.getDrugDose());
-        preparedStatement.setString(3, prescription.getDrugDuration());
-        preparedStatement.setString(4, prescription.getExplanation());
-        preparedStatement.setInt(5, prescription.getPrescriptionId());
-        preparedStatement.execute();
+
+        preparedStatement.setInt(1, prescription.getDoctorId());
+        preparedStatement.setInt(2, prescription.getPatientId());
+        preparedStatement.setString(3, prescription.getMedicineName());
+        preparedStatement.setString(4, prescription.getDrugDose());
+        preparedStatement.setString(5, prescription.getDrugDuration());
+        preparedStatement.setString(6, prescription.getExplanation());
+        preparedStatement.setInt(7, prescription.getPrescriptionId());
     }
 
     public void remove(int id) throws SQLException {
@@ -75,6 +80,8 @@ public class PrescriptionDa implements AutoCloseable {
                             .drugDose(resultSet.getString("DRUG_DOSE"))
                             .drugDuration(resultSet.getString("DRUG_DURATION"))
                             .explanation(resultSet.getString("EXPLANATION"))
+                            .doctorId(resultSet.getInt("DOCTOR_ID"))
+                            .patientId(resultSet.getInt("PATIENT_ID"))
                             .build();
             prescriptionList.add(prescription);
         }
@@ -98,6 +105,8 @@ public class PrescriptionDa implements AutoCloseable {
                             .drugDose(resultSet.getString("DRUG_DOSE"))
                             .drugDuration(resultSet.getString("DRUG_DURATION"))
                             .explanation(resultSet.getString("EXPLANATION"))
+                            .doctorId(resultSet.getInt("DOCTOR_ID"))
+                            .patientId(resultSet.getInt("PATIENT_ID"))
                             .build();
 
             optionalPrescription = Optional.of(prescription);
@@ -106,20 +115,12 @@ public class PrescriptionDa implements AutoCloseable {
         return optionalPrescription;
     }
 
-    public Optional<Prescription> findByDoctorId(int prescriptionId, int doctorId) throws Exception {
-
+    public Optional<Prescription>findByPatientId(int patientId) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-
-                "SELECT * FROM PRESCRIPTION WHERE PRESCRIPTION_ID =?");
-        preparedStatement.setInt(1, (prescriptionId));
-        preparedStatement = connection.prepareStatement(
-
-                "SELECT * FROM DOCTOR WHERE DOCTOR_ID =?");
-        preparedStatement.setInt(1, (doctorId));
-
+                "SELECT * FROM PATIENT_PRESCRIPTION_EMP_VIEW WHERE PATIENT_ID=? ");
+        preparedStatement.setInt(1, patientId);
         ResultSet resultSet = preparedStatement.executeQuery();
-
         Optional<Prescription> optionalPrescription = Optional.empty();
         if (resultSet.next()) {
             Prescription prescription =
@@ -130,45 +131,45 @@ public class PrescriptionDa implements AutoCloseable {
                             .drugDose(resultSet.getString("DRUG_DOSE"))
                             .drugDuration(resultSet.getString("DRUG_DURATION"))
                             .explanation(resultSet.getString("EXPLANATION"))
+                            .doctorId(resultSet.getInt("DOCTOR_ID"))
+                            .patientId(resultSet.getInt("PATIENT_ID"))
                             .build();
+
             optionalPrescription = Optional.of(prescription);
         }
+        return optionalPrescription;
+    }
+
+        public Optional<Prescription>findByDoctorId(int doctorId) throws Exception {
+            connection = JdbcProvider.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM DOCTOR_PRESCRIPTION_EMP_VIEW WHERE PATIENT_ID=? ");
+            preparedStatement.setInt(1, doctorId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Optional<Prescription> optionalPrescription = Optional.empty();
+            if (resultSet.next()) {
+                Prescription prescription =
+                        Prescription
+                                .builder()
+                                .prescriptionId(resultSet.getInt("PRESCRIPTION_ID"))
+                                .medicineName(resultSet.getString("MEDICINE_NAME"))
+                                .drugDose(resultSet.getString("DRUG_DOSE"))
+                                .drugDuration(resultSet.getString("DRUG_DURATION"))
+                                .explanation(resultSet.getString("EXPLANATION"))
+                                .doctorId(resultSet.getInt("DOCTOR_ID"))
+                                .patientId(resultSet.getInt("PATIENT_ID"))
+                                .build();
+
+                optionalPrescription = Optional.of(prescription);
+            }
+
 
 
         return optionalPrescription;
     }
 
-    public Optional<Prescription> findByPatientId(int prescriptionId, int patientId) throws Exception {
-
-        connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement(
-
-                "SELECT * FROM PRESCRIPTION WHERE PRESCRIPTION_ID =?");
-        preparedStatement.setInt(1, (prescriptionId));
-        preparedStatement = connection.prepareStatement(
-
-                "SELECT * FROM PATIENT WHERE PATIENT_ID =?");
-        preparedStatement.setInt(1, (patientId));
-
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        Optional<Prescription> optionalPrescription = Optional.empty();
-        if (resultSet.next()) {
-            Prescription prescription =
-                    Prescription
-                            .builder()
-                            .prescriptionId(resultSet.getInt("PRESCRIPTION_ID"))
-                            .medicineName(resultSet.getString("MEDICINE_NAME"))
-                            .drugDose(resultSet.getString("DRUG_DOSE"))
-                            .drugDuration(resultSet.getString("DRUG_DURATION"))
-                            .explanation(resultSet.getString("EXPLANATION"))
-                            .build();
-            optionalPrescription = Optional.of(prescription);
-        }
 
 
-        return optionalPrescription;
-    }
 
     @Override
     public void close() throws Exception {
