@@ -7,6 +7,7 @@ import reception.model.entity.Employee;
 import java.util.Optional;
 
 public class EmployeeBl {
+
     public static void remove(int id)throws Exception{
         try(EmployeeDa employeeDa = new EmployeeDa()){
             employeeDa.remove(id);
@@ -24,4 +25,5 @@ public class EmployeeBl {
             }
         }
     }
+
 }

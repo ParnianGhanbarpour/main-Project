@@ -26,6 +26,7 @@ public class EmployeeDa implements AutoCloseable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         employee.setEmployeeId(resultSet.getInt("NEXT_EMPLOYEE_ID"));
+        employee.setActive(true);
 
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?,?,?)"
@@ -147,35 +148,36 @@ public class EmployeeDa implements AutoCloseable {
         return optionalEmployee;
     }
 
-    public Optional<Employee> findByUsernameAndPassword(String username, String password) throws SQLException {
 
+    public Optional<Employee> findByUsernameAndPassword(String username, String password) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("SELECT * FROM EMPLOYEE WHERE USERNAME=? AND PASSWORD=? AND ACTIVE=1");
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM EMPLOYEE WHERE USERNAME=? AND PASSWORD=? AND ACTIVE=1"
+        );
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<Employee> optionalEmployee = Optional.empty();
         if (resultSet.next()) {
-            Employee employee =
-                    Employee
-                            .builder()
-                            .employeeId(resultSet.getInt("EMPLOYEE_ID"))
-                            .username(resultSet.getString("USERNAME"))
-                            .password(resultSet.getString("PASSWORD"))
-                            .nationalId(resultSet.getString("NATIONAL_ID"))
-                            .name(resultSet.getString("NAME"))
-                            .family(resultSet.getString("FAMILY"))
-                            .phoneNumber(resultSet.getString("PHONE_NUMBER"))
-                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
-                            .active(resultSet.getBoolean("ACTIVE"))
-                            .build();
+            Employee employee = Employee.builder()
+                    .employeeId(resultSet.getInt("EMPLOYEE_ID"))
+                    .username(resultSet.getString("USERNAME"))
+                    .password(resultSet.getString("PASSWORD"))
+                    .nationalId(resultSet.getString("NATIONAL_ID"))
+                    .name(resultSet.getString("NAME"))
+                    .family(resultSet.getString("FAMILY"))
+                    .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                    .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                    .active(resultSet.getBoolean("ACTIVE"))
+                    .build();
 
             optionalEmployee = Optional.of(employee);
         }
 
         return optionalEmployee;
     }
+
     public Optional<Employee> findByNameAndFamily(String name, String family) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
@@ -267,9 +269,8 @@ public class EmployeeDa implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        preparedStatement.close();
-        connection.close();
-
-
+        if (preparedStatement != null) preparedStatement.close();
+        if (connection != null) connection.close();
     }
+
 }

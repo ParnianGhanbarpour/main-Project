@@ -25,10 +25,7 @@ public class LoginController implements Initializable {
     @FXML
     private Button loginBtn;
     @FXML
-    private Hyperlink signUpPatientLink,signUpAdminLink;
-
-
-
+    private Hyperlink signUpPatientLink, signUpAdminLink;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,34 +34,34 @@ public class LoginController implements Initializable {
             try {
 
                 Patient patient = PatientBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
-                openPanel("PatientPanel.fxml", "Patient Panel");
+                openPanel("main.fxml", "Patient Panel");
                 return;
-
             } catch (UserNotFoundException ignored) {
-                // اگر بیمار پیدا نشد، به دکتر ادامه می‌دهیم
+
             } catch (Exception ex) {
                 handleError(ex);
                 return;
             }
 
             try {
+
                 Doctor doctor = DoctorBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
-                openPanel("DoctorPanel.fxml", "Doctor Panel");
+                openPanel("main.fxml", "Doctor Panel");
                 return;
-
             } catch (UserNotFoundException ignored) {
-                // اگر دکتر پیدا نشد، به کارمند ادامه می‌دهیم
+
             } catch (Exception ex) {
                 handleError(ex);
                 return;
             }
 
             try {
-                Employee employee = EmployeeBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
-                openPanel("EmployeePanel.fxml", "Employee Panel");
-                return;
 
+                Employee employee = EmployeeBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
+                openPanel("main.fxml", "Employee Panel");
+                return;
             } catch (UserNotFoundException ignored) {
+
                 showAlert("Login Failed", "Username or Password is incorrect.");
             } catch (Exception ex) {
                 handleError(ex);
@@ -75,19 +72,13 @@ public class LoginController implements Initializable {
             try {
                 openPanel("Patient.fxml", "Patient Sign Up");
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                handleError(e);
             }
         });
 
-
-
         signUpAdminLink.setOnAction(event -> {
             try {
-                Stage stage = new Stage();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/SelectSignUp.fxml")));
-                stage.setScene(scene);
-                stage.setTitle("Select Sign Up");
-                stage.show();
+                openPanel("SelectSignUp.fxml", "Select Sign Up");
             } catch (Exception ex) {
                 handleError(ex);
             }
@@ -101,10 +92,11 @@ public class LoginController implements Initializable {
         stage.setTitle(title);
         stage.show();
 
+
         loginBtn.getScene().getWindow().hide();
     }
-    private void handleError(Exception ex) {
 
+    private void handleError(Exception ex) {
         ex.printStackTrace();
         showAlert("Error", "An error occurred: " + ex.getMessage());
     }
