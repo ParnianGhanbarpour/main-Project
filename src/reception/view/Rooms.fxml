@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2e8b57;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.RoomController">
+   <children>
+      <TableView layoutX="73.0" layoutY="92.0" prefHeight="222.0" prefWidth="458.0" style="-fx-background-color: #3cb371;">
+        <columns>
+          <TableColumn prefWidth="114.0" text="Room Number" />
+          <TableColumn minWidth="0.0" prefWidth="170.0" style="-fc-background-color: #3cb371;" text="Location" />
+            <TableColumn minWidth="0.0" prefWidth="173.0" text="Equipments" />
+        </columns>
+      </TableView>
+      <Button layoutX="73.0" layoutY="332.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Save" textFill="SEAGREEN" />
+      <Button layoutX="251.0" layoutY="332.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Edit" textFill="SEAGREEN" />
+      <Button layoutX="432.0" layoutY="332.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Remove" textFill="SEAGREEN" />
+      <Label layoutX="225.0" layoutY="10.0" text="Rooms" textFill="MEDIUMSEAGREEN">
+         <font>
+            <Font name="System Bold Italic" size="48.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
