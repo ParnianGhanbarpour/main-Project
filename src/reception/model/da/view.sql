@@ -15,3 +15,38 @@ create view patient_view as
     from PATIENT
 join VISIT_TIME on patient.patient_id = visit_time.VISIT_PATIENT_ID;
 
+SELECT
+    P.PATIENT_ID ,
+    P.NAME,
+    P.FAMILY,
+    P.DISEASE,
+    V.VISIT_TIME_ID,
+    VISIT_DATE_TIME,
+    VISIT_DURATION
+FROM
+    PATIENT P
+        JOIN VISIT_TIME V
+             ON P.PATIENT_ID=V.VISIT_PATIENT_ID;
+
+create view doctor_shift_emp_view as
+SELECT
+    D.DOCTOR_ID,
+    D.NAME,
+    D.FAMILY,
+    D.SKILL,
+    W.WORK_SHIFT_ID,
+    W.SHIFT_DATE
+
+FROM
+    DOCTOR D
+        JOIN WORK_SHIFT W
+             ON D.DOCTOR_ID=W.SHIFT_DOCTOR_ID;
+
+
+create view doctor_visit_emp_view as
+SELECT *
+FROM
+    doctor_shift_emp_view DSh
+        JOIN VISIT_TIME V
+             ON DSh.WORK_SHIFT_ID=V.VISIT_WORK_SHIFT_ID;
+
