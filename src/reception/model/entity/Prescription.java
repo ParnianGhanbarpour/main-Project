@@ -17,5 +17,7 @@ public class Prescription {
     private String drugDose;
     private String drugDuration;
     private String explanation;
+    private int doctorId;
+    private int patientId;
 
 }

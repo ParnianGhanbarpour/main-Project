@@ -146,7 +146,7 @@ public class VisitTimeDa implements AutoCloseable {
         public Optional<VisitTime>findByPatient(int patientId) throws Exception {
             connection = JdbcProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM VISIT_TIME WHERE VISIT_PATIENT_ID=? ");
+                    "SELECT * FROM PATIENT_VISIT_EMP_VIEW WHERE VISIT_PATIENT_ID=? ");
             preparedStatement.setInt(1, patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             Optional<VisitTime> optionalVisitTime = Optional.empty();

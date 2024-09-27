@@ -60,11 +60,14 @@ create table PAYMENT(
 CREATE SEQUENCE PAYMENT_SEQ START WITH 1 INCREMENT BY 1;
 
 create table PRESCRIPTION(
-                       prescription_id number primary key,
-                       medicine_name nvarchar2(20),
-                       drug_dose nvarchar2(20),
-                       drug_duration nvarchar2(20),
-                       explanation nvarchar2(50)
+                             prescription_id number primary key,
+                             doctor_id number ,
+                             patient_id number,
+                             medicine_name nvarchar2(20),
+                             drug_dose nvarchar2(20),
+                             drug_duration nvarchar2(20),
+                             explanation nvarchar2(50)
+
 );
 CREATE SEQUENCE PRESCRIPTION_SEQ START WITH 1 INCREMENT BY 1;
 
