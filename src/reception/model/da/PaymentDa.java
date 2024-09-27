@@ -1,6 +1,7 @@
 package reception.model.da;
 
 import reception.model.entity.Payment;
+import reception.model.entity.PaymentMethods;
 import reception.model.utils.JdbcProvider;
 
 import java.sql.*;
@@ -25,7 +26,7 @@ public class PaymentDa implements AutoCloseable {
                 "INSERT INTO PAYMENT VALUES (?,?,?,?)"
         );
         preparedStatement.setInt(1, payment.getPaymentId());
-        preparedStatement.setString(2, payment.getPaymentMethod());
+        preparedStatement.setString(2, payment.getPaymentMethod().name());
         preparedStatement.setTimestamp(3, Timestamp.valueOf(payment.getPaymentTime()));
         preparedStatement.setDouble(4, payment.getPaymentAmount());
         preparedStatement.execute();
@@ -37,7 +38,7 @@ public class PaymentDa implements AutoCloseable {
                 "UPDATE PAYMENT SET PAYMENT_METHOD=?,PAYMENT_TIME=?,PAYMENT_AMOUNT=? WHERE PAYMENT_ID=?"
         );
 
-        preparedStatement.setString(1, payment.getPaymentMethod());
+        preparedStatement.setString(1, payment.getPaymentMethod().name());
         preparedStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentTime()));
         preparedStatement.setDouble(3, payment.getPaymentAmount());
         preparedStatement.setInt(4,payment.getPaymentId());
@@ -66,7 +67,7 @@ public class PaymentDa implements AutoCloseable {
                     Payment
                             .builder()
                             .paymentId(resultSet.getInt("PAYMENT_ID"))
-                            .paymentMethod(resultSet.getString("PAYMENT_METHOD"))
+                            .paymentMethod(PaymentMethods.valueOf(resultSet.getString("PAYMENT_METHOD")))
                             .paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
                             .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .build();
@@ -89,7 +90,7 @@ public class PaymentDa implements AutoCloseable {
                     Payment
                             .builder()
                             .paymentId(resultSet.getInt("PAYMENT_ID"))
-                            .paymentMethod(resultSet.getString("PAYMENT_METHOD"))
+                            .paymentMethod(PaymentMethods.valueOf(resultSet.getString("PAYMENT_METHOD")))
                             .paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
                             .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .build();

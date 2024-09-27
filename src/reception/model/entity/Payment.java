@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 public class Payment  {
     private int paymentId;
-    private String paymentMethod;
+    private PaymentMethods paymentMethod;
     private LocalDateTime paymentTime;
     private double paymentAmount;
 }
