@@ -46,7 +46,6 @@ create table EMPLOYEE(
                        name nvarchar2(20) not null,
                        family nvarchar2(20) not null,
                        phone_number nvarchar2(20) unique ,
-                       work_department nvarchar2(20),
                        active number(1),
                        access_level char(4) default '0000'
 );

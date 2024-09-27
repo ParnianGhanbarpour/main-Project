@@ -72,7 +72,7 @@ public class DoctorController implements Initializable {
                                 .phoneNumber(validation.phoneNumberValidator(phoneTxt.getText()))
                                 .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
-                doctorDa.edit(doctor);
+                doctorDa.editByUsername(doctor);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Doctor Edited\n" + doctor);
                 alert.show();
