@@ -1,4 +1,5 @@
 package reception.model.da;
+import reception.model.entity.Doctor;
 import reception.model.entity.Patient;
 import reception.model.entity.VisitTime;
 import reception.model.utils.JdbcProvider;
@@ -247,18 +248,75 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-    public Optional<VisitTime> findByDoctor(int shiftId, int doctorId) throws Exception {
+    public Optional<VisitTime> findByDoctor(String doctorName , String doctorFamily) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM VISIT_TIME WHERE VISIT_WORK_SHIFT_ID =?");
-        preparedStatement.setInt(1, (shiftId));
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE NAME = ? AND FAMILY=?" );
+
+        preparedStatement.setString(1, (doctorName));
+        preparedStatement.setString(2, (doctorFamily));
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<VisitTime> optionalVisitTime = Optional.empty();
+        if (resultSet.next()) {
+            VisitTime visitTime =
+                    VisitTime
+                            .builder()
+                            .visitTimeId(resultSet.getInt("Visit_Time_id"))
+                            .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
+                            .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
+                            .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
+                            .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
+                            .visitDuration(resultSet.getString("Visit_Duration"))
+                            .build();
+            optionalVisitTime = Optional.of(visitTime);
+        }
+        return optionalVisitTime;
+    }
+
+    public Optional<VisitTime> findByExpertise (String expertise) throws Exception {
+
+        connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM WORK_SHIFT WHERE SHIFT_DOCTOR_ID =?");
-        preparedStatement.setInt(1, (doctorId));
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE SKILL = ?" );
 
+        preparedStatement.setString(1, (expertise));
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Optional<VisitTime> optionalVisitTime = Optional.empty();
+        if (resultSet.next()) {
+            VisitTime visitTime =
+                    VisitTime
+                            .builder()
+                            .visitTimeId(resultSet.getInt("Visit_Time_id"))
+                            .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
+                            .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
+                            .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
+                            .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
+                            .visitDuration(resultSet.getString("Visit_Duration"))
+                            .build();
+            optionalVisitTime = Optional.of(visitTime);
+        }
+        return optionalVisitTime;
+    }
+
+    public Optional<VisitTime> findByExpertiseAndDateRange(LocalDate FromDate, LocalDate toDate,String expertise) throws Exception {
+
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE VISIT_DATE_TIME BETWEEN ? AND ? AND SKILL=?");
+        preparedStatement.setDate(1, Date.valueOf(FromDate));
+        preparedStatement.setDate(2, Date.valueOf(toDate));
+        preparedStatement.setString(3, expertise);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<VisitTime> optionalVisitTime = Optional.empty();

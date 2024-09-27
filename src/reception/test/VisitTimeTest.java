@@ -12,6 +12,7 @@ public class VisitTimeTest {
 
                 System.out.println(visitTimeDa.findByDoctor("farshad","rezaei"));
                 System.out.println(visitTimeDa.findByExpertise("dermatologist"));
+
             }
         }
 }
