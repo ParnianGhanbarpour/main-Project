@@ -25,6 +25,7 @@ public class DoctorDa implements AutoCloseable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         doctor.setDoctorId(resultSet.getInt("NEXT_DOCTOR_ID"));
+        doctor.setActive(true);
 
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO DOCTOR VALUES (?,?,?,?,?,?,?,?,?,?)"

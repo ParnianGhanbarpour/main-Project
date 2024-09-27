@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="341.0" style="-fx-background-color: #FFDAB9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="732.0" style="-fx-background-color: #FFDAB9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="71.0" layoutY="70.0" prefHeight="193.0" prefWidth="200.0">
         <columnConstraints>
@@ -30,7 +30,7 @@
             <Line endX="100.0" startX="-100.0" />
          </children>
       </GridPane>
-      <Label layoutX="139.0" layoutY="35.0" text="Panel" textFill="#905b00">
+      <Label layoutX="79.0" layoutY="21.0" text="Visit Time Panel" textFill="#905b00">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
