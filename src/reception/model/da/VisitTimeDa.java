@@ -1,4 +1,5 @@
 package reception.model.da;
+import reception.model.entity.Patient;
 import reception.model.entity.VisitTime;
 import reception.model.utils.JdbcProvider;
 import java.sql.*;
