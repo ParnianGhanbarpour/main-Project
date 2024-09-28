@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import reception.model.da.PaymentDa;
 import reception.model.da.WorkShiftDa;
-import reception.model.entity.Payment;
-import reception.model.entity.PaymentMethods;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
@@ -19,6 +16,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
+
+//workShiftTbl va local date ha
 
 public class WorkShiftController implements Initializable {
     private final Validation validation = new Validation();
@@ -78,7 +77,7 @@ public class WorkShiftController implements Initializable {
                                 //.ShiftStartingTime(startTimeDate.getValue())
                                 //.ShiftFinishingTime(finishTimeDate.getValue())
                                 .build();
-                workShiftDa.save(workShift);
+                workShiftDa.edit(workShift);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Work Shift Edited\n" + workShift);
                 alert.show();
