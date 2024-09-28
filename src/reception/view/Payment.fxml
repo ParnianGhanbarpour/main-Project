@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="600.0" style="-fx-background-color: #FFB6C1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PaymentController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="600.0" style="-fx-background-color: #ECC5C0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PaymentController">
    <children>
       <Line endX="205.0" layoutX="300.0" layoutY="131.0" startX="-207.0" stroke="INDIANRED" />
       <Label layoutX="224.0" layoutY="77.0" text="Payment" textFill="INDIANRED">
@@ -46,19 +46,19 @@
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="PaymentTimeTxt" promptText="Enter Time" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="paymentIdTxt" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" />
             <ComboBox fx:id="paymentMethodCmb" prefHeight="31.0" prefWidth="283.0" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="paymentTimeTxt" promptText="Enter Time" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="paymentAmountTxt" promptText="Enter Amount" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="payment ID :" textFill="INDIANRED">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="paymentIdTxt" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Button fx:id="saveBtn" layoutX="94.0" layoutY="343.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: #ffffff;" text="Save" textFill="INDIANRED" />
-      <Button fx:id="EditBtn" layoutX="249.0" layoutY="342.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="Edit" textFill="INDIANRED" />
+      <Button fx:id="editBtn" layoutX="249.0" layoutY="342.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="Edit" textFill="INDIANRED" />
       <Button fx:id="removeBtn" layoutX="407.0" layoutY="341.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: #ffffff;" text="Remove" textFill="INDIANRED" />
    </children>
 </Pane>

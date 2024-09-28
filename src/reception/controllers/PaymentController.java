@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 public class PaymentController implements Initializable {
     private final Validation validation = new Validation();
 
+
     @FXML
     private TextField paymentIdTxt,paymentTimeTxt,paymentAmountTxt;
 
