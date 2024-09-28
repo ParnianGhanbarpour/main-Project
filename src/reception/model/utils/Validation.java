@@ -41,4 +41,20 @@ public class Validation {
             throw new Exception("Invalid disease");
         }
     }
+
+    public  String paymentAmountValidator(String amount) throws Exception {
+        if(Pattern.matches("^[0-9]*\\.?[0-9]+$", amount)){
+            return amount;
+        }else{
+            throw new Exception("Invalid Amount");
+        }
+    }
+
+    public  String DateAndTimeValidator(String time) throws Exception {
+        if(Pattern.matches("^[0-9]{4}-[0-9]{2}-[0-9]-{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$", time)){
+            return time;
+        }else{
+            throw new Exception("Invalid disease");
+        }
+    }
 }
