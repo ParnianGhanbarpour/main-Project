@@ -1,28 +1,17 @@
-create view doctor_shift_emp_view as
-select DOCTOR.DOCTOR_ID as DOCTOR_ID,
-       WORK_SHIFT.SHIFT_DATE as SHIFT_DATE
-    from DOCTOR
-join WORK_SHIFT on DOCTOR.DOCTOR_ID = WORK_SHIFT.SHIFT_DOCTOR_ID
-join EMPLOYEE on EMPLOYEE.EMPLOYEE_ID = WORK_SHIFT.SHIFT_EMPLOYEE_ID;
-
-
 
 select * from VISIT_TIME
 where VISIT_DATE_TIME between to_date('2024-09-15 16:00:00'  , 'YYYY-MM-DD HH24:MI:SS') and to_date('2024-09-15 16:30:00' , 'YYYY-MM-DD HH24:MI:SS');
 
-create view patient_view as
-    select PATIENT.PATIENT_ID as patientId
-    from PATIENT
-join VISIT_TIME on patient.patient_id = visit_time.VISIT_PATIENT_ID;
-
 create view doctor_shift_emp_view as
 SELECT
+    W.WORK_SHIFT_ID,
     D.DOCTOR_ID,
     D.NAME,
     D.FAMILY,
-    D.SKILL,
-    W.WORK_SHIFT_ID,
-    W.SHIFT_DATE
+    D.EXPERTISE,
+    W.SHIFT_DATE ,
+    W.SHIFT_STARTING_TIME AS FINISHING_TIME,
+    W.SHIFT_FINISHING_TIME AS STARTARTING_TIME
 
 FROM
     DOCTOR D
@@ -31,7 +20,8 @@ FROM
 
 
 create view doctor_visit_emp_view as
-SELECT *
+SELECT V.*,
+       DSh.*
 FROM
     doctor_shift_emp_view DSh
         JOIN VISIT_TIME V
@@ -53,7 +43,7 @@ SELECT
     PR.*,
     D.NAME AS DOCTOR_NAME,
     D.FAMILY DOCTOR_FAMILY,
-    D.SKILL AS DOCTOR_SKILL
+    D.EXPERTISE AS DOCTOR_SKILL
 
 FROM
     DOCTOR D
