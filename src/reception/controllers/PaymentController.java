@@ -12,7 +12,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-//note: validator nadare, payment time momkene be moshkel bokhore va majboor shim be date tabdil konimesh.
+//note: payment time momkene be moshkel bokhore va majboor shim be date tabdil konimesh.
 
 public class PaymentController implements Initializable {
     private final Validation validation = new Validation();
@@ -36,8 +36,8 @@ public class PaymentController implements Initializable {
                         Payment
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
-                                .paymentTime(LocalDateTime.parse(paymentTimeTxt.getText()))
-                                .paymentAmount(Double.parseDouble(Validation.paymentAmountValidator(paymentAmountTxt.getText())))
+                                .paymentTime(LocalDateTime.parse(validation.DateAndTimeValidator(paymentTimeTxt.getText())))
+                                .paymentAmount(Double.parseDouble(validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.save(payment);
 
@@ -56,8 +56,8 @@ public class PaymentController implements Initializable {
                         Payment
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
-                                .paymentTime(LocalDateTime.parse(paymentTimeTxt.getText()))
-                                .paymentAmount(Double.parseDouble(Validation.paymentAmountValidator(paymentAmountTxt.getText())))
+                                .paymentTime(LocalDateTime.parse(validation.DateAndTimeValidator(paymentTimeTxt.getText())))
+                                .paymentAmount(Double.parseDouble(validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.edit(payment);
 
