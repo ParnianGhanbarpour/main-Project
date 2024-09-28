@@ -37,7 +37,7 @@ public class PaymentController implements Initializable {
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
                                 .paymentTime(LocalDateTime.parse(paymentTimeTxt.getText()))
-                                .paymentAmount(Double.parseDouble(paymentAmountTxt.getText()))
+                                .paymentAmount(Double.parseDouble(Validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.save(payment);
 
@@ -57,7 +57,7 @@ public class PaymentController implements Initializable {
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
                                 .paymentTime(LocalDateTime.parse(paymentTimeTxt.getText()))
-                                .paymentAmount(Double.parseDouble(paymentAmountTxt.getText()))
+                                .paymentAmount(Double.parseDouble(Validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.edit(payment);
 

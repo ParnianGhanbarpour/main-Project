@@ -48,7 +48,7 @@
             </Label>
             <TextField fx:id="paymentIdTxt" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" />
             <ComboBox fx:id="paymentMethodCmb" prefHeight="31.0" prefWidth="283.0" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="paymentTimeTxt" promptText="Enter Time" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="paymentTimeTxt" promptText="Example: 2019-08-15 09:30:00" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="paymentAmountTxt" promptText="Enter Amount" style="-fx-background-color: #ffe4e1;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="payment ID :" textFill="INDIANRED">
                <font>

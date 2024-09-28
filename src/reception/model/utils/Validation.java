@@ -42,7 +42,7 @@ public class Validation {
         }
     }
 
-    public  String paymentAmountValidator(String amount) throws Exception {
+    public static String paymentAmountValidator(String amount) throws Exception {
         if(Pattern.matches("^[0-9]*\\.?[0-9]+$", amount)){
             return amount;
         }else{
