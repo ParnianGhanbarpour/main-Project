@@ -8,7 +8,7 @@ join EMPLOYEE on EMPLOYEE.EMPLOYEE_ID = WORK_SHIFT.SHIFT_EMPLOYEE_ID;
 
 
 select * from VISIT_TIME
-where VISIT_DATE_TIME between to_date('2024-09-15 16:00:00  , ''YYYY-MM-DD HH24:MI:SS') and to_date('2024-09-15 16:30:00 , ''YYYY-MM-DD HH24:MI:SS');
+where VISIT_DATE_TIME between to_date('2024-09-15 16:00:00'  , 'YYYY-MM-DD HH24:MI:SS') and to_date('2024-09-15 16:30:00' , 'YYYY-MM-DD HH24:MI:SS');
 
 create view patient_view as
     select PATIENT.PATIENT_ID as patientId
@@ -35,7 +35,7 @@ SELECT *
 FROM
     doctor_shift_emp_view DSh
         JOIN VISIT_TIME V
-             ON DSh.WORK_SHIFT_ID=V.VISIT_WORK_SHIFT_ID;
+             ON DSh.WORK_SHIFT_ID = V.VISIT_WORK_SHIFT_ID;
 
 CREATE VIEW PATIENT_PRESCRIPTION_EMP_VIEW AS
 SELECT
