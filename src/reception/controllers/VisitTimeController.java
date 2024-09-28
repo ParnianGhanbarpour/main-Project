@@ -27,7 +27,7 @@ public class VisitTimeController implements Initializable {
 
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources ) {
         resetForm();
         saveBtn.setOnAction(event -> {
             try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
