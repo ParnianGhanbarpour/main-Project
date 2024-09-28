@@ -14,10 +14,12 @@ import reception.model.entity.Doctor;
 import reception.model.entity.Employee;
 import reception.model.entity.Patient;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
     @FXML
     private TextField usernameTxt;
     @FXML
@@ -32,36 +34,30 @@ public class LoginController implements Initializable {
 
         loginBtn.setOnAction(event -> {
             try {
-
                 Patient patient = PatientBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
-                openPanel("main.fxml", "Patient Panel");
+                openPanel("main.fxml", "Patient Panel", patient);
                 return;
             } catch (UserNotFoundException ignored) {
-
             } catch (Exception ex) {
                 handleError(ex);
                 return;
             }
 
             try {
-
                 Doctor doctor = DoctorBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
-                openPanel("main.fxml", "Doctor Panel");
+                openPanel("main.fxml", "Doctor Panel", doctor);
                 return;
             } catch (UserNotFoundException ignored) {
-
             } catch (Exception ex) {
                 handleError(ex);
                 return;
             }
 
             try {
-
                 Employee employee = EmployeeBl.findByUsernameAndPassword(usernameTxt.getText(), passwordTxt.getText());
-                openPanel("main.fxml", "Employee Panel");
+                openPanel("main.fxml", "Employee Panel", employee);
                 return;
             } catch (UserNotFoundException ignored) {
-
                 showAlert("Login Failed", "Username or Password is incorrect.");
             } catch (Exception ex) {
                 handleError(ex);
@@ -70,28 +66,53 @@ public class LoginController implements Initializable {
 
         signUpPatientLink.setOnAction(event -> {
             try {
-                openPanel("Patient.fxml", "Patient Sign Up");
-            } catch (Exception e) {
-                handleError(e);
+                Stage stage = new Stage();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/patient.fxml")));
+                stage.setScene(scene);
+                stage.setTitle("Patient Sign Up");
+                stage.show();
+
+                loginBtn.getScene().getWindow().hide();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
 
         signUpAdminLink.setOnAction(event -> {
             try {
-                openPanel("SelectSignUp.fxml", "Select Sign Up");
+                Stage stage = new Stage();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/SelectSignUp.fxml")));
+                stage.setScene(scene);
+                stage.setTitle("Select Sign Up Admin");
+                stage.show();
+
+
+                loginBtn.getScene().getWindow().hide();
             } catch (Exception ex) {
                 handleError(ex);
             }
         });
     }
 
-    private void openPanel(String fxmlFile, String title) throws Exception {
+    private void openPanel(String fxmlFile, String title,Object user) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/reception/view/" + fxmlFile));
+        Scene scene = new Scene(loader.load());
+
+
+        MainController mainController = loader.getController();
+
+        if (user instanceof Patient) {
+            mainController.setPatient((Patient) user);
+        } else if (user instanceof Doctor) {
+            mainController.setDoctor((Doctor) user);
+        } else if (user instanceof Employee) {
+            mainController.setEmployee((Employee) user);
+        }
+
         Stage stage = new Stage();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/" + fxmlFile)));
         stage.setScene(scene);
         stage.setTitle(title);
         stage.show();
-
 
         loginBtn.getScene().getWindow().hide();
     }
