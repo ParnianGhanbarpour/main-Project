@@ -7,13 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
-   /* @Override
-    public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view.Doctor.fxml")));
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Doctor");
-        primaryStage.show();
-    }*/
+
    @Override
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view/login.fxml")));

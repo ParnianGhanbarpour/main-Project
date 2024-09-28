@@ -45,7 +45,7 @@ public class DoctorDa implements AutoCloseable {
     public void edit(Doctor doctor) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE DOCTOR SET USERNAME=?,PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,SKILL=?,ACTIVE=?,ACCESS_LEVEL=? WHERE DOCTOR_ID=?"
+                "UPDATE DOCTOR SET USERNAME=?,PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,EXPERTISE=?,ACTIVE=?,ACCESS_LEVEL=? WHERE DOCTOR_ID=?"
         );
         preparedStatement.setString(1, doctor.getUsername());
         preparedStatement.setString(2, doctor.getPassword());
@@ -63,7 +63,7 @@ public class DoctorDa implements AutoCloseable {
     public void editByUsername(Doctor doctor) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE DOCTOR SET PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,SKILL=?,ACTIVE=?,ACCESS_LEVEL=? WHERE USERNAME=?"
+                "UPDATE DOCTOR SET PASSWORD=?,NATIONAL_ID=?,NAME=?, FAMILY=?,PHONE_NUMBER=?,EXPERTISE=?,ACTIVE=?,ACCESS_LEVEL=? WHERE USERNAME=?"
         );
         preparedStatement.setString(1, doctor.getPassword());
         preparedStatement.setString(2, doctor.getNationalId());
