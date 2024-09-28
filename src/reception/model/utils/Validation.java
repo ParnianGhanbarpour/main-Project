@@ -54,7 +54,7 @@ public class Validation {
         if(Pattern.matches("^[0-9]{4}-[0-9]{2}-[0-9]-{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$", time)){
             return time;
         }else{
-            throw new Exception("Invalid disease");
+            throw new Exception("Invalid Date and Time");
         }
     }
 }
