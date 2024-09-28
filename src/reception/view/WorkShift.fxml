@@ -22,7 +22,7 @@
             <Font name="System Bold Italic" size="48.0" />
          </font>
       </Label>
-      <Line endX="336.0" layoutX="148.0" layoutY="92.0" startX="-115.0" stroke="#fafcf7" />
+      <Line endX="515.0" layoutX="148.0" layoutY="92.0" startX="-115.0" stroke="#fafcf7" />
       <GridPane layoutX="32.0" layoutY="103.0" prefHeight="252.0" prefWidth="293.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="171.0" />
@@ -63,12 +63,12 @@
             </Label>
             <TextField fx:id="doctorIdTxt" prefHeight="31.0" prefWidth="108.0" GridPane.columnIndex="1" />
             <TextField fx:id="employeeIdTxt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="workShiftDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="startTimeDate" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker fx:id="finishTimeDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <TableView layoutX="361.0" layoutY="103.0" prefHeight="296.0" prefWidth="303.0">
+      <TableView fx:id="workShiftTbl" layoutX="361.0" layoutY="103.0" prefHeight="296.0" prefWidth="303.0">
         <columns>
           <TableColumn fx:id="doctorIdCol" prefWidth="75.0" text="DoctorId" />
           <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
