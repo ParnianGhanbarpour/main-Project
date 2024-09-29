@@ -88,13 +88,13 @@ public class VisitTimeController implements Initializable {
                 if (confirmAlert.showAndWait().get() == ButtonType.OK) {
                     Integer id = Integer.parseInt(idTxt.getText());
                     visitTimeDa.remove(id);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, " Removed Doctor With Username : " + id);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, " Removed VisitTime With id : " + id);
                     alert.show();
                     resetForm();
                 }
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, " Doctor Remove Error\n" + e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, " VisitTime Remove Error\n" + e.getMessage());
                 alert.show();
             }
         });
@@ -110,12 +110,7 @@ public class VisitTimeController implements Initializable {
             durationTxt.clear();
 
 
-            try (DoctorDa doctorDa = new DoctorDa()) {
-                doctorDa.findAll();
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Find VisitTimes Error\n" + e.getMessage());
-                alert.show();
-            }
+
         }
     }
 

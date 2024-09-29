@@ -91,7 +91,7 @@ public class EmployeeController implements Initializable {
                 }
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, " Doctor Remove Error\n" + e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Employee Remove Error\n" + e.getMessage());
                 alert.show();
             }
         });
@@ -108,13 +108,6 @@ public class EmployeeController implements Initializable {
         familyTxt.clear();
         phoneTxt.clear();
 
-
-        try (EmployeeDa employeeDa = new EmployeeDa()) {
-            employeeDa.findAll();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Find Employees Error\n" + e.getMessage());
-            alert.show();
-        }
 
 
 

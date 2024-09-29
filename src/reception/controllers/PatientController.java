@@ -89,7 +89,7 @@ public class PatientController implements Initializable {
                 }
 
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, " Doctor Remove Error\n" + e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Patient Remove Error\n" + e.getMessage());
                 alert.show();
             }
         });

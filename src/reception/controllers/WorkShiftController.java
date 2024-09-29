@@ -23,7 +23,7 @@ public class WorkShiftController implements Initializable {
     private final Validation validation = new Validation();
 
     @FXML
-    private TextField doctorIdTxt, employeeIdTxt;
+    private TextField workShiftIdTxt,doctorIdTxt, employeeIdTxt;
 
     @FXML
     private DatePicker workShiftDate, startTimeDate, finishTimeDate;
@@ -49,6 +49,7 @@ public class WorkShiftController implements Initializable {
                 WorkShift workShift =
                         WorkShift
                                 .builder()
+                                .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
                                 //.ShiftDate(workShiftDate.getValue())
@@ -71,6 +72,7 @@ public class WorkShiftController implements Initializable {
                 WorkShift workShift =
                         WorkShift
                                 .builder()
+                                .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
                                 //.ShiftDate(workShiftDate.getValue())
@@ -92,7 +94,7 @@ public class WorkShiftController implements Initializable {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
                 Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Do You Want To Remove This WorkShift?");
                 if (confirmAlert.showAndWait().get() == ButtonType.OK) {
-                    int id = Integer.parseInt(doctorIdTxt.getText());
+                    int id = Integer.parseInt(workShiftIdTxt.getText());
                     workShiftDa.remove(id);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, " Removed WorkShift ");
                     alert.show();
