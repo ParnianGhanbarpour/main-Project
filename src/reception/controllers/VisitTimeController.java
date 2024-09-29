@@ -7,7 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import reception.model.da.DoctorDa;
 import reception.model.da.VisitTimeDa;
 import reception.model.entity.VisitTime;
 import reception.model.utils.Validation;
@@ -21,6 +20,8 @@ public class VisitTimeController implements Initializable {
     private TextField idTxt,shiftIdTxt,patientIdTxt,paymentIdTxt,roomNumberTxt,prescriptionIdTxt,durationTxt;
 //  @FXML
 //   زمان
+    @FXML
+    private Button findExpertiseBtn,findDoctorBtn,findPatientBtn,findDateBtn;
     @FXML
     private Button saveBtn, editBtn, removeBtn;
 

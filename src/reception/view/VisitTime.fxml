@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="1050.0" style="-fx-background-color: #3d466e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.VisitTimeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="1054.0" style="-fx-background-color: #3d466e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.VisitTimeController">
    <children>
       <Label layoutX="21.0" layoutY="11.0" text="Visit Time" textFill="#ebf2f5">
          <font>
@@ -89,7 +89,7 @@
             <TextField fx:id="idTxt" promptText="Enter a Number " GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <TableView layoutX="406.0" layoutY="54.0" prefHeight="406.0" prefWidth="630.0">
+      <TableView layoutX="400.0" layoutY="103.0" prefHeight="356.0" prefWidth="618.0">
         <columns>
           <TableColumn fx:id="doctorIdCol" prefWidth="70.0" text="DoctorId" />
           <TableColumn fx:id="nameCol" prefWidth="100.0" text="Name" />
@@ -127,6 +127,10 @@
             </Button>
          </children>
       </HBox>
-      <Line endX="530.0" layoutX="506.0" layoutY="481.0" startX="-100.0" stroke="#cd48ac" />
+      <Line endX="539.0" layoutX="481.0" layoutY="82.0" startX="-100.0" stroke="#cd48ac" />
+      <Button fx:id="findPatientBtn" layoutX="400.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Find By Patient" />
+      <Button fx:id="findDateBtn" layoutX="547.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="128.0" text="Find By Date" />
+      <Button fx:id="findDoctorBtn" layoutX="688.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Find By Doctor" />
+      <Button fx:id="findExpertiseBtn" layoutX="836.0" layoutY="479.0" mnemonicParsing="false" text="Find By Doctor Experties" />
    </children>
 </Pane>
