@@ -91,6 +91,7 @@ public class PaymentController implements Initializable {
 
 
     }
+
     private void resetForm() {
         paymentAmountTxt.clear();
         paymentTimeTxt.clear();
