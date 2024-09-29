@@ -126,12 +126,12 @@ public class VisitTimeController implements Initializable {
 
 
     public void configureAccess(Person person) {
-        String accessLevel = "00000000";
+        String accessLevel = "0000000000";
 
         if (person instanceof Patient) {
-            accessLevel = "00000011";
+            accessLevel = "0000000011";
         } else if (person instanceof Employee) {
-            accessLevel = "11111111";
+            accessLevel = "1111111111";
         }
 
         setAccessLevel(accessLevel);

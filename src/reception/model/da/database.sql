@@ -102,7 +102,7 @@ create table VISIT_TIME(
                            Visit_Date_Time timestamp,
                            Visit_Duration nvarchar2(20) not null,
                            active number(1),
-                           access_level char(8) default '00000000'
+                           access_level char(10) default '0000000000'
 );
 
 CREATE SEQUENCE VISIT_TIME_SEQ START WITH 1 INCREMENT BY 1;
