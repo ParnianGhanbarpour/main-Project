@@ -284,7 +284,7 @@ public class VisitTimeDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE SKILL = ?" );
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE EXPERTISE = ?" );
 
         preparedStatement.setString(1, (expertise));
 
@@ -313,7 +313,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE VISIT_DATE_TIME BETWEEN ? AND ? AND SKILL=?");
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE VISIT_DATE_TIME BETWEEN ? AND ? AND EXPERTISE=?");
         preparedStatement.setDate(1, Date.valueOf(FromDate));
         preparedStatement.setDate(2, Date.valueOf(toDate));
         preparedStatement.setString(3, expertise);
