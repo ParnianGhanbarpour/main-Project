@@ -24,9 +24,10 @@ public class PrescriptionDa implements AutoCloseable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         prescription.setPrescriptionId(resultSet.getInt("NEXT_PRESCRIPTION_ID"));
+        prescription.setActive(true);
 
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO PRESCRIPTION VALUES (?,?,?,?,?,?,?)"
+                "INSERT INTO PRESCRIPTION VALUES (?,?,?,?,?,?,?,?,?)"
         );
         preparedStatement.setInt(1, prescription.getPrescriptionId());
         preparedStatement.setInt(2, prescription.getDoctorId());
@@ -35,13 +36,15 @@ public class PrescriptionDa implements AutoCloseable {
         preparedStatement.setString(5, prescription.getDrugDose());
         preparedStatement.setString(6, prescription.getDrugDuration());
         preparedStatement.setString(7, prescription.getExplanation());
+        preparedStatement.setBoolean(8,prescription.isActive());
+        preparedStatement.setString(9, prescription.getAccessLevel());
         preparedStatement.execute();
     }
 
     public void edit(Prescription prescription) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PRESCRIPTION SET MEDICINE_NAME=?,DRUG_DOSE=?,DRUG_DURATION=?,EXPLANATION=?,DOCTOR_ID=?,PATIENT_ID=? WHERE PRESCRIPTION_ID=?"
+                "UPDATE PRESCRIPTION SET MEDICINE_NAME=?,DRUG_DOSE=?,DRUG_DURATION=?,EXPLANATION=?,DOCTOR_ID=?,PATIENT_ID=? ,ACCESS_LEVEL=?,ACTIVE=? WHERE PRESCRIPTION_ID=?"
         );
 
 
@@ -51,12 +54,14 @@ public class PrescriptionDa implements AutoCloseable {
         preparedStatement.setString(4, prescription.getDrugDose());
         preparedStatement.setString(5, prescription.getDrugDuration());
         preparedStatement.setString(6, prescription.getExplanation());
-        preparedStatement.setInt(7, prescription.getPrescriptionId());
+        preparedStatement.setString(7, prescription.getAccessLevel());
+        preparedStatement.setInt(8, prescription.getDoctorId());
+        preparedStatement.setInt(9, prescription.getPrescriptionId());
     }
 
     public void remove(int id) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("DELETE FROM PRESCRIPTION WHERE PRESCRIPTION_ID=?");
+        preparedStatement = connection.prepareStatement("UPDATE PRESCRIPTION SET ACTIVE=0 WHERE PRESCRIPTION_ID=?");
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }
@@ -82,6 +87,8 @@ public class PrescriptionDa implements AutoCloseable {
                             .explanation(resultSet.getString("EXPLANATION"))
                             .doctorId(resultSet.getInt("DOCTOR_ID"))
                             .patientId(resultSet.getInt("PATIENT_ID"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
                             .build();
             prescriptionList.add(prescription);
         }
@@ -107,6 +114,8 @@ public class PrescriptionDa implements AutoCloseable {
                             .explanation(resultSet.getString("EXPLANATION"))
                             .doctorId(resultSet.getInt("DOCTOR_ID"))
                             .patientId(resultSet.getInt("PATIENT_ID"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
                             .build();
 
             optionalPrescription = Optional.of(prescription);
@@ -118,7 +127,7 @@ public class PrescriptionDa implements AutoCloseable {
     public Optional<Prescription>findByPatientId(int patientId) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM PATIENT_PRESCRIPTION_EMP_VIEW WHERE PATIENT_ID=? ");
+                "SELECT * FROM PATIENT_PRESCRIPTION_EMP_VIEW WHERE PATIENT_ID=? AND ACTIVE=1 ");
         preparedStatement.setInt(1, patientId);
         ResultSet resultSet = preparedStatement.executeQuery();
         Optional<Prescription> optionalPrescription = Optional.empty();
@@ -133,6 +142,8 @@ public class PrescriptionDa implements AutoCloseable {
                             .explanation(resultSet.getString("EXPLANATION"))
                             .doctorId(resultSet.getInt("DOCTOR_ID"))
                             .patientId(resultSet.getInt("PATIENT_ID"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
                             .build();
 
             optionalPrescription = Optional.of(prescription);
@@ -143,7 +154,7 @@ public class PrescriptionDa implements AutoCloseable {
         public Optional<Prescription>findByDoctorId(int doctorId) throws Exception {
             connection = JdbcProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM DOCTOR_PRESCRIPTION_EMP_VIEW WHERE PATIENT_ID=? ");
+                    "SELECT * FROM DOCTOR_PRESCRIPTION_EMP_VIEW WHERE PATIENT_ID=? AND ACTIVE=1");
             preparedStatement.setInt(1, doctorId);
             ResultSet resultSet = preparedStatement.executeQuery();
             Optional<Prescription> optionalPrescription = Optional.empty();
@@ -158,6 +169,8 @@ public class PrescriptionDa implements AutoCloseable {
                                 .explanation(resultSet.getString("EXPLANATION"))
                                 .doctorId(resultSet.getInt("DOCTOR_ID"))
                                 .patientId(resultSet.getInt("PATIENT_ID"))
+                                .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                                .active(resultSet.getBoolean("ACTIVE"))
                                 .build();
 
                 optionalPrescription = Optional.of(prescription);

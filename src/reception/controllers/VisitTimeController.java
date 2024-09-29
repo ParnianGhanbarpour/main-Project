@@ -3,11 +3,9 @@ package reception.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import reception.model.da.VisitTimeDa;
+import reception.model.entity.Expertise;
 import reception.model.entity.VisitTime;
 import reception.model.utils.Validation;
 
@@ -18,8 +16,12 @@ public class VisitTimeController implements Initializable {
     private final Validation validation = new Validation();
     @FXML
     private TextField idTxt,shiftIdTxt,patientIdTxt,paymentIdTxt,roomNumberTxt,prescriptionIdTxt,durationTxt;
-//  @FXML
-//   زمان
+    @FXML
+    private DatePicker visitDatePicker;
+    @FXML
+    private ComboBox<String> expertiseCmb;
+    @FXML
+   private TableView<VisitTime> visitTbl;
     @FXML
     private Button findExpertiseBtn,findDoctorBtn,findPatientBtn,findDateBtn;
     @FXML
@@ -30,6 +32,11 @@ public class VisitTimeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources ) {
         resetForm();
+
+        for (Expertise expertise : Expertise.values()) {
+            expertiseCmb.getItems().add(expertise.toString());
+        }
+
         saveBtn.setOnAction(event -> {
             try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
 
@@ -44,6 +51,7 @@ public class VisitTimeController implements Initializable {
                                 .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
                                 //.visitDateTime(Timestamp.valueOf(visitTime.getVisitDateTime()))
                                 .visitDuration((durationTxt.getText()))
+                                .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 visitTimeDa.save(visitTime);
 
@@ -70,6 +78,7 @@ public class VisitTimeController implements Initializable {
                                 .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
                                 //.visitDateTime(Timestamp.valueOf(visitTime.getVisitDateTime()))
                                 .visitDuration((durationTxt.getText()))
+                                .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 visitTimeDa.edit(visitTime);
 
@@ -99,6 +108,9 @@ public class VisitTimeController implements Initializable {
                 alert.show();
             }
         });
+
+
+
     }
         private void resetForm () {
             idTxt.clear();
@@ -107,8 +119,9 @@ public class VisitTimeController implements Initializable {
             paymentIdTxt.clear();
             roomNumberTxt.clear();
             prescriptionIdTxt.clear();
-            //
+
             durationTxt.clear();
+            expertiseCmb.getSelectionModel().clearSelection();
 
 
 

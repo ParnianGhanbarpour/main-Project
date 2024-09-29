@@ -22,6 +22,7 @@ public class WorkShiftDa implements AutoCloseable {
         resultSet.next();
         workShift.setWorkShiftId(resultSet.getInt("NEXT_WORK_SHIFT_ID"));
 
+
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO WORK_SHIFT VALUES (?,?,?,?,?,?)"
         );
@@ -182,7 +183,7 @@ public class WorkShiftDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM DOCTOR_SHIFT_EMP_VIEW WHERE SKILL = ?" );
+                "SELECT * FROM DOCTOR_SHIFT_EMP_VIEW WHERE EXPERTISE = ?" );
         preparedStatement.setString(1, (expertise));
 
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -207,7 +208,7 @@ public class WorkShiftDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM JAVAPROJECT.DOCTOR_SHIFT_EMP_VIEW WHERE SHIFT_DATE BETWEEN ? AND ? AND SKILL=?");
+                "SELECT * FROM JAVAPROJECT.DOCTOR_SHIFT_EMP_VIEW WHERE SHIFT_DATE BETWEEN ? AND ? AND EXPERTISE=?");
         preparedStatement.setDate(1, Date.valueOf(FromDate));
         preparedStatement.setDate(2, Date.valueOf(toDate));
         preparedStatement.setString(3, expertise);

@@ -69,9 +69,7 @@ public class MainController implements Initializable {
     }
 
     private void configureEmployeeAccess() {
-
-        prescriptionBtn.setVisible(false);
-        paymentBtn.setVisible(false);
+        //Chon bayad Taghirat ro anjam bede
 
     }
 

@@ -22,6 +22,9 @@ public class VisitTime {
     private int visitPrescriptionId;
     private LocalDateTime visitDateTime;
     private String visitDuration;
+    private Expertise expertise;
+    private boolean active;
+    private String accessLevel;
 
     private WorkShift workShift;
     private Patient patient;

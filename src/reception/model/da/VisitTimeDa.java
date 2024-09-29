@@ -22,9 +22,9 @@ public class VisitTimeDa implements AutoCloseable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         visitTime.setVisitTimeId(resultSet.getInt("NEXT_VISIT_TIME_ID"));
-
+        visitTime.setActive(true);
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO VISIT_TIME VALUES (?,?,?,?,?,?,?,?)"
+                "INSERT INTO VISIT_TIME VALUES (?,?,?,?,?,?,?,?,?,?)"
 
         );
         preparedStatement.setInt(1, visitTime.getVisitTimeId());
@@ -35,6 +35,9 @@ public class VisitTimeDa implements AutoCloseable {
         preparedStatement.setInt(6, visitTime.getVisitPrescriptionId());
         preparedStatement.setTimestamp(7, Timestamp.valueOf(visitTime.getVisitDateTime()));
         preparedStatement.setString(8, String.valueOf(visitTime.getVisitDuration()));
+        preparedStatement.setBoolean(9, visitTime.isActive());
+        preparedStatement.setString(10, visitTime.getAccessLevel());
+
         preparedStatement.execute();
 
 
@@ -44,7 +47,7 @@ public class VisitTimeDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
 
         preparedStatement = connection.prepareStatement(
-                "UPDATE VISIT_TIME SET Visit_Work_Shift_Id=?,Visit_Patient_Id=?,Visit_Payment_Id=?,Visit_Room_Number=?,Visit_Prescription_Id=?,Visit_Date_Time=?,Visit_Duration=? WHERE Visit_Time_Id=? "
+                "UPDATE VISIT_TIME SET Visit_Work_Shift_Id=?,Visit_Patient_Id=?,Visit_Payment_Id=?,Visit_Room_Number=?,Visit_Prescription_Id=?,Visit_Date_Time=?,Visit_Duration=?,ACTIVE=?,ACCESS_LEVEL=? WHERE Visit_Time_Id=? "
         );
 
         preparedStatement.setInt(1, visitTime.getVisitWorkShiftId());
@@ -54,13 +57,15 @@ public class VisitTimeDa implements AutoCloseable {
         preparedStatement.setInt(5, visitTime.getVisitPrescriptionId());
         preparedStatement.setTimestamp(6, Timestamp.valueOf(visitTime.getVisitDateTime()));
         preparedStatement.setString(7, String.valueOf(visitTime.getVisitDuration()));
-        preparedStatement.setInt(8, visitTime.getVisitTimeId());
+        preparedStatement.setBoolean(8, visitTime.isActive());
+        preparedStatement.setString(9, visitTime.getAccessLevel());
+        preparedStatement.setInt(10, visitTime.getVisitTimeId());
         preparedStatement.execute();
     }
 
     public void remove(int visitTimeId) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("DELETE FROM VISIT_TIME WHERE VISIT_TIME_ID=?");
+        preparedStatement = connection.prepareStatement("UPDATE VISIT_TIME SET ACTIVE=0 WHERE VISIT_TIME_ID=?");
         preparedStatement.setInt(1, visitTimeId);
         preparedStatement.executeUpdate();
     }
@@ -84,6 +89,8 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             visitTimeList.add(visitTime);
         }
@@ -93,7 +100,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM VISIT_TIME WHERE VISIT_TIME_ID=?");
+                "SELECT * FROM VISIT_TIME WHERE VISIT_TIME_ID=? AND ACTIVE=1 ");
         preparedStatement.setInt(1, visitTimeId);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -110,6 +117,8 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             optionalVisitTime = Optional.of(visitTime);
         }
@@ -138,6 +147,8 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             optionalVisitTime = Optional.of(visitTime);
         }
@@ -146,7 +157,7 @@ public class VisitTimeDa implements AutoCloseable {
         public Optional<VisitTime>findByPatient(int patientId) throws Exception {
             connection = JdbcProvider.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM PATIENT_VISIT_EMP_VIEW WHERE VISIT_PATIENT_ID=? ");
+                    "SELECT * FROM PATIENT_VISIT_EMP_VIEW WHERE VISIT_PATIENT_ID=? AND ACTIVE=1");
             preparedStatement.setInt(1, patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             Optional<VisitTime> optionalVisitTime = Optional.empty();
@@ -162,13 +173,15 @@ public class VisitTimeDa implements AutoCloseable {
                                 .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                                 .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                                 .visitDuration(resultSet.getString("Visit_Duration"))
+                                .active(resultSet.getBoolean("Active"))
+                                .accessLevel(resultSet.getString("Access_Level"))
                                 .build();
                 optionalVisitTime = Optional.of(visitTime);
             }
             return optionalVisitTime;
         }
 
-            public Optional<VisitTime>findByDateTime (LocalDateTime visitDateTime) throws Exception {
+        public Optional<VisitTime>findByDateTime (LocalDateTime visitDateTime) throws Exception {
 
                 connection = JdbcProvider.getInstance().getConnection();
                 preparedStatement = connection.prepareStatement(
@@ -189,6 +202,8 @@ public class VisitTimeDa implements AutoCloseable {
                                     .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                                     .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                                     .visitDuration(resultSet.getString("Visit_Duration"))
+                                    .active(resultSet.getBoolean("Active"))
+                                    .accessLevel(resultSet.getString("Access_Level"))
                                     .build();
                     optionalVisitTime = Optional.of(visitTime);
                 }
@@ -215,6 +230,8 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             optionalVisitTime = Optional.of(visitTime);
         }
@@ -242,6 +259,8 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             optionalVisitTime = Optional.of(visitTime);
         }
@@ -273,6 +292,8 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             optionalVisitTime = Optional.of(visitTime);
         }
@@ -284,7 +305,7 @@ public class VisitTimeDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE EXPERTISE = ?" );
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE EXPERTISE = ? " );
 
         preparedStatement.setString(1, (expertise));
 
@@ -303,6 +324,8 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             optionalVisitTime = Optional.of(visitTime);
         }
@@ -332,18 +355,13 @@ public class VisitTimeDa implements AutoCloseable {
                             .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
                             .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
                             .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
                             .build();
             optionalVisitTime = Optional.of(visitTime);
         }
         return optionalVisitTime;
     }
-
-
-
-
-
-
-
 
 
     @Override
