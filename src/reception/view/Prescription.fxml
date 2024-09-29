@@ -14,18 +14,17 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="800.0" style="-fx-background-color: #aeb058;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PrescriptionController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="841.0" style="-fx-background-color: #CFECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PrescriptionController">
    <children>
-      <Label layoutX="35.0" layoutY="14.0" text="Prescription" textFill="WHITE">
+      <Label layoutX="73.0" layoutY="14.0" text="Prescription" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="48.0" />
          </font>
       </Label>
-      <Line endX="196.0" layoutX="128.0" layoutY="96.0" startX="-111.0" stroke="#6f0707" />
-      <GridPane layoutX="20.0" layoutY="106.0" prefHeight="238.0" prefWidth="301.0">
+      <GridPane layoutX="32.0" layoutY="112.0" prefHeight="359.0" prefWidth="328.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="171.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="0.0" prefWidth="123.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="130.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="0.0" prefWidth="194.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -37,37 +36,37 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Prescription Id :" textFill="WHITE">
+            <Label text="Prescription Id :" textFill="#6694d0">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Medicine Name :" textFill="WHITE" GridPane.rowIndex="1">
+            <Label text="Medicine Name :" textFill="#6694d0" GridPane.rowIndex="1">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Dose :" textFill="WHITE" GridPane.rowIndex="2">
+            <Label text="Drug Dose :" textFill="#6694d0" GridPane.rowIndex="2">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Duration :" textFill="WHITE" GridPane.rowIndex="3">
+            <Label text="Drug Duration :" textFill="#6694d0" GridPane.rowIndex="3">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Explanation :" textFill="WHITE" GridPane.rowIndex="4">
+            <Label text="Explanation :" textFill="#6694d0" GridPane.rowIndex="4">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Doctor Id :" textFill="WHITE" GridPane.rowIndex="5">
+            <Label text="Doctor Id :" textFill="#6694d0" GridPane.rowIndex="5">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Patient Id :" textFill="WHITE" GridPane.rowIndex="6">
+            <Label text="Patient Id :" textFill="#6694d0" GridPane.rowIndex="6">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
@@ -75,14 +74,29 @@
             <TextField fx:id="prescriptionIdTxt" GridPane.columnIndex="1" />
             <TextField fx:id="medicineNameTxt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="drugDoseTxt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="drugDurationTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="drugDurationTxt" prefHeight="31.0" prefWidth="121.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="explanationTxt" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="doctorIdTxt" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="patientIdTxt" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Line endX="196.0" layoutX="128.0" layoutY="356.0" startX="-111.0" stroke="#6f0707" />
-      <TableView fx:id="patientListTbl" layoutX="361.0" layoutY="225.0" prefHeight="165.0" prefWidth="420.0">
+      <Line endX="196.0" layoutX="161.0" layoutY="97.0" startX="-111.0" stroke="#4371cd" />
+      <Button fx:id="saveBtn" layoutX="385.0" layoutY="69.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #FFFFFF;" text="save" textFill="#0f39b9">
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+      </Button>
+      <Button fx:id="editBtn" layoutX="537.0" layoutY="69.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #FFFFFF;" text="edit" textFill="#0f39b9">
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+      </Button>
+      <Button fx:id="removeBtn" layoutX="689.0" layoutY="69.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #FFFFFF;" text="remove" textFill="#0f39b9">
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+      </Button>
+      <TableView fx:id="patientListTbl" layoutX="386.0" layoutY="294.0" prefHeight="165.0" prefWidth="420.0">
         <columns>
           <TableColumn fx:id="patientIdCol" prefWidth="75.0" text="PatientId" />
           <TableColumn fx:id="patientNameCol" prefWidth="115.0" text="Name" />
@@ -90,35 +104,8 @@
             <TableColumn fx:id="diseaseCol" prefWidth="115.0" text="Disease" />
         </columns>
       </TableView>
-      <HBox layoutX="16.0" layoutY="369.0" prefHeight="31.0" prefWidth="308.0">
-         <children>
-            <Button fx:id="saveBtn" mnemonicParsing="false" prefHeight="0.0" prefWidth="95.0" text="save">
-               <opaqueInsets>
-                  <Insets right="10.0" />
-               </opaqueInsets>
-               <HBox.margin>
-                  <Insets right="13.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="editBtn" mnemonicParsing="false" prefHeight="0.0" prefWidth="95.0" text="edit">
-               <opaqueInsets>
-                  <Insets right="10.0" />
-               </opaqueInsets>
-               <HBox.margin>
-                  <Insets right="13.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="removeBtn" mnemonicParsing="false" prefHeight="31.0" prefWidth="102.0" text="remove">
-               <opaqueInsets>
-                  <Insets right="10.0" />
-               </opaqueInsets>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-      <TableView fx:id="doctorListTbl" layoutX="361.0" layoutY="36.0" prefHeight="165.0" prefWidth="420.0">
+      <HBox layoutX="16.0" layoutY="369.0" prefHeight="31.0" prefWidth="308.0" />
+      <TableView fx:id="doctorListTbl" layoutX="385.0" layoutY="121.0" prefHeight="165.0" prefWidth="420.0">
          <columns>
             <TableColumn fx:id="doctorIdCol" prefWidth="75.0" text="DoctorId" />
             <TableColumn fx:id="doctorNameCol" prefWidth="115.0" text="Name" />
