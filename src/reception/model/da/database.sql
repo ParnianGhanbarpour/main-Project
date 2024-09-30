@@ -55,7 +55,9 @@ create table PAYMENT(
                        payment_id number primary key,
                        payment_method nvarchar2(20),
                        payment_time date,
-                       payment_amount number
+                       payment_amount number,
+                       active number(1),
+                       access_level char(4) default '0000'
 );
 CREATE SEQUENCE PAYMENT_SEQ START WITH 1 INCREMENT BY 1;
 
@@ -66,6 +68,8 @@ create table PRESCRIPTION(
                              medicine_name nvarchar2(20),
                              drug_dose nvarchar2(20),
                              drug_duration nvarchar2(20),
+                             active number(1),
+                             access_level char(4) default '0000',
                              explanation nvarchar2(50)
 
 );
@@ -96,7 +100,9 @@ create table VISIT_TIME(
                            Visit_Room_Number number unique ,
                            Visit_Prescription_Id number unique ,
                            Visit_Date_Time timestamp,
-                           Visit_Duration nvarchar2(20) not null
+                           Visit_Duration nvarchar2(20) not null,
+                           active number(1),
+                           access_level char(10) default '0000000000'
 );
 
 CREATE SEQUENCE VISIT_TIME_SEQ START WITH 1 INCREMENT BY 1;

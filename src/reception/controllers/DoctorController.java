@@ -31,10 +31,17 @@ public class DoctorController implements Initializable {
             expertiseCmb.getItems().add(expertise.toString());
         }
 
-        resetForm();
+
 
         saveBtn.setOnAction(event -> {
             try (DoctorDa doctorDa = new DoctorDa()) {
+
+                String selectedExpertise = expertiseCmb.getSelectionModel().getSelectedItem();
+                if (selectedExpertise == null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an expertise.");
+                    alert.show();
+                    return;
+                }
 
                 Doctor doctor =
                         Doctor
@@ -61,6 +68,13 @@ public class DoctorController implements Initializable {
         editBtn.setOnAction(event -> {
             try (DoctorDa doctorDa = new DoctorDa()) {
 
+                String selectedExpertise = expertiseCmb.getSelectionModel().getSelectedItem();
+                if (selectedExpertise == null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an expertise.");
+                    alert.show();
+                    return;
+                }
+
                 Doctor doctor =
                         Doctor
                                 .builder()
@@ -78,6 +92,7 @@ public class DoctorController implements Initializable {
                 alert.show();
                 resetForm();
             } catch (Exception e) {
+                e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Doctor Edit Error\n" + e.getMessage());
                 alert.show();
             }
@@ -96,15 +111,13 @@ public class DoctorController implements Initializable {
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR, " Doctor Remove Error\n" + e.getMessage());
                 alert.show();
             }
         });
 
-
-
-
-}
+    }
 private void resetForm () {
         usernameTxt.clear();
         passwordTxt.clear();
@@ -112,11 +125,12 @@ private void resetForm () {
         nameTxt.clear();
         familyTxt.clear();
         phoneTxt.clear();
-        expertiseCmb.getSelectionModel().select(0);
+        expertiseCmb.getSelectionModel().clearSelection();
 
         try (DoctorDa doctorDa = new DoctorDa()) {
             doctorDa.findAll();
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Find Doctors Error\n" + e.getMessage());
             alert.show();
         }

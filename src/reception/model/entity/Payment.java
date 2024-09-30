@@ -18,4 +18,6 @@ public class Payment  {
     private PaymentMethods paymentMethod;
     private LocalDateTime paymentTime;
     private double paymentAmount;
+    private boolean active;
+    private String accessLevel;
 }

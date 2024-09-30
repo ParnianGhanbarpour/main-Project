@@ -7,6 +7,7 @@ import reception.model.da.PaymentDa;
 import reception.model.entity.Payment;
 import reception.model.entity.PaymentMethods;
 import reception.model.utils.Validation;
+import reception.view.dto.FormState;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -90,6 +91,7 @@ public class PaymentController implements Initializable {
 
 
     }
+
     private void resetForm() {
         paymentAmountTxt.clear();
         paymentTimeTxt.clear();

@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import reception.model.entity.Doctor;
 import reception.model.entity.Employee;
 import reception.model.entity.Patient;
+import reception.model.entity.Person;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,37 +44,42 @@ public class MainController implements Initializable {
 
     public void setPatient(Patient patient) {
         this.currentPatient = patient;
-        configurePatientAccess();
+        configureAccess(patient);
     }
 
     public void setDoctor(Doctor doctor) {
         this.currentDoctor = doctor;
-        configureDoctorAccess();
+        configureAccess(doctor);
     }
 
     public void setEmployee(Employee employee) {
         this.currentEmployee = employee;
-        configureEmployeeAccess();
+        configureAccess(employee);
     }
 
-    private void configurePatientAccess() {
 
-        workShiftBtn.setVisible(false);
+    public void configureAccess(Person person) {
+        String accessLevel = "0000";
 
+        if (person instanceof Doctor) {
+            accessLevel = "0101";
+        } else if (person instanceof Patient) {
+            accessLevel = "1110";
+        } else if (person instanceof Employee) {
+            accessLevel = "1111";
+        }
+
+        setAccessLevel(accessLevel);
     }
 
-    private void configureDoctorAccess() {
-
-        paymentBtn.setVisible(false);
-
+    private void setAccessLevel(String accessLevel) {
+        paymentBtn.setVisible(accessLevel.charAt(0) == '1');
+        prescriptionBtn.setVisible(accessLevel.charAt(1) == '1');
+        visitTimeBtn.setVisible(accessLevel.charAt(2) == '1');
+        workShiftBtn.setVisible(accessLevel.charAt(3) == '1');
     }
 
-    private void configureEmployeeAccess() {
 
-        prescriptionBtn.setVisible(false);
-        paymentBtn.setVisible(false);
-
-    }
 
     private void openMain(String fxmlFile, String title) {
         try {

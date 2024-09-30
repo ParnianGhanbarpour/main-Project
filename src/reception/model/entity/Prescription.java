@@ -19,5 +19,7 @@ public class Prescription {
     private String explanation;
     private int doctorId;
     private int patientId;
+    private boolean active;
+    private String accessLevel;
 
 }

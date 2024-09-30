@@ -21,33 +21,38 @@ public class PaymentDa implements AutoCloseable {
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         payment.setPaymentId(resultSet.getInt("NEXT_PAYMENT_ID"));
+        payment.setActive(true);
 
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO PAYMENT VALUES (?,?,?,?)"
+                "INSERT INTO PAYMENT VALUES (?,?,?,?,?,?)"
         );
         preparedStatement.setInt(1, payment.getPaymentId());
         preparedStatement.setString(2, payment.getPaymentMethod().name());
         preparedStatement.setTimestamp(3, Timestamp.valueOf(payment.getPaymentTime()));
         preparedStatement.setDouble(4, payment.getPaymentAmount());
+        preparedStatement.setBoolean(5,payment.isActive());
+        preparedStatement.setString(6,payment.getAccessLevel());
         preparedStatement.execute();
     }
 
     public void edit(Payment payment) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PAYMENT SET PAYMENT_METHOD=?,PAYMENT_TIME=?,PAYMENT_AMOUNT=? WHERE PAYMENT_ID=?"
+                "UPDATE PAYMENT SET PAYMENT_METHOD=?,PAYMENT_TIME=?,PAYMENT_AMOUNT=? ,ACCESS_LEVEL=?,ACTIVE=? WHERE PAYMENT_ID=?"
         );
 
         preparedStatement.setString(1, payment.getPaymentMethod().name());
         preparedStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentTime()));
         preparedStatement.setDouble(3, payment.getPaymentAmount());
-        preparedStatement.setInt(4,payment.getPaymentId());
+        preparedStatement.setBoolean(4,payment.isActive());
+        preparedStatement.setString(5, payment.getAccessLevel());
+        preparedStatement.setInt(6,payment.getPaymentId());
         preparedStatement.execute();
     }
 
     public void remove(int id) throws SQLException {
         connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("DELETE FROM PAYMENT WHERE PAYMENT_ID=?");
+        preparedStatement = connection.prepareStatement("UPDATE PAYMENT SET ACTIVE=0 WHERE PAYMENT_ID=?");
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }
@@ -70,6 +75,8 @@ public class PaymentDa implements AutoCloseable {
                             .paymentMethod(PaymentMethods.valueOf(resultSet.getString("PAYMENT_METHOD")))
                             .paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
                             .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
                             .build();
             paymentList.add(payment);
         }
@@ -93,6 +100,8 @@ public class PaymentDa implements AutoCloseable {
                             .paymentMethod(PaymentMethods.valueOf(resultSet.getString("PAYMENT_METHOD")))
                             .paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
                             .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                            .active(resultSet.getBoolean("ACTIVE"))
                             .build();
 
             optionalPayment = Optional.of(payment);

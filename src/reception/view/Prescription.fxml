@@ -14,14 +14,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="800.0" style="-fx-background-color: #d6f28a;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PrescriptionController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="800.0" style="-fx-background-color: #aeb058;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PrescriptionController">
    <children>
-      <Label layoutX="35.0" layoutY="14.0" text="Prescription" textFill="#362a2a">
+      <Label layoutX="35.0" layoutY="14.0" text="Prescription" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="48.0" />
          </font>
       </Label>
-      <Line endX="196.0" layoutX="128.0" layoutY="96.0" startX="-111.0" stroke="#06390c" />
+      <Line endX="196.0" layoutX="128.0" layoutY="96.0" startX="-111.0" stroke="#6f0707" />
       <GridPane layoutX="20.0" layoutY="106.0" prefHeight="238.0" prefWidth="301.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="171.0" />
@@ -37,37 +37,37 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Prescription Id :">
+            <Label text="Prescription Id :" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Medicine Name :" GridPane.rowIndex="1">
+            <Label text="Medicine Name :" textFill="WHITE" GridPane.rowIndex="1">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Dose :" GridPane.rowIndex="2">
+            <Label text="Drug Dose :" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Duration :" GridPane.rowIndex="3">
+            <Label text="Drug Duration :" textFill="WHITE" GridPane.rowIndex="3">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Explanation :" GridPane.rowIndex="4">
+            <Label text="Explanation :" textFill="WHITE" GridPane.rowIndex="4">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Doctor Id :" GridPane.rowIndex="5">
+            <Label text="Doctor Id :" textFill="WHITE" GridPane.rowIndex="5">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Patient Id :" GridPane.rowIndex="6">
+            <Label text="Patient Id :" textFill="WHITE" GridPane.rowIndex="6">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
@@ -81,8 +81,8 @@
             <TextField fx:id="patientIdTxt" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Line endX="196.0" layoutX="128.0" layoutY="356.0" startX="-111.0" stroke="#206518" />
-      <TableView layoutX="361.0" layoutY="225.0" prefHeight="165.0" prefWidth="420.0">
+      <Line endX="196.0" layoutX="128.0" layoutY="356.0" startX="-111.0" stroke="#6f0707" />
+      <TableView fx:id="patientListTbl" layoutX="361.0" layoutY="225.0" prefHeight="165.0" prefWidth="420.0">
         <columns>
           <TableColumn fx:id="patientIdCol" prefWidth="75.0" text="PatientId" />
           <TableColumn fx:id="patientNameCol" prefWidth="115.0" text="Name" />
