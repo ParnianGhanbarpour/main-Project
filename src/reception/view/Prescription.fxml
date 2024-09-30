@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="841.0" style="-fx-background-color: #CFECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PrescriptionController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="841.0" style="-fx-background-color: #5F9EA0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.PrescriptionController">
    <children>
       <Label layoutX="73.0" layoutY="14.0" text="Prescription" textFill="WHITE">
          <font>
@@ -36,37 +36,37 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Prescription Id :" textFill="#6694d0">
+            <Label text="Prescription Id :" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Medicine Name :" textFill="#6694d0" GridPane.rowIndex="1">
+            <Label text="Medicine Name :" textFill="WHITE" GridPane.rowIndex="1">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Dose :" textFill="#6694d0" GridPane.rowIndex="2">
+            <Label text="Drug Dose :" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Duration :" textFill="#6694d0" GridPane.rowIndex="3">
+            <Label text="Drug Duration :" textFill="WHITE" GridPane.rowIndex="3">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Explanation :" textFill="#6694d0" GridPane.rowIndex="4">
+            <Label text="Explanation :" textFill="WHITE" GridPane.rowIndex="4">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Doctor Id :" textFill="#6694d0" GridPane.rowIndex="5">
+            <Label text="Doctor Id :" textFill="WHITE" GridPane.rowIndex="5">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Patient Id :" textFill="#6694d0" GridPane.rowIndex="6">
+            <Label text="Patient Id :" textFill="WHITE" GridPane.rowIndex="6">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
@@ -80,7 +80,7 @@
             <TextField fx:id="patientIdTxt" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Line endX="196.0" layoutX="161.0" layoutY="97.0" startX="-111.0" stroke="#4371cd" />
+      <Line endX="196.0" layoutX="161.0" layoutY="97.0" startX="-111.0" stroke="WHITE" />
       <Button fx:id="saveBtn" layoutX="385.0" layoutY="69.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #FFFFFF;" text="save" textFill="#0f39b9">
          <opaqueInsets>
             <Insets right="10.0" />
