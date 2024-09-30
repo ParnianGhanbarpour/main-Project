@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 //workShiftTbl va local date ha
+//atTime(spesificTime)
 
 public class WorkShiftController implements Initializable {
     private final Validation validation = new Validation();
@@ -52,9 +53,10 @@ public class WorkShiftController implements Initializable {
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
-                                //.ShiftDate(workShiftDate.getValue())
-                                //.ShiftStartingTime(startTimeDate.getValue())
-                                //.ShiftFinishingTime(finishTimeDate.getValue())
+                                .ShiftDate(workShiftDate.getValue().atStartOfDay())
+                                .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
+                                .ShiftFinishingTime(finishTimeDate.getValue().atStartOfDay())
+                                //atTime(spesificTime)
                                 .build();
                 workShiftDa.save(workShift);
 
@@ -75,9 +77,10 @@ public class WorkShiftController implements Initializable {
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
-                                //.ShiftDate(workShiftDate.getValue())
-                                //.ShiftStartingTime(startTimeDate.getValue())
-                                //.ShiftFinishingTime(finishTimeDate.getValue())
+                                .ShiftDate(workShiftDate.getValue().atStartOfDay())
+                                .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
+                                .ShiftFinishingTime(finishTimeDate.getValue().atStartOfDay ())
+                                //atTime(spesificTime)
                                 .build();
                 workShiftDa.edit(workShift);
 
