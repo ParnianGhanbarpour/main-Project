@@ -9,6 +9,8 @@ import reception.model.entity.*;
 import reception.model.utils.Validation;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class VisitTimeController implements Initializable {
@@ -51,7 +53,7 @@ public class VisitTimeController implements Initializable {
                                 .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
                                 .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
                                 .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
-                                //.visitDateTime(Timestamp.valueOf(visitTime.getVisitDateTime()))
+                                .visitDateTime(visitDatePicker.getValue().atStartOfDay())
                                 .visitDuration((durationTxt.getText()))
                                 .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
@@ -78,7 +80,7 @@ public class VisitTimeController implements Initializable {
                                 .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
                                 .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
                                 .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
-                                //.visitDateTime(Timestamp.valueOf(visitTime.getVisitDateTime()))
+                                .visitDateTime(visitDatePicker.getValue().atStartOfDay())
                                 .visitDuration((durationTxt.getText()))
                                 .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
