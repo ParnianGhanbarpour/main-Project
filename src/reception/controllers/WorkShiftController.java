@@ -44,8 +44,20 @@ public class WorkShiftController implements Initializable {
     @FXML
     private TableColumn<WorkShift, String> nameCol, familyCol, skillCol;
 
+//    ComboBox<Integer> hours,minutes
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+//        for (int i =10; i <=20; i++) {
+//            hours.getItems().add(i);
+//        }
+//
+//        for (int i =0; i <60; i+=5) {
+//            minutes.getItems().add(i);
+//        }
+
+//        minutes.getSelectionModel().getSelectedItem(),
+
         resetForm();
         saveBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
@@ -141,7 +153,7 @@ public class WorkShiftController implements Initializable {
     private void refreshTable(List<WorkShift> workShiftList) {
         ObservableList<WorkShift> workShifts = FXCollections.observableList(workShiftList);
 
-        doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctor_id"));
+        doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctor.id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
         skillCol.setCellValueFactory(new PropertyValueFactory<>("skill"));

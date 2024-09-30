@@ -1,8 +1,10 @@
 package reception.model.da;
+
 import reception.model.entity.Doctor;
 import reception.model.entity.Patient;
 import reception.model.entity.VisitTime;
 import reception.model.utils.JdbcProvider;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -96,6 +98,7 @@ public class VisitTimeDa implements AutoCloseable {
         }
         return visitTimeList;
     }
+
     public Optional<VisitTime> findById(int visitTimeId) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
@@ -126,6 +129,7 @@ public class VisitTimeDa implements AutoCloseable {
     }
 
     public Optional<VisitTime> findValidTime(LocalDateTime visitDateTime, int duration) throws Exception {
+//        LocalTime.of(hour, minute)
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
@@ -154,63 +158,64 @@ public class VisitTimeDa implements AutoCloseable {
         }
         return optionalVisitTime;
     }
-        public Optional<VisitTime>findByPatient(int patientId) throws Exception {
-            connection = JdbcProvider.getInstance().getConnection();
-            preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM PATIENT_VISIT_EMP_VIEW WHERE VISIT_PATIENT_ID=? AND ACTIVE=1");
-            preparedStatement.setInt(1, patientId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Optional<VisitTime> optionalVisitTime = Optional.empty();
-            if (resultSet.next()) {
-                VisitTime visitTime =
-                        VisitTime
-                                .builder()
-                                .visitTimeId(resultSet.getInt("Visit_Time_id"))
-                                .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
-                                .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
-                                .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
-                                .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
-                                .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
-                                .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
-                                .visitDuration(resultSet.getString("Visit_Duration"))
-                                .active(resultSet.getBoolean("Active"))
-                                .accessLevel(resultSet.getString("Access_Level"))
-                                .build();
-                optionalVisitTime = Optional.of(visitTime);
-            }
-            return optionalVisitTime;
+
+    public Optional<VisitTime> findByPatient(int patientId) throws Exception {
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM PATIENT_VISIT_EMP_VIEW WHERE VISIT_PATIENT_ID=? AND ACTIVE=1");
+        preparedStatement.setInt(1, patientId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Optional<VisitTime> optionalVisitTime = Optional.empty();
+        if (resultSet.next()) {
+            VisitTime visitTime =
+                    VisitTime
+                            .builder()
+                            .visitTimeId(resultSet.getInt("Visit_Time_id"))
+                            .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
+                            .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
+                            .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
+                            .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
+                            .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
+                            .build();
+            optionalVisitTime = Optional.of(visitTime);
         }
+        return optionalVisitTime;
+    }
 
-        public Optional<VisitTime>findByDateTime (LocalDateTime visitDateTime) throws Exception {
+    public Optional<VisitTime> findByDateTime(LocalDateTime visitDateTime) throws Exception {
 
-                connection = JdbcProvider.getInstance().getConnection();
-                preparedStatement = connection.prepareStatement(
-                        "SELECT * FROM VISIT_TIME WHERE VISIT_DATE_TIME = ?");
-                preparedStatement.setTimestamp(1, Timestamp.valueOf(visitDateTime));
-                ResultSet resultSet = preparedStatement.executeQuery();
+        connection = JdbcProvider.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE_TIME = ?");
+        preparedStatement.setTimestamp(1, Timestamp.valueOf(visitDateTime));
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-                Optional<VisitTime> optionalVisitTime = Optional.empty();
-                if (resultSet.next()) {
-                    VisitTime visitTime =
-                            VisitTime
-                                    .builder()
-                                    .visitTimeId(resultSet.getInt("Visit_Time_id"))
-                                    .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
-                                    .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
-                                    .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
-                                    .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
-                                    .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
-                                    .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
-                                    .visitDuration(resultSet.getString("Visit_Duration"))
-                                    .active(resultSet.getBoolean("Active"))
-                                    .accessLevel(resultSet.getString("Access_Level"))
-                                    .build();
-                    optionalVisitTime = Optional.of(visitTime);
-                }
-                return optionalVisitTime;
-            }
+        Optional<VisitTime> optionalVisitTime = Optional.empty();
+        if (resultSet.next()) {
+            VisitTime visitTime =
+                    VisitTime
+                            .builder()
+                            .visitTimeId(resultSet.getInt("Visit_Time_id"))
+                            .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
+                            .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
+                            .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
+                            .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
+                            .visitDateTime(resultSet.getTimestamp("Visit_Date_Time").toLocalDateTime())
+                            .visitDuration(resultSet.getString("Visit_Duration"))
+                            .active(resultSet.getBoolean("Active"))
+                            .accessLevel(resultSet.getString("Access_Level"))
+                            .build();
+            optionalVisitTime = Optional.of(visitTime);
+        }
+        return optionalVisitTime;
+    }
 
-    public Optional<VisitTime>findByDate (LocalDate visitDate) throws Exception {
+    public Optional<VisitTime> findByDate(LocalDate visitDate) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
@@ -237,6 +242,7 @@ public class VisitTimeDa implements AutoCloseable {
         }
         return optionalVisitTime;
     }
+
     public Optional<VisitTime> findByDateRange(LocalDate FromDate, LocalDate toDate) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
@@ -267,12 +273,12 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-    public Optional<VisitTime> findByDoctor(String doctorName , String doctorFamily) throws Exception {
+    public Optional<VisitTime> findByDoctor(String doctorName, String doctorFamily) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE NAME = ? AND FAMILY=?" );
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE NAME = ? AND FAMILY=?");
 
         preparedStatement.setString(1, (doctorName));
         preparedStatement.setString(2, (doctorFamily));
@@ -300,12 +306,12 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-    public Optional<VisitTime> findByExpertise (String expertise) throws Exception {
+    public Optional<VisitTime> findByExpertise(String expertise) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE EXPERTISE = ? " );
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE EXPERTISE = ? ");
 
         preparedStatement.setString(1, (expertise));
 
@@ -332,7 +338,7 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-    public Optional<VisitTime> findByExpertiseAndDateRange(LocalDate FromDate, LocalDate toDate,String expertise) throws Exception {
+    public Optional<VisitTime> findByExpertiseAndDateRange(LocalDate FromDate, LocalDate toDate, String expertise) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(

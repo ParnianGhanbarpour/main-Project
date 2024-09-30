@@ -35,6 +35,9 @@ public class VisitTimeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources ) {
+//        configureAccess();
+        saveBtn.setVisible(false);
+
         resetForm();
 
         for (Expertise expertise : Expertise.values()) {
@@ -140,7 +143,7 @@ public class VisitTimeController implements Initializable {
     }
 
     private void setAccessLevel(String accessLevel) {
-        idTxt.setVisible(accessLevel.charAt(0) == '1');
+        idTxt.setVisible(String.valueOf(accessLevel.charAt(0)).equals("1"));
         shiftIdTxt.setVisible(accessLevel.charAt(1) == '1');
         patientIdTxt.setVisible(accessLevel.charAt(2) == '1');
         paymentIdTxt.setVisible(accessLevel.charAt(3) == '1');
