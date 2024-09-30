@@ -10,9 +10,7 @@ import reception.model.da.DoctorDa;
 import reception.model.da.PrescriptionDa;
 import reception.model.da.VisitTimeDa;
 import reception.model.da.WorkShiftDa;
-import reception.model.entity.Prescription;
-import reception.model.entity.VisitTime;
-import reception.model.entity.WorkShift;
+import reception.model.entity.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -110,6 +108,32 @@ public class PrescriptionController implements Initializable {
                 alert.show();
             }
         });
+    }
+    //it doesn't work
+    public void configureAccess(Person person) {
+        String accessLevel = "0000000";
+
+        if (person instanceof Patient) {
+            accessLevel = "0000000";
+        } else if (person instanceof Doctor) {
+            accessLevel = "1111111";
+        }
+
+        setAccessLevel(accessLevel);
+    }
+
+    private void setAccessLevel(String accessLevel) {
+
+        prescriptionIdTxt.setVisible(accessLevel.charAt(0) == '1');
+        medicineNameTxt.setVisible(accessLevel.charAt(1) == '1');
+        drugDoseTxt.setVisible(accessLevel.charAt(2) == '1');
+        drugDurationTxt.setVisible(accessLevel.charAt(3) == '1');
+        explanationTxt.setVisible(accessLevel.charAt(4) == '1');
+        editBtn.setVisible(accessLevel.charAt(5) == '1');
+        removeBtn.setVisible(accessLevel.charAt(6) == '1');
+
+
+
     }
     private void resetForm () {
         prescriptionIdTxt.clear();
