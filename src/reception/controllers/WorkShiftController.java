@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.WorkShiftDa;
+import reception.model.da.DoctorDa;
+import reception.model.entity.Doctor;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
@@ -111,11 +113,13 @@ public class WorkShiftController implements Initializable {
         });
 
         workShiftTbl.setOnMouseReleased(event->{
+            DoctorDa doctorDa = new DoctorDa();
+            Doctor doctor = new Doctor();
             WorkShift workShift = workShiftTbl.getSelectionModel().getSelectedItem();
             doctorIdTxt.setText(String.valueOf(workShift.getShiftDoctorId()));
-           // nameTxt.setText(doctor.getName());
-           // familyTxt.setText(doctor.getFamily());
-           // skillTxt.setValue(doctor.getSkill());
+            nameCol.setText(Integer.toString(doctor.getDoctorId()));
+            familyCol.setText(doctor.getFamily());
+            skillCol.setText(doctor.getExpertise().name());
         });
     }
     private void resetForm(){
