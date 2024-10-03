@@ -20,6 +20,9 @@ import java.util.Set;
 
 public class PrescriptionController implements Initializable {
 
+    private Patient currentPatient;
+    private Doctor currentDoctor;
+
     @FXML
     private TextField prescriptionIdTxt ,  medicineNameTxt , drugDoseTxt,drugDurationTxt ,explanationTxt ,doctorIdTxt,patientIdTxt;
 
