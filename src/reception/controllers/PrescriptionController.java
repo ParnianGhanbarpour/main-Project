@@ -49,7 +49,7 @@ public class PrescriptionController implements Initializable {
     public void initialize(URL location, ResourceBundle resources ) {
 
         resetForm();
-        //        configureAccess(currentUser);
+        configureAccess(currentUser);
 
 
         saveBtn.setOnAction(event -> {

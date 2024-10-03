@@ -38,6 +38,8 @@ public class VisitTimeController implements Initializable {
     private Button findExpertiseBtn,findDoctorBtn,findPatientBtn,findDateBtn;
     @FXML
     private Button saveBtn, editBtn, removeBtn;
+    @FXML
+    private Label visitIdLbl,shiftIdLbl,patientIdLbl,paymentIdLbl;
 
     private Person currentUser;
 
@@ -166,14 +168,14 @@ public class VisitTimeController implements Initializable {
     }
 
     private void configureAccess(Person person) {
-        String accessLevel = "0000000000";
+        String accessLevel = "00000000000000";
 
         if (person instanceof Employee) {
-            accessLevel = "1111111111";
+            accessLevel = "11111111111111";
         } else if (person instanceof Patient) {
-            accessLevel = "0000000011";
-        } else if (person instanceof Doctor) {
-            accessLevel = "1100000000";
+            accessLevel = "00001000110000";
+        } else if (person instanceof Doctor) {//kolan neshunesh nemide pas mohem nist
+            accessLevel = "00001100000000";
         }
 
         setAccessLevel(accessLevel);
@@ -193,7 +195,10 @@ public class VisitTimeController implements Initializable {
             findPatientBtn.setVisible(accessLevel.charAt(7) == '1');
             findDateBtn.setVisible(accessLevel.charAt(8) == '1');
             findDoctorBtn.setVisible(accessLevel.charAt(9) == '1');
-
+            shiftIdLbl.setVisible(accessLevel.charAt(10) == '1');
+            visitIdLbl.setVisible(accessLevel.charAt(11) == '1');
+            patientIdLbl.setVisible(accessLevel.charAt(12) == '1');
+            paymentIdLbl.setVisible(accessLevel.charAt(13) == '1');
 
         }
 
