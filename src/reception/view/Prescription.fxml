@@ -37,27 +37,27 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Prescription Id :" textFill="WHITE">
+            <Label fx:id="pIdLbl" text="Prescription Id :" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Medicine Name :" textFill="WHITE" GridPane.rowIndex="1">
+            <Label fx:id="mNameLbl" text="Medicine Name :" textFill="WHITE" GridPane.rowIndex="1">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Dose :" textFill="WHITE" GridPane.rowIndex="2">
+            <Label fx:id="doseLbl" text="Drug Dose :" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Drug Duration :" textFill="WHITE" GridPane.rowIndex="3">
+            <Label fx:id="durationLbl" text="Drug Duration :" textFill="WHITE" GridPane.rowIndex="3">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Explanation :" textFill="WHITE" GridPane.rowIndex="4">
+            <Label fx:id="explanationLbl" text="Explanation :" textFill="WHITE" GridPane.rowIndex="4">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
