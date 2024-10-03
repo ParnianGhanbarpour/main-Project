@@ -1,19 +1,23 @@
 package reception.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import reception.model.da.DoctorDa;
-import reception.model.da.PrescriptionDa;
-import reception.model.da.VisitTimeDa;
-import reception.model.da.WorkShiftDa;
+import reception.model.da.*;
 import reception.model.entity.*;
 
 import java.net.URL;
+
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+
 public class PrescriptionController implements Initializable {
 
     @FXML
@@ -23,8 +27,10 @@ public class PrescriptionController implements Initializable {
     private Button saveBtn, editBtn, removeBtn;
 
     @FXML
-    private TableView<WorkShift> doctorListTbl ,
-             patientListTbl;
+    private TableView<Patient> patientListTbl;
+
+    @FXML
+    private TableView<Doctor> doctorListTbl;
 
     @FXML
     private TableColumn<WorkShift, Integer> doctorIdCol,
@@ -144,6 +150,44 @@ public class PrescriptionController implements Initializable {
         doctorIdTxt.clear();
         patientIdTxt.clear();
 
+        try (DoctorDa doctorDa=new DoctorDa()) {
+            refreshTableD(doctorDa.findAll());
+        }
+        catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, " Error1\n" + e.getMessage());
+            alert.show();
+        }
+
+        try (PatientDa patientDa=new PatientDa()) {
+            refreshTableP(patientDa.findAll());
+        }
+        catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, " Error2\n" + e.getMessage());
+            alert.show();
+        }
+
+    }
+
+    private void refreshTableD(List<Doctor> doctorList) {
+        ObservableList<Doctor> doctors= FXCollections.observableList(doctorList);
+
+        doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+        doctorNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        doctorFamilyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
+        skillCol.setCellValueFactory(new PropertyValueFactory<>("skill"));
+
+        doctorListTbl.setItems(doctors);
+
+    }
+
+    private void refreshTableP(List<Patient>patientList){
+        ObservableList<Patient> patients= FXCollections.observableList(patientList);
+
+        patientIdCol.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        patientNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        patientFamilyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
+        diseaseCol.setCellValueFactory(new PropertyValueFactory<>("disease"));
+        patientListTbl.setItems(patients);
     }
 
     }
