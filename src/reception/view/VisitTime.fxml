@@ -73,7 +73,7 @@
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <Label text="Prescrition Id :" textFill="#f8f8f8" GridPane.rowIndex="5">
+            <Label text="Prescription Id :" textFill="#f8f8f8" GridPane.rowIndex="5">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
@@ -101,7 +101,7 @@
             <ComboBox fx:id="hourCmb" prefHeight="31.0" prefWidth="150.0" promptText="ChoseHour" GridPane.rowIndex="7" />
          </children>
       </GridPane>
-      <TableView fx:id="visitTbl" layoutX="400.0" layoutY="103.0" prefHeight="396.0" prefWidth="400.0">
+      <TableView fx:id="doctorTbl" layoutX="400.0" layoutY="103.0" prefHeight="396.0" prefWidth="400.0">
         <columns>
           <TableColumn fx:id="doctorIdCol" prefWidth="70.0" style="-fx-background-color: #a4cc9b;" text="DoctorId" />
           <TableColumn fx:id="nameCol" prefWidth="100.0" text="Name" />
