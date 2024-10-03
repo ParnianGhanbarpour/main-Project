@@ -34,9 +34,8 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         paymentBtn.setOnAction(event -> openMain("Payment.fxml", "Payment Main"));
-        prescriptionBtn.setOnAction(event -> openMain("Prescription.fxml", "Prescription Main"));
+        prescriptionBtn.setOnAction(event -> openPrescription());
 
-        // Change visitTimeBtn action to pass currentUser to VisitTimeController
         visitTimeBtn.setOnAction(event -> openVisitTime());
         workShiftBtn.setOnAction(event -> openMain("WorkShift.fxml", "Work Shift Main"));
     }
@@ -95,6 +94,29 @@ public class MainController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Visit Time Main");
+            stage.show();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    private void openPrescription() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Prescription.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            VisitTimeController visitTimeController = loader.getController();
+
+//            if (currentPatient != null) {
+//                visitTimeController.setCurrentUser(currentPatient);
+//            } else if (currentDoctor != null) {
+//                visitTimeController.setCurrentUser(currentDoctor);
+//            } else if (currentEmployee != null) {
+//                visitTimeController.setCurrentUser(currentEmployee);
+//            }
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle(" prescription main");
             stage.show();
         } catch (Exception ex) {
             ex.printStackTrace();

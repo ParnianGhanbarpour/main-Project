@@ -20,8 +20,6 @@ import java.util.Set;
 
 public class PrescriptionController implements Initializable {
 
-    private Patient currentPatient;
-    private Doctor currentDoctor;
 
     @FXML
     private TextField prescriptionIdTxt ,  medicineNameTxt , drugDoseTxt,drugDurationTxt ,explanationTxt ,doctorIdTxt,patientIdTxt;
@@ -43,12 +41,17 @@ public class PrescriptionController implements Initializable {
     private TableColumn<WorkShift, String> doctorNameCol, doctorFamilyCol, skillCol ,
             patientNameCol,patientFamilyCol,diseaseCol;
 
+    private Person currentUser;
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources ) {
 
         resetForm();
+        //        configureAccess(currentUser);
+
+
         saveBtn.setOnAction(event -> {
             try (PrescriptionDa prescriptionDa= new PrescriptionDa()) {
 
@@ -118,7 +121,11 @@ public class PrescriptionController implements Initializable {
             }
         });
     }
-    //it doesn't work
+ //   public void setCurrentUser(Person person) {
+//        this.currentUser = person;
+//        configureAccess(person);
+//    }
+
     public void configureAccess(Person person) {
         String accessLevel = "0000000";
 
