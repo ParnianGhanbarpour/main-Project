@@ -302,7 +302,7 @@ public class VisitTimeController implements Initializable {
         shiftTbl.setItems(workShifts);
     }
 
-    private void refreshTable ( List <VisitTime> visitTimeList){
+    private void refreshTable (  List <VisitTime> visitTimeList){
         ObservableList<VisitTime> visitTimes = FXCollections.observableList(visitTimeList);
 
                 idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
