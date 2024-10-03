@@ -69,7 +69,7 @@ create table PRESCRIPTION(
                              drug_dose nvarchar2(20),
                              drug_duration nvarchar2(20),
                              active number(1),
-                             access_level char(4) default '0000',
+                             access_level char(12) default '000000000000',
                              explanation nvarchar2(50)
 
 );

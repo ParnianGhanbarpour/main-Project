@@ -41,6 +41,9 @@ public class PrescriptionController implements Initializable {
     private TableColumn<WorkShift, String> doctorNameCol, doctorFamilyCol, skillCol ,
             patientNameCol,patientFamilyCol,diseaseCol;
 
+    @FXML
+    private Label pIdLbl,mNameLbl,doseLbl,durationLbl,explanationLbl;
+
     private Person currentUser;
 
 
@@ -127,12 +130,12 @@ public class PrescriptionController implements Initializable {
     }
 
     public void configureAccess(Person person) {
-        String accessLevel = "0000000";
+        String accessLevel = "000000000000";
 
         if (person instanceof Patient) {
-            accessLevel = "0000000";
+            accessLevel = "000000000000";
         } else if (person instanceof Doctor) {
-            accessLevel = "1111111";
+            accessLevel = "111111111111";
         }
 
         setAccessLevel(accessLevel);
@@ -147,7 +150,11 @@ public class PrescriptionController implements Initializable {
         explanationTxt.setVisible(accessLevel.charAt(4) == '1');
         editBtn.setVisible(accessLevel.charAt(5) == '1');
         removeBtn.setVisible(accessLevel.charAt(6) == '1');
-
+        pIdLbl.setVisible(accessLevel.charAt(7) == '1');
+        mNameLbl.setVisible(accessLevel.charAt(8) == '1');
+        doseLbl.setVisible(accessLevel.charAt(9) == '1');
+        durationLbl.setVisible(accessLevel.charAt(10) == '1');
+        explanationLbl.setVisible(accessLevel.charAt(11) == '1');
 
 
     }
