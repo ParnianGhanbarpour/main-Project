@@ -15,7 +15,6 @@ import reception.model.utils.Validation;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -56,7 +55,7 @@ public class WorkShiftController implements Initializable {
                         WorkShift
                                 .builder()
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
-                                .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
+                                .shiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
                                 .ShiftDate(workShiftDate.getValue().atStartOfDay())
                                 .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
@@ -80,7 +79,7 @@ public class WorkShiftController implements Initializable {
                         WorkShift
                                 .builder()
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
-                                .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
+                                .shiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
                                 .ShiftDate(workShiftDate.getValue().atStartOfDay())
                                 .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
