@@ -35,7 +35,7 @@ public class VisitTimeDa implements AutoCloseable {
         preparedStatement.setInt(6, visitTime.getVisitPrescriptionId());
         preparedStatement.setDate(7, Date.valueOf(visitTime.getVisitDate()));
         preparedStatement.setInt(8, visitTime.getHour());
-        preparedStatement.setInt(9, visitTime.getMinutes());
+        preparedStatement.setInt(9, visitTime.getMinute());
         preparedStatement.setString(10, String.valueOf(visitTime.getVisitDuration()));
         preparedStatement.setBoolean(11, visitTime.isActive());
         preparedStatement.setString(12, visitTime.getAccessLevel());
@@ -49,7 +49,7 @@ public class VisitTimeDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
 
         preparedStatement = connection.prepareStatement(
-                "UPDATE VISIT_TIME SET Visit_Work_Shift_Id=?,Visit_Patient_Id=?,Visit_Payment_Id=?,Visit_Room_Number=?,Visit_Prescription_Id=?,Visit_Date_Time=?,HOUR=?,MINUTES=?,Visit_Duration=?,ACTIVE=?,ACCESS_LEVEL=? WHERE Visit_Time_Id=? "
+                "UPDATE VISIT_TIME SET Visit_Work_Shift_Id=?,Visit_Patient_Id=?,Visit_Payment_Id=?,Visit_Room_Number=?,Visit_Prescription_Id=?,Visit_Date_Time=?,HOUR=?,MINUTE=?,Visit_Duration=?,ACTIVE=?,ACCESS_LEVEL=? WHERE Visit_Time_Id=? "
         );
 
         preparedStatement.setInt(1, visitTime.getVisitWorkShiftId());
@@ -59,7 +59,7 @@ public class VisitTimeDa implements AutoCloseable {
         preparedStatement.setInt(5, visitTime.getVisitPrescriptionId());
         preparedStatement.setDate(7, Date.valueOf(visitTime.getVisitDate()));
         preparedStatement.setInt(7, visitTime.getHour());
-        preparedStatement.setInt(8, visitTime.getMinutes());
+        preparedStatement.setInt(8, visitTime.getMinute());
         preparedStatement.setString(9, String.valueOf(visitTime.getVisitDuration()));
         preparedStatement.setBoolean(10, visitTime.isActive());
         preparedStatement.setString(11, visitTime.getAccessLevel());
@@ -370,6 +370,8 @@ public class VisitTimeDa implements AutoCloseable {
         }
         return optionalVisitTime;
     }
+
+
 
 
     @Override

@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="1054.0" style="-fx-background-color: #3d466e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.VisitTimeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="1121.0" style="-fx-background-color: #3d466e;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.VisitTimeController">
    <children>
       <Label layoutX="21.0" layoutY="11.0" text="Visit Time" textFill="#ebf2f5">
          <font>
@@ -98,17 +98,15 @@
             </Label>
             <ComboBox fx:id="expertiseCmb" prefHeight="31.0" prefWidth="239.0" promptText="choose Doctor Expertise" GridPane.columnIndex="2" GridPane.rowIndex="9" />
             <ComboBox fx:id="minutesCmb" prefHeight="31.0" prefWidth="150.0" promptText="ChoseMinutes" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <ComboBox fx:id="hourCmb" prefHeight="31.0" prefWidth="150.0" promptText="Chosehour" GridPane.rowIndex="7" />
+            <ComboBox fx:id="hourCmb" prefHeight="31.0" prefWidth="150.0" promptText="ChoseHour" GridPane.rowIndex="7" />
          </children>
       </GridPane>
-      <TableView fx:id="visitTbl" layoutX="400.0" layoutY="103.0" prefHeight="388.0" prefWidth="618.0">
+      <TableView fx:id="visitTbl" layoutX="400.0" layoutY="103.0" prefHeight="396.0" prefWidth="400.0">
         <columns>
-          <TableColumn fx:id="doctorIdCol" prefWidth="70.0" text="DoctorId" />
+          <TableColumn fx:id="doctorIdCol" prefWidth="70.0" style="-fx-background-color: #a4cc9b;" text="DoctorId" />
           <TableColumn fx:id="nameCol" prefWidth="100.0" text="Name" />
             <TableColumn fx:id="familyCol" prefWidth="100.0" text="Family" />
             <TableColumn fx:id="skillCol" prefWidth="130.0" text="SKill" />
-            <TableColumn fx:id="shiftIdCol" prefWidth="70.0" text="Shift Id" />
-            <TableColumn fx:id="shiftDateCol" prefWidth="160.0" text="ShiftDate" />
         </columns>
       </TableView>
       <HBox layoutX="143.0" layoutY="520.0" prefHeight="31.0" prefWidth="236.0">
@@ -139,10 +137,17 @@
             </Button>
          </children>
       </HBox>
-      <Line endX="539.0" layoutX="481.0" layoutY="82.0" startX="-100.0" stroke="#49c1cc" />
+      <Line endX="627.0" layoutX="481.0" layoutY="82.0" startX="-100.0" stroke="#49c1cc" />
       <Button fx:id="findPatientBtn" layoutX="400.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Find By Patient" />
-      <Button fx:id="findDateBtn" layoutX="547.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="128.0" text="Find By Date" />
-      <Button fx:id="findDoctorBtn" layoutX="688.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Find By Doctor" />
-      <Button fx:id="findExpertiseBtn" layoutX="836.0" layoutY="520.0" mnemonicParsing="false" text="Find By Doctor Experties" />
+      <Button fx:id="findDateBtn" layoutX="575.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="128.0" text="Find By Date" />
+      <Button fx:id="findDoctorBtn" layoutX="748.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Find By Doctor" />
+      <Button fx:id="findExpertiseBtn" layoutX="928.0" layoutY="520.0" mnemonicParsing="false" text="Find By Doctor Experties" />
+      <TableView fx:id="shiftTbl" layoutX="822.0" layoutY="103.0" prefHeight="396.0" prefWidth="288.0">
+        <columns>
+          <TableColumn fx:id="shiftIdCol" prefWidth="75.0" text="ShiftId" />
+            <TableColumn fx:id="shiftDoctorIdCol" style="-fx-background-color: #a4cc9b;" text="ShiftD.Id" />
+            <TableColumn fx:id="shiftDateCol" prefWidth="132.0" text="Date" />
+        </columns>
+      </TableView>
    </children>
 </Pane>

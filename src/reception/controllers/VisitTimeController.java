@@ -1,20 +1,21 @@
 package reception.controllers;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import reception.model.da.DoctorDa;
 import reception.model.da.VisitTimeDa;
+import reception.model.da.WorkShiftDa;
 import reception.model.entity.*;
 import reception.model.utils.Validation;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class VisitTimeController implements Initializable {
     private Patient currentPatient;
@@ -30,13 +31,17 @@ public class VisitTimeController implements Initializable {
     @FXML
     private ComboBox<Integer> hourCmb , minutesCmb;
     @FXML
-   private TableView<VisitTime> visitTbl;
+   private TableView visitTbl,
+            shiftTbl;
+    @FXML
+    private TableColumn doctorIdCol,nameCol,familyCol,skillCol,
+            shiftIdCol,shiftDoctorIdCol,shiftDateCol;
     @FXML
     private Button findExpertiseBtn,findDoctorBtn,findPatientBtn,findDateBtn;
     @FXML
     private Button saveBtn, editBtn, removeBtn;
 
-
+    private Doctor doctor;
 
     private Set<String> selectedTimes = new HashSet<>();
     private Set <String> selectedDays=new HashSet<>();
@@ -54,7 +59,11 @@ public class VisitTimeController implements Initializable {
 //        configureAccess();
 
 
-        resetForm();
+        try {
+            resetForm();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         for (Expertise expertise : Expertise.values()) {
             expertiseCmb.getItems().add(expertise.toString());
@@ -75,7 +84,7 @@ public class VisitTimeController implements Initializable {
                                 .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
                                 .visitDate(visitDatePicker.getValue())
                                 .hour(hourCmb.getSelectionModel().getSelectedItem())
-                                .minutes(minutesCmb.getSelectionModel().getSelectedItem())
+                                .minute(minutesCmb.getSelectionModel().getSelectedItem())
                                 .visitDuration((durationTxt.getText()))
                                 .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
@@ -109,7 +118,7 @@ public class VisitTimeController implements Initializable {
                                 .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
                                 .visitDate(visitDatePicker.getValue())
                                 .hour(hourCmb.getSelectionModel().getSelectedItem())
-                                .minutes(minutesCmb.getSelectionModel().getSelectedItem())
+                                .minute(minutesCmb.getSelectionModel().getSelectedItem())
                                 .visitDuration((durationTxt.getText()))
                                 .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                                 .build();
@@ -143,9 +152,17 @@ public class VisitTimeController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR, " VisitTime Remove Error\n" + e.getMessage());
                 alert.show();
             }
+
         });
 
+
+
+
     }
+
+
+
+
 
 
 
@@ -190,7 +207,9 @@ public class VisitTimeController implements Initializable {
         }
 
         */
-        private void resetForm () {
+
+
+        private void resetForm () throws Exception {
             idTxt.clear();
             shiftIdTxt.clear();
             patientIdTxt.clear();
@@ -199,6 +218,23 @@ public class VisitTimeController implements Initializable {
             prescriptionIdTxt.clear();
             durationTxt.clear();
             expertiseCmb.getSelectionModel().clearSelection();
+
+            try (DoctorDa doctorDa=new DoctorDa()) {
+                refreshTableV(doctorDa.findAll());
+            }
+            catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error1\n" + e.getMessage());
+                alert.show();
+            }
+
+            try (WorkShiftDa workShiftDa=new WorkShiftDa()) {
+                refreshTableSh(workShiftDa.findAll());
+            }
+            catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error2\n" + e.getMessage());
+                alert.show();
+            }
+
 
         }
 
@@ -216,14 +252,49 @@ public class VisitTimeController implements Initializable {
           if (selectedDays.contains(date)){
             if (selectedTimes.contains(time)) {
                 throw new IllegalArgumentException("Error: This time is already selected, please choose another time.\n");
-            }}
-               else{
-                   selectedDays.add(date);
-                   selectedTimes.add(time);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Visit time at " + time + "on"+date +" has been successfully added.\n");
+            }
+          }
+               else {
+              selectedDays.add(date);
+              selectedTimes.add(time);
+              Alert alert = new Alert(Alert.AlertType.INFORMATION, "Visit time at " + time + "on" + date + " has been successfully added.\n");
 
-                alert.show();
-
- }
+              alert.show();
+          }
         }
-       }
+
+        private void refreshTableV(List <Doctor> doctorList) {
+            ObservableList<Doctor> doctors= FXCollections.observableList(doctorList);
+
+            doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+            familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
+            skillCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
+
+            visitTbl.setItems(doctors);
+
+        }
+
+        private void refreshTableSh(List<WorkShift>workShiftList){
+            ObservableList<WorkShift> workShifts= FXCollections.observableList(workShiftList);
+
+            shiftIdCol.setCellValueFactory(new PropertyValueFactory<>("workShiftId"));
+            shiftDoctorIdCol.setCellValueFactory(new PropertyValueFactory<>("shiftDoctorId"));
+            shiftDateCol.setCellValueFactory(new PropertyValueFactory<>("shiftDate"));
+
+            shiftTbl.setItems(workShifts);
+        }
+
+/*    private void refreshTable(List<Person> personList) {
+        ObservableList<Person> persons = FXCollections.observableList(personList);
+
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
+        genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
+
+        personTbl.setItems(persons);*/
+    }
+
+
+

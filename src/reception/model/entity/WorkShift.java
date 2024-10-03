@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 public class WorkShift  {
     private int workShiftId;
-    private int ShiftDoctorId;
+    private int shiftDoctorId;
     private int shiftEmployeeId;
     private LocalDateTime ShiftDate;
     private LocalDateTime ShiftStartingTime;

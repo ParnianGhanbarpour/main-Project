@@ -1,5 +1,4 @@
 package reception.model.da;
-import reception.model.entity.VisitTime;
 import reception.model.entity.WorkShift;
 import reception.model.utils.JdbcProvider;
 import java.sql.*;
@@ -69,7 +68,7 @@ public class WorkShiftDa implements AutoCloseable {
                     WorkShift
                             .builder()
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .ShiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
@@ -93,7 +92,7 @@ public class WorkShiftDa implements AutoCloseable {
                     WorkShift
                             .builder()
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .ShiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
@@ -117,7 +116,7 @@ public class WorkShiftDa implements AutoCloseable {
                     WorkShift
                             .builder()
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .ShiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
@@ -141,7 +140,7 @@ public class WorkShiftDa implements AutoCloseable {
                     WorkShift
                             .builder()
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .ShiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
@@ -167,7 +166,7 @@ public class WorkShiftDa implements AutoCloseable {
                     WorkShift
                             .builder()
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .ShiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
@@ -193,7 +192,7 @@ public class WorkShiftDa implements AutoCloseable {
                     WorkShift
                             .builder()
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .ShiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
@@ -220,7 +219,7 @@ public class WorkShiftDa implements AutoCloseable {
                     WorkShift
                             .builder()
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .ShiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())

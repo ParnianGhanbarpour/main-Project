@@ -23,7 +23,7 @@ public class VisitTime {
     private int visitPrescriptionId;
     private LocalDate visitDate;
     private int hour;
-    private int minutes;
+    private int minute;
     private String visitDuration;
     private Expertise expertise;
     private boolean active;

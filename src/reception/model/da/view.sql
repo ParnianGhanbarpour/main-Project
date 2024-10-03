@@ -1,6 +1,6 @@
 
 select * from VISIT_TIME
-where VISIT_DATE_TIME between to_date('2024-09-15 16:00:00'  , 'YYYY-MM-DD HH24:MI:SS') and to_date('2024-09-15 16:30:00' , 'YYYY-MM-DD HH24:MI:SS');
+where VISIT_DATE between to_date('2024-09-15 16:00:00'  , 'YYYY-MM-DD HH24:MI:SS') and to_date('2024-09-15 16:30:00' , 'YYYY-MM-DD HH24:MI:SS');
 
 create view doctor_shift_emp_view as
 SELECT

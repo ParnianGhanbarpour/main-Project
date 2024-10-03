@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import reception.model.da.PaymentDa;
+import reception.model.entity.Expertise;
 import reception.model.entity.Payment;
 import reception.model.entity.PaymentMethods;
 import reception.model.utils.Validation;
@@ -89,7 +90,9 @@ public class PaymentController implements Initializable {
             }
         });
 
-
+        for (PaymentMethods paymentMethods : PaymentMethods.values()) {
+            paymentMethodCmb.getItems().add(paymentMethods.toString());
+        }
     }
 
     private void resetForm() {
