@@ -83,13 +83,13 @@ public class MainController implements Initializable {
 
             VisitTimeController visitTimeController = loader.getController();
 
-//            if (currentPatient != null) {
-//                visitTimeController.setCurrentUser(currentPatient);
-//            } else if (currentDoctor != null) {
-//                visitTimeController.setCurrentUser(currentDoctor);
-//            } else if (currentEmployee != null) {
-//                visitTimeController.setCurrentUser(currentEmployee);
-//            }
+            if (currentPatient != null) {
+                visitTimeController.setCurrentUser(currentPatient);
+            } else if (currentDoctor != null) {
+                visitTimeController.setCurrentUser(currentDoctor);
+            } else if (currentEmployee != null) {
+                visitTimeController.setCurrentUser(currentEmployee);
+            }
 
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -100,23 +100,24 @@ public class MainController implements Initializable {
         }
     }
     private void openPrescription() {
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Prescription.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/reception/view/Prescription.fxml"));
             Scene scene = new Scene(loader.load());
 
-            VisitTimeController visitTimeController = loader.getController();
+            PrescriptionController prescriptionController = loader.getController();
 
-//            if (currentPatient != null) {
-//                visitTimeController.setCurrentUser(currentPatient);
-//            } else if (currentDoctor != null) {
-//                visitTimeController.setCurrentUser(currentDoctor);
-//            } else if (currentEmployee != null) {
-//                visitTimeController.setCurrentUser(currentEmployee);
-//            }
+            if (currentPatient != null) {
+                prescriptionController.setCurrentUser(currentPatient);
+            } else if (currentDoctor != null) {
+                prescriptionController.setCurrentUser(currentDoctor);
+            } else if (currentEmployee != null) {
+                prescriptionController.setCurrentUser(currentEmployee);
+            }
 
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle(" prescription main");
+            stage.setTitle("Prescription Main");
             stage.show();
         } catch (Exception ex) {
             ex.printStackTrace();

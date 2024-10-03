@@ -121,10 +121,10 @@ public class PrescriptionController implements Initializable {
             }
         });
     }
- //   public void setCurrentUser(Person person) {
-//        this.currentUser = person;
-//        configureAccess(person);
-//    }
+    public void setCurrentUser(Person person) {
+        this.currentUser = person;
+        configureAccess(person);
+    }
 
     public void configureAccess(Person person) {
         String accessLevel = "0000000";

@@ -160,25 +160,25 @@ public class VisitTimeController implements Initializable {
 
 
     }
-//    public void setCurrentUser(Person person) {
-//        this.currentUser = person;
-//        configureAccess(person);
-//    }
-//
-//    private void configureAccess(Person person) {
-//        String accessLevel = "0000000000";
-//
-//        if (person instanceof Employee) {
-//            accessLevel = "1111111111";
-//        } else if (person instanceof Patient) {
-//            accessLevel = "0000000011";
-//        } else if (person instanceof Doctor) {
-//            accessLevel = "1100000000";
-//        }
-//
-//        setAccessLevel(accessLevel);
-//    }
-//
+    public void setCurrentUser(Person person) {
+        this.currentUser = person;
+        configureAccess(person);
+    }
+
+    private void configureAccess(Person person) {
+        String accessLevel = "0000000000";
+
+        if (person instanceof Employee) {
+            accessLevel = "1111111111";
+        } else if (person instanceof Patient) {
+            accessLevel = "0000000011";
+        } else if (person instanceof Doctor) {
+            accessLevel = "1100000000";
+        }
+
+        setAccessLevel(accessLevel);
+    }
+
 
 
     private void setAccessLevel(String accessLevel) {
