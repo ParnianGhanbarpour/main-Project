@@ -18,10 +18,9 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class VisitTimeController implements Initializable {
-    private Patient currentPatient;
-    private Employee currentEmployee;
 
     private final Validation validation = new Validation();
+
     @FXML
     private TextField idTxt,shiftIdTxt,patientIdTxt,paymentIdTxt,roomNumberTxt,prescriptionIdTxt,durationTxt;
     @FXML
@@ -31,8 +30,7 @@ public class VisitTimeController implements Initializable {
     @FXML
     private ComboBox<Integer> hourCmb , minutesCmb;
     @FXML
-   private TableView visitTbl,
-            shiftTbl;
+   private TableView visitTbl, shiftTbl;
     @FXML
     private TableColumn doctorIdCol,nameCol,familyCol,skillCol,
             shiftIdCol,shiftDoctorIdCol,shiftDateCol;
@@ -41,10 +39,11 @@ public class VisitTimeController implements Initializable {
     @FXML
     private Button saveBtn, editBtn, removeBtn;
 
-    private Doctor doctor;
+    private Person currentUser;
 
-    private Set<String> selectedTimes = new HashSet<>();
-    private Set <String> selectedDays=new HashSet<>();
+
+    private final Set<String> selectedTimes = new HashSet<>();
+    private final Set <String> selectedDays=new HashSet<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources ) {
@@ -55,8 +54,7 @@ public class VisitTimeController implements Initializable {
             minutesCmb.getItems().add(m) ;}
 
 
-
-//        configureAccess();
+//        configureAccess(currentUser);
 
 
         try {
@@ -68,6 +66,9 @@ public class VisitTimeController implements Initializable {
         for (Expertise expertise : Expertise.values()) {
             expertiseCmb.getItems().add(expertise.toString());
         }
+
+
+
 
         saveBtn.setOnAction(event -> {
 
@@ -159,39 +160,29 @@ public class VisitTimeController implements Initializable {
 
 
     }
+//    public void setCurrentUser(Person person) {
+//        this.currentUser = person;
+//        configureAccess(person);
+//    }
+//
+//    private void configureAccess(Person person) {
+//        String accessLevel = "0000000000";
+//
+//        if (person instanceof Employee) {
+//            accessLevel = "1111111111";
+//        } else if (person instanceof Patient) {
+//            accessLevel = "0000000011";
+//        } else if (person instanceof Doctor) {
+//            accessLevel = "1100000000";
+//        }
+//
+//        setAccessLevel(accessLevel);
+//    }
+//
 
 
+    private void setAccessLevel(String accessLevel) {
 
-
-
-
-
-    /*
-        public void setPatient(Patient patient) {
-            this.currentPatient = patient;
-            configureAccess(patient);
-        }
-
-        public void setEmployee(Employee employee) {
-            this.currentEmployee = employee;
-            configureAccess(employee);
-        }
-
-
-
-        public void configureAccess(Person person) {
-            String accessLevel = "0000000000";
-
-            if (person instanceof Patient) {
-                accessLevel = "0000000011";
-            } else if (person instanceof Employee) {
-                accessLevel = "1111111111";
-            }
-
-            setAccessLevel(accessLevel);
-        }
-
-        private void setAccessLevel(String accessLevel) {
             idTxt.setVisible(String.valueOf(accessLevel.charAt(0)).equals("1"));
             shiftIdTxt.setVisible(accessLevel.charAt(1) == '1');
             patientIdTxt.setVisible(accessLevel.charAt(2) == '1');
@@ -206,7 +197,7 @@ public class VisitTimeController implements Initializable {
 
         }
 
-        */
+
 
 
         private void resetForm () throws Exception {
