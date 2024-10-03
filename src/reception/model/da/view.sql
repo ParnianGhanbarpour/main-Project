@@ -19,6 +19,7 @@ FROM
              ON D.DOCTOR_ID=W.SHIFT_DOCTOR_ID;
 
 
+
 create view doctor_visit_emp_view as
 SELECT V.*,
        DSh.*

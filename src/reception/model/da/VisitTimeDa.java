@@ -49,7 +49,7 @@ public class VisitTimeDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
 
         preparedStatement = connection.prepareStatement(
-                "UPDATE VISIT_TIME SET Visit_Work_Shift_Id=?,Visit_Patient_Id=?,Visit_Payment_Id=?,Visit_Room_Number=?,Visit_Prescription_Id=?,Visit_Date_Time=?,HOUR=?,MINUTE=?,Visit_Duration=?,ACTIVE=?,ACCESS_LEVEL=? WHERE Visit_Time_Id=? "
+                "UPDATE VISIT_TIME SET Visit_Work_Shift_Id=?,Visit_Patient_Id=?,Visit_Payment_Id=?,Visit_Room_Number=?,Visit_Prescription_Id=?,Visit_Date=?,HOUR=?,MINUTE=?,Visit_Duration=?,ACTIVE=?,ACCESS_LEVEL=? WHERE Visit_Time_Id=? "
         );
 
         preparedStatement.setInt(1, visitTime.getVisitWorkShiftId());
@@ -135,7 +135,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE_TIME BETWEEN ? AND ?");
+                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE BETWEEN ? AND ?");
         preparedStatement.setTimestamp(1, Timestamp.valueOf(visitDateTime));
         preparedStatement.setTimestamp(2, Timestamp.valueOf(visitDateTime.plusMinutes(duration)));
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -192,7 +192,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE_TIME = ?");
+                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE = ?");
         preparedStatement.setTimestamp(1, Timestamp.valueOf(visitDateTime));
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -221,7 +221,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE_TIME = ?");
+                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE = ?");
         preparedStatement.setDate(1, Date.valueOf(visitDate));
         ResultSet resultSet = preparedStatement.executeQuery();
         Optional<VisitTime> optionalVisitTime = Optional.empty();
@@ -249,7 +249,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE_TIME BETWEEN ? AND ?");
+                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE BETWEEN ? AND ?");
         preparedStatement.setDate(1, Date.valueOf(FromDate));
         preparedStatement.setDate(2, Date.valueOf(toDate));
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -344,7 +344,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE VISIT_DATE_TIME BETWEEN ? AND ? AND EXPERTISE=?");
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE VISIT_DATE BETWEEN ? AND ? AND EXPERTISE=?");
         preparedStatement.setDate(1, Date.valueOf(FromDate));
         preparedStatement.setDate(2, Date.valueOf(toDate));
         preparedStatement.setString(3, expertise);
