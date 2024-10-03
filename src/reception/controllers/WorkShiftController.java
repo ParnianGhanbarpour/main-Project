@@ -48,15 +48,6 @@ public class WorkShiftController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        for (int i =10; i <=20; i++) {
-//            hours.getItems().add(i);
-//        }
-//
-//        for (int i =0; i <60; i+=5) {
-//            minutes.getItems().add(i);
-//        }
-
-//        minutes.getSelectionModel().getSelectedItem(),
 
         resetForm();
         saveBtn.setOnAction(event -> {
