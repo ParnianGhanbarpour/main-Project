@@ -99,7 +99,7 @@ create table VISIT_TIME(
                            Visit_Payment_Id number unique ,
                            Visit_Room_Number number unique ,
                            Visit_Prescription_Id number unique ,
-                           Visit_Date date,
+                           Visit_Date date ,
                            hour number,
                            minute number,
                            Visit_Duration nvarchar2(20) not null,
