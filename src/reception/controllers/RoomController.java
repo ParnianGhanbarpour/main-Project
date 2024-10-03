@@ -87,9 +87,9 @@ public class RoomController implements Initializable {
 
         roomsTbl.setOnMouseReleased(event->{
             Rooms rooms = roomsTbl.getSelectionModel().getSelectedItem();
-           // roomNumberTxt.setText(String.valueOf(rooms.getRoomNumber()));
-           // locationTxt.setText(rooms.getLocation());
-           // equipmentsTxt.setText(rooms.getEquipments());
+            roomNumberCol.setText(String.valueOf(rooms.getRoomNumber()));
+            locationCol.setText(rooms.getRoomLocation());
+            equipmentsCol.setText(rooms.getEquipments());
         });
     }
 

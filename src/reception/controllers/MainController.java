@@ -19,7 +19,6 @@ public class MainController implements Initializable {
     private Doctor currentDoctor;
     private Employee currentEmployee;
 
-
     @FXML
     private Button paymentBtn;
 
@@ -34,12 +33,11 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         paymentBtn.setOnAction(event -> openMain("Payment.fxml", "Payment Main"));
-        prescriptionBtn.setOnAction(event -> openMain("Prescription.fxml", "Prescription Main"));
-        visitTimeBtn.setOnAction(event -> openMain("VisitTime.fxml", "Visit Time Main"));
-        workShiftBtn.setOnAction(event -> openMain("WorkShift.fxml", "Work Shift Main"));
+        prescriptionBtn.setOnAction(event -> openPrescription());
 
+        visitTimeBtn.setOnAction(event -> openVisitTime());
+        workShiftBtn.setOnAction(event -> openMain("WorkShift.fxml", "Work Shift Main"));
     }
 
     public void setPatient(Patient patient) {
@@ -56,7 +54,6 @@ public class MainController implements Initializable {
         this.currentEmployee = employee;
         configureAccess(employee);
     }
-
 
     public void configureAccess(Person person) {
         String accessLevel = "0000";
@@ -79,12 +76,58 @@ public class MainController implements Initializable {
         workShiftBtn.setVisible(accessLevel.charAt(3) == '1');
     }
 
+    private void openVisitTime() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/reception/view/VisitTime.fxml"));
+            Scene scene = new Scene(loader.load());
 
+            VisitTimeController visitTimeController = loader.getController();
+
+            if (currentPatient != null) {
+                visitTimeController.setCurrentUser(currentPatient);
+            } else if (currentDoctor != null) {
+                visitTimeController.setCurrentUser(currentDoctor);
+            } else if (currentEmployee != null) {
+                visitTimeController.setCurrentUser(currentEmployee);
+            }
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Visit Time Main");
+            stage.show();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    private void openPrescription() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/reception/view/Prescription.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            PrescriptionController prescriptionController = loader.getController();
+
+            if (currentPatient != null) {
+                prescriptionController.setCurrentUser(currentPatient);
+            } else if (currentDoctor != null) {
+                prescriptionController.setCurrentUser(currentDoctor);
+            } else if (currentEmployee != null) {
+                prescriptionController.setCurrentUser(currentEmployee);
+            }
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Prescription Main");
+            stage.show();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private void openMain(String fxmlFile, String title) {
         try {
             Stage stage = new Stage();
-            Scene scene = new Scene(FXMLLoader. load(getClass().getResource("/reception/view/" + fxmlFile)));
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/reception/view/" + fxmlFile)));
             stage.setScene(scene);
             stage.setTitle(title);
             stage.show();
