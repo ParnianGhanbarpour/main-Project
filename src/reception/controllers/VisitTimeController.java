@@ -56,7 +56,7 @@ public class VisitTimeController implements Initializable {
             minutesCmb.getItems().add(m) ;}
 
 
-//        configureAccess(currentUser);
+        configureAccess(currentUser);
 
 
         try {
