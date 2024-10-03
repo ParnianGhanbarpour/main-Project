@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.WorkShiftDa;
+import reception.model.da.DoctorDa;
+import reception.model.entity.Doctor;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 //workShiftTbl va local date ha
+//atTime(spesificTime)
 
 public class WorkShiftController implements Initializable {
     private final Validation validation = new Validation();
@@ -41,8 +44,11 @@ public class WorkShiftController implements Initializable {
     @FXML
     private TableColumn<WorkShift, String> nameCol, familyCol, skillCol;
 
+//    ComboBox<Integer> hours,minutes
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         resetForm();
         saveBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
@@ -52,9 +58,10 @@ public class WorkShiftController implements Initializable {
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
-                                //.ShiftDate(workShiftDate.getValue())
-                                //.ShiftStartingTime(startTimeDate.getValue())
-                                //.ShiftFinishingTime(finishTimeDate.getValue())
+                                .ShiftDate(workShiftDate.getValue().atStartOfDay())
+                                .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
+                                .ShiftFinishingTime(finishTimeDate.getValue().atStartOfDay())
+                                //atTime(spesificTime)
                                 .build();
                 workShiftDa.save(workShift);
 
@@ -75,9 +82,10 @@ public class WorkShiftController implements Initializable {
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .ShiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
-                                //.ShiftDate(workShiftDate.getValue())
-                                //.ShiftStartingTime(startTimeDate.getValue())
-                                //.ShiftFinishingTime(finishTimeDate.getValue())
+                                .ShiftDate(workShiftDate.getValue().atStartOfDay())
+                                .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
+                                .ShiftFinishingTime(finishTimeDate.getValue().atStartOfDay ())
+                                //atTime(spesificTime)
                                 .build();
                 workShiftDa.edit(workShift);
 
@@ -108,11 +116,13 @@ public class WorkShiftController implements Initializable {
         });
 
         workShiftTbl.setOnMouseReleased(event->{
+            DoctorDa doctorDa = new DoctorDa();
+            Doctor doctor = new Doctor();
             WorkShift workShift = workShiftTbl.getSelectionModel().getSelectedItem();
             doctorIdTxt.setText(String.valueOf(workShift.getShiftDoctorId()));
-           // nameTxt.setText(doctor.getName());
-           // familyTxt.setText(doctor.getFamily());
-           // skillTxt.setValue(doctor.getSkill());
+            nameCol.setText(Integer.toString(doctor.getDoctorId()));
+            familyCol.setText(doctor.getFamily());
+            skillCol.setText(doctor.getExpertise().name());
         });
     }
     private void resetForm(){
@@ -134,7 +144,7 @@ public class WorkShiftController implements Initializable {
     private void refreshTable(List<WorkShift> workShiftList) {
         ObservableList<WorkShift> workShifts = FXCollections.observableList(workShiftList);
 
-        doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctor_id"));
+        doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctor.id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
         skillCol.setCellValueFactory(new PropertyValueFactory<>("skill"));
