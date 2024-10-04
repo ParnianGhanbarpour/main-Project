@@ -35,7 +35,7 @@ public class WorkShiftController implements Initializable {
 
 
     @FXML
-    private TableView<WorkShift> workShiftTbl;
+    private TableView<Doctor> workShiftTbl;
 
     @FXML
     private TableColumn<WorkShift, Integer> doctorIdCol;
@@ -114,15 +114,6 @@ public class WorkShiftController implements Initializable {
             }
         });
 
-        workShiftTbl.setOnMouseReleased(event->{
-            DoctorDa doctorDa = new DoctorDa();
-            Doctor doctor = new Doctor();
-            WorkShift workShift = workShiftTbl.getSelectionModel().getSelectedItem();
-            doctorIdTxt.setText(String.valueOf(workShift.getShiftDoctorId()));
-            nameCol.setText(Integer.toString(doctor.getDoctorId()));
-            familyCol.setText(doctor.getFamily());
-            skillCol.setText(doctor.getExpertise().name());
-        });
     }
     private void resetForm(){
         doctorIdTxt.clear();
@@ -131,23 +122,24 @@ public class WorkShiftController implements Initializable {
         startTimeDate.setValue(LocalDate.now());
         finishTimeDate.setValue(LocalDate.now());
 
-        try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-            refreshTable(workShiftDa.findAll());
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Find Work Shifts Error\n" + e.getMessage());
+        try (DoctorDa doctorDa=new DoctorDa()) {
+            refreshTable(doctorDa.findAll());
+        }
+        catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, " Error1\n" + e.getMessage());
             alert.show();
         }
 
     }
 
-    private void refreshTable(List<WorkShift> workShiftList) {
-        ObservableList<WorkShift> workShifts = FXCollections.observableList(workShiftList);
+    private void refreshTable(List<Doctor> doctorList) {
+        ObservableList<Doctor> doctors = FXCollections.observableList(doctorList);
 
         doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctor.id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
         skillCol.setCellValueFactory(new PropertyValueFactory<>("skill"));
 
-        workShiftTbl.setItems(workShifts);
+        workShiftTbl.setItems(doctors);
     }
 }

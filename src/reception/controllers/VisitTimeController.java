@@ -284,6 +284,8 @@ public class VisitTimeController implements Initializable {
             nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
             familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
             skillCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
+            //shiftIdCol.setCellValueFactory(new PropertyValueFactory<>("shiftId"));
+            //shiftDoctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
             shiftDateCol.setCellValueFactory(new PropertyValueFactory<>("shiftDate"));
             // va chizaye dige ke Darim
         } else {
