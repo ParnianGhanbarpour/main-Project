@@ -54,7 +54,7 @@ CREATE SEQUENCE EMPLOYEE_SEQ START WITH 1 INCREMENT BY 1;
 create table PAYMENT(
                        payment_id number primary key,
                        payment_method nvarchar2(20),
-                       payment_time nvarchar2(20),
+                       payment_time nvarchar2(40),
                        payment_amount number,
                        active number(1),
                        access_level char(4) default '0000'
