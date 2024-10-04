@@ -29,7 +29,10 @@ public class WorkShiftController implements Initializable {
     private TextField workShiftIdTxt,doctorIdTxt, employeeIdTxt;
 
     @FXML
-    private DatePicker workShiftDate, startTimeDate, finishTimeDate;
+    private DatePicker workShiftDate;
+
+    @FXML
+    private TextField startingTimeTxt,finishingTimeTxt;
 
     @FXML
     private Button saveBtn, editBtn, removeBtn;
@@ -42,7 +45,7 @@ public class WorkShiftController implements Initializable {
     private TableColumn<WorkShift, Integer> doctorIdCol;
 
     @FXML
-    private TableColumn<WorkShift, String> nameCol, familyCol, skillCol;
+    private TableColumn<WorkShift, String> nameCol, familyCol;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,10 +58,10 @@ public class WorkShiftController implements Initializable {
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .shiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
-                                .ShiftDate(workShiftDate.getValue().atStartOfDay())
-                                .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
-                                .ShiftFinishingTime(finishTimeDate.getValue().atStartOfDay())
-                                //atTime(spesificTime)
+                                .ShiftDate(workShiftDate.getValue())
+                                //.ShiftDate(workShiftDate.getValue().atStartOfDay())
+                                .ShiftStartingTime(startingTimeTxt.getText())
+                                .ShiftFinishingTime(finishingTimeTxt.getText())
                                 .build();
                 workShiftDa.save(workShift);
 
@@ -79,10 +82,10 @@ public class WorkShiftController implements Initializable {
                                 .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
                                 .shiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
-                                .ShiftDate(workShiftDate.getValue().atStartOfDay())
-                                .ShiftStartingTime(startTimeDate.getValue().atStartOfDay())
-                                .ShiftFinishingTime(finishTimeDate.getValue().atStartOfDay ())
-                                //atTime(spesificTime)
+                                .ShiftDate(workShiftDate.getValue())
+                                //.ShiftDate(workShiftDate.getValue().atStartOfDay())
+                                .ShiftStartingTime(startingTimeTxt.getText())
+                                .ShiftFinishingTime(finishingTimeTxt.getText())
                                 .build();
                 workShiftDa.edit(workShift);
 
@@ -117,8 +120,8 @@ public class WorkShiftController implements Initializable {
         doctorIdTxt.clear();
         employeeIdTxt.clear();
         workShiftDate.setValue(LocalDate.now());
-        startTimeDate.setValue(LocalDate.now());
-        finishTimeDate.setValue(LocalDate.now());
+        startingTimeTxt.clear();
+        finishingTimeTxt.clear();
 
         try (DoctorDa doctorDa=new DoctorDa()) {
             refreshTable(doctorDa.findAll());

@@ -28,9 +28,10 @@ public class WorkShiftDa implements AutoCloseable {
         preparedStatement.setInt(1, workShift.getWorkShiftId());
         preparedStatement.setInt(2, workShift.getShiftDoctorId());
         preparedStatement.setInt(3, workShift.getShiftEmployeeId());
-        preparedStatement.setTimestamp(4, Timestamp.valueOf(workShift.getShiftDate()));
-        preparedStatement.setTimestamp(5,Timestamp.valueOf(workShift.getShiftStartingTime( )));
-        preparedStatement.setTimestamp(6,Timestamp.valueOf(workShift.getShiftFinishingTime( )));
+        preparedStatement.setDate(4, Date.valueOf(workShift.getShiftDate()));
+        //preparedStatement.setTimestamp(4, Timestamp.valueOf(workShift.getShiftDate()));
+        preparedStatement.setString(5, workShift.getShiftStartingTime());
+        preparedStatement.setString(6, workShift.getShiftFinishingTime());
         preparedStatement.execute();
     }
     public void edit(WorkShift workShift) throws Exception {
@@ -41,10 +42,11 @@ public class WorkShiftDa implements AutoCloseable {
         );
 
         preparedStatement.setInt(1, workShift.getShiftDoctorId());
-        preparedStatement.setTimestamp(2, Timestamp.valueOf(workShift.getShiftDate()));
+        preparedStatement.setDate(2, Date.valueOf(workShift.getShiftDate()));
+        //preparedStatement.setTimestamp(2, Timestamp.valueOf(workShift.getShiftDate()));
         preparedStatement.setInt(3, workShift.getShiftEmployeeId());
-        preparedStatement.setTimestamp(4,Timestamp.valueOf(workShift.getShiftStartingTime( )));
-        preparedStatement.setTimestamp(5,Timestamp.valueOf(workShift.getShiftFinishingTime( )));
+        preparedStatement.setString(4, workShift.getShiftStartingTime());
+        preparedStatement.setString(5, workShift.getShiftFinishingTime());
         preparedStatement.setInt(6, workShift.getWorkShiftId());
         preparedStatement.execute();
     }
@@ -70,9 +72,10 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
-                            .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
-                            .ShiftFinishingTime(resultSet.getTimestamp("Shift_Finishing_Time").toLocalDateTime())
+                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
+                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
             workShiftList.add(workShift);
         }
@@ -94,9 +97,10 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
-                            .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
-                            .ShiftFinishingTime(resultSet.getTimestamp("Shift_Finishing_Time").toLocalDateTime())
+                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
+                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
             optionalWorkShift=Optional.of(workShift);
         }
@@ -118,9 +122,10 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
-                            .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
-                            .ShiftFinishingTime(resultSet.getTimestamp("Shift_Finishing_Time").toLocalDateTime())
+                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
+                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
             optionalWorkShift=Optional.of(workShift);
         }
@@ -142,9 +147,10 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
-                            .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
-                            .ShiftFinishingTime(resultSet.getTimestamp("Shift_Finishing_Time").toLocalDateTime())
+                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
+                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
             optionalWorkShift=Optional.of(workShift);
         }
@@ -168,9 +174,10 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
-                            .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
-                            .ShiftFinishingTime(resultSet.getTimestamp("Shift_Finishing_Time").toLocalDateTime())
+                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
+                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
             optionalWorkShift=Optional.of(workShift);
         }
@@ -194,9 +201,10 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
-                            .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
-                            .ShiftFinishingTime(resultSet.getTimestamp("Shift_Finishing_Time").toLocalDateTime())
+                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
+                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
             optionalWorkShift=Optional.of(workShift);
         }
@@ -221,9 +229,10 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
-                            .ShiftStartingTime(resultSet.getTimestamp("Shift_Starting_Time").toLocalDateTime())
-                            .ShiftFinishingTime(resultSet.getTimestamp("Shift_Finishing_Time").toLocalDateTime())
+                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
+                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
             optionalWorkShift=Optional.of(workShift);
         }

@@ -86,9 +86,9 @@ create table WORK_SHIFT(
                            Work_Shift_Id number primary key ,
                            Shift_Doctor_Id number unique ,
                            Shift_Employee_Id number unique ,
-                           Shift_Date timestamp ,
-                           Shift_Starting_Time timestamp,
-                           Shift_Finishing_Time timestamp
+                           Shift_Date date ,
+                           Shift_Starting_Time nvarchar2(20),
+                           Shift_Finishing_Time nvarchar2(20)
 );
 CREATE SEQUENCE WORK_SHIFT_SEQ START WITH 1 INCREMENT BY 1;
 
