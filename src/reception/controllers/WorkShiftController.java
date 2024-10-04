@@ -60,8 +60,8 @@ public class WorkShiftController implements Initializable {
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
                                 .ShiftDate(workShiftDate.getValue())
                                 //.ShiftDate(workShiftDate.getValue().atStartOfDay())
-                                .ShiftStartingTime(startingTimeTxt.getText())
-                                .ShiftFinishingTime(finishingTimeTxt.getText())
+                                .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()))
+                                .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()))
                                 .build();
                 workShiftDa.save(workShift);
 
@@ -84,8 +84,8 @@ public class WorkShiftController implements Initializable {
                                 .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
                                 .ShiftDate(workShiftDate.getValue())
                                 //.ShiftDate(workShiftDate.getValue().atStartOfDay())
-                                .ShiftStartingTime(startingTimeTxt.getText())
-                                .ShiftFinishingTime(finishingTimeTxt.getText())
+                                .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()))
+                                .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()))
                                 .build();
                 workShiftDa.edit(workShift);
 

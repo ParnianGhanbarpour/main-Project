@@ -58,5 +58,12 @@ public class Validation {
         }
     }
 
+    public String TimeValidator(String time) throws Exception {
+        if(Pattern.matches("^[0-9]{2}:[0-9]{2}$", time)){
+            return time;
+        }else{
+            throw new Exception("Invalid Time");
+        }
+    }
 
 }
