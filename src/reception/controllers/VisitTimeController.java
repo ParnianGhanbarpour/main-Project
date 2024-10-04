@@ -90,13 +90,12 @@ public class VisitTimeController implements Initializable {
             try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
                 addTime();
                 VisitTime visitTime = VisitTime.builder()
-                        .visitTimeId(Integer.parseInt(idTxt.getText()))
-                        .visitWorkShiftId(Integer.parseInt(shiftIdTxt.getText()))
-                        .visitPatientId(Integer.parseInt(patientIdTxt.getText()))
-                        .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
-
-                        .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
-                        .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
+                        .visitTimeId(parseIntOrDefault((idTxt.getText()),0))
+                        .visitWorkShiftId(parseIntOrDefault((shiftIdTxt.getText()),0))
+                        .visitPatientId(parseIntOrDefault((patientIdTxt.getText()),0))
+                        .visitPaymentId(parseIntOrDefault((paymentIdTxt.getText()),0))
+                        .visitRoomNumber(parseIntOrDefault((roomNumberTxt.getText()),0))
+                        .visitPrescriptionId(parseIntOrDefault((prescriptionIdTxt.getText()),0))
                         .visitDate(visitDatePicker.getValue())
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
@@ -118,12 +117,12 @@ public class VisitTimeController implements Initializable {
             try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
                 addTime();
                 VisitTime visitTime = VisitTime.builder()
-                        .visitTimeId(Integer.parseInt(idTxt.getText()))
-                        .visitWorkShiftId(Integer.parseInt(shiftIdTxt.getText()))
-                        .visitPatientId(Integer.parseInt(patientIdTxt.getText()))
-                        .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
-                        .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
-                        .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
+                        .visitTimeId(parseIntOrDefault((idTxt.getText()),0))
+                        .visitWorkShiftId(parseIntOrDefault((shiftIdTxt.getText()),0))
+                        .visitPatientId(parseIntOrDefault((patientIdTxt.getText()),0))
+                        .visitPaymentId(parseIntOrDefault((paymentIdTxt.getText()),0))
+                        .visitRoomNumber(parseIntOrDefault((roomNumberTxt.getText()),0))
+                        .visitPrescriptionId(parseIntOrDefault((prescriptionIdTxt.getText()),0))
                         .visitDate(visitDatePicker.getValue())
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
@@ -382,9 +381,16 @@ public class VisitTimeController implements Initializable {
         }
     }
 
-
-
-
+    private int parseIntOrDefault(String value, int defaultValue) {
+        if (value == null || value.trim().isEmpty()) {
+            return defaultValue; // Return the default value if the field is empty
+        }
+        try {
+            return Integer.parseInt(value); // Try parsing the input to an integer
+        } catch (NumberFormatException e) {
+            return defaultValue; // Return the default value if parsing fails
+        }
+    }
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -393,7 +399,5 @@ public class VisitTimeController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 
    }

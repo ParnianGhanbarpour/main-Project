@@ -27,16 +27,55 @@ public class VisitTimeDa implements AutoCloseable {
                 "INSERT INTO VISIT_TIME VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
         );
+        if (visitTime.getVisitTimeId() != 0) {
         preparedStatement.setInt(1, visitTime.getVisitTimeId());
+            }else{
+                preparedStatement.setNull(1, java.sql.Types.INTEGER);
+            }
+
+        if (visitTime.getVisitWorkShiftId() != 0) {
         preparedStatement.setInt(2, visitTime.getVisitWorkShiftId());
+            }else{
+                preparedStatement.setNull(2, java.sql.Types.INTEGER);
+            }
+
+        if (visitTime.getVisitPatientId() != 0) {
         preparedStatement.setInt(3, visitTime.getVisitPatientId());
+            }else{
+                preparedStatement.setNull(3, java.sql.Types.INTEGER);
+            }
+
+        if (visitTime.getVisitPaymentId() != 0) {
         preparedStatement.setInt(4, visitTime.getVisitPaymentId());
+            }else{
+                preparedStatement.setNull(4, java.sql.Types.INTEGER);
+            }
+
+        if (visitTime.getVisitRoomNumber() != 0) {
         preparedStatement.setInt(5, visitTime.getVisitRoomNumber());
+            }else{
+                preparedStatement.setNull(5, java.sql.Types.INTEGER);
+            }
+
+        if (visitTime.getVisitPrescriptionId() != 0) {
         preparedStatement.setInt(6, visitTime.getVisitPrescriptionId());
+            }else{
+                preparedStatement.setNull(6, java.sql.Types.INTEGER);
+            }
+
         preparedStatement.setDate(7, Date.valueOf(visitTime.getVisitDate()));
+        if (visitTime.getHour() != 0) {
         preparedStatement.setInt(8, visitTime.getHour());
+            }else{
+                preparedStatement.setNull(8, java.sql.Types.INTEGER);
+            }
+
+        if (visitTime.getMinute() != 0) {
         preparedStatement.setInt(9, visitTime.getMinute());
-        preparedStatement.setString(10, String.valueOf(visitTime.getVisitDuration()));
+            }else{
+                preparedStatement.setNull(9, java.sql.Types.INTEGER);
+            }
+        preparedStatement.setString(10, emptyToNull(String.valueOf(visitTime.getVisitDuration())));
         preparedStatement.setBoolean(11, visitTime.isActive());
         preparedStatement.setString(12, visitTime.getAccessLevel());
 
@@ -53,18 +92,55 @@ public class VisitTimeDa implements AutoCloseable {
                 "UPDATE VISIT_TIME SET Visit_Work_Shift_Id=?,Visit_Patient_Id=?,Visit_Payment_Id=?,Visit_Room_Number=?,Visit_Prescription_Id=?,Visit_Date=?,HOUR=?,MINUTE=?,Visit_Duration=?,ACTIVE=?,ACCESS_LEVEL=? WHERE Visit_Time_Id=? "
         );
 
-        preparedStatement.setInt(1, visitTime.getVisitWorkShiftId());
-        preparedStatement.setInt(2, visitTime.getVisitPatientId());
-        preparedStatement.setInt(3, visitTime.getVisitPaymentId());
-        preparedStatement.setInt(4, visitTime.getVisitRoomNumber());
-        preparedStatement.setInt(5, visitTime.getVisitPrescriptionId());
-        preparedStatement.setDate(7, Date.valueOf(visitTime.getVisitDate()));
-        preparedStatement.setInt(7, visitTime.getHour());
-        preparedStatement.setInt(8, visitTime.getMinute());
-        preparedStatement.setString(9, String.valueOf(visitTime.getVisitDuration()));
+        if (visitTime.getVisitWorkShiftId() != 0) {
+            preparedStatement.setInt(1, visitTime.getVisitWorkShiftId());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
+
+        if (visitTime.getVisitPatientId() != 0) {
+            preparedStatement.setInt(2, visitTime.getVisitPatientId());
+        }else{
+            preparedStatement.setNull(2, java.sql.Types.INTEGER);
+        }
+
+        if (visitTime.getVisitPaymentId() != 0) {
+            preparedStatement.setInt(3, visitTime.getVisitPaymentId());
+        }else{
+            preparedStatement.setNull(3, java.sql.Types.INTEGER);
+        }
+
+        if (visitTime.getVisitRoomNumber() != 0) {
+            preparedStatement.setInt(4, visitTime.getVisitRoomNumber());
+        }else{
+            preparedStatement.setNull(4, java.sql.Types.INTEGER);
+        }
+
+        if (visitTime.getVisitPrescriptionId() != 0) {
+            preparedStatement.setInt(5, visitTime.getVisitPrescriptionId());
+        }else{
+            preparedStatement.setNull(5, java.sql.Types.INTEGER);
+        }
+        preparedStatement.setDate(6, Date.valueOf(visitTime.getVisitDate()));
+        if (visitTime.getHour() != 0) {
+            preparedStatement.setInt(7, visitTime.getHour());
+        }else{
+            preparedStatement.setNull(7, java.sql.Types.INTEGER);
+        }
+
+        if (visitTime.getMinute() != 0) {
+            preparedStatement.setInt(8, visitTime.getMinute());
+        }else{
+            preparedStatement.setNull(8, java.sql.Types.INTEGER);
+        }
+        preparedStatement.setString(9, emptyToNull(String.valueOf(visitTime.getVisitDuration())));
         preparedStatement.setBoolean(10, visitTime.isActive());
         preparedStatement.setString(11, visitTime.getAccessLevel());
-        preparedStatement.setInt(12, visitTime.getVisitTimeId());
+        if (visitTime.getVisitTimeId() != 0) {
+            preparedStatement.setInt(12, visitTime.getVisitTimeId());
+        }else{
+            preparedStatement.setNull(12, java.sql.Types.INTEGER);
+        }
         preparedStatement.execute();
     }
 
@@ -368,7 +444,9 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-
+    private String emptyToNull(String str) {
+         return (str == null || str.trim().isEmpty()) ? null : str;
+    }
 
 
     @Override
