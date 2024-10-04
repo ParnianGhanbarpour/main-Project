@@ -26,7 +26,11 @@ public class PaymentDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO PAYMENT VALUES (?,?,?,?,?,?)"
         );
-        preparedStatement.setInt(1, payment.getPaymentId());
+        if (payment.getPaymentId() != 0) {
+            preparedStatement.setInt(1, payment.getPaymentId());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
         preparedStatement.setString(2, payment.getPaymentMethod().name());
         preparedStatement.setString(3, payment.getPaymentTime());
         //preparedStatement.setTimestamp(3, Timestamp.valueOf(payment.getPaymentTime()));
@@ -48,7 +52,11 @@ public class PaymentDa implements AutoCloseable {
         preparedStatement.setDouble(3, payment.getPaymentAmount());
         preparedStatement.setBoolean(4,payment.isActive());
         preparedStatement.setString(5, payment.getAccessLevel());
-        preparedStatement.setInt(6,payment.getPaymentId());
+        if (payment.getPaymentId() != 0) {
+            preparedStatement.setInt(6, payment.getPaymentId());
+        }else{
+            preparedStatement.setNull(6, java.sql.Types.INTEGER);
+        }
         preparedStatement.execute();
     }
 
