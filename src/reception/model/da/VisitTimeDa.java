@@ -24,7 +24,7 @@ public class VisitTimeDa implements AutoCloseable {
         visitTime.setVisitTimeId(resultSet.getInt("NEXT_VISIT_TIME_ID"));
         visitTime.setActive(true);
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO VISIT_TIME VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+                "INSERT INTO VISIT_TIME VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
         );
         preparedStatement.setInt(1, visitTime.getVisitTimeId());
@@ -279,7 +279,7 @@ public class VisitTimeDa implements AutoCloseable {
     public List<VisitTime> findByDoctor(String doctorName, String doctorFamily) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE NAME = ? AND FAMILY=?");
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE DOCTOR_NAME = ? AND DOCTOR_FAMILY = ?");
 
         preparedStatement.setString(1, doctorName);
         preparedStatement.setString(2, doctorFamily);
@@ -303,10 +303,9 @@ public class VisitTimeDa implements AutoCloseable {
             visitTimes.add(visitTime);
         }
 
-        System.out.println("Number of doctors found: " + visitTimes.size()); // چاپ تعداد ویزیت‌ها
-
         return visitTimes;
     }
+
 
 
 
@@ -316,7 +315,7 @@ public class VisitTimeDa implements AutoCloseable {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
 
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE EXPERTISE = ? ");
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE DOCTOR_EXPERTISE = ? ");
 
         preparedStatement.setString(1, (expertise));
 
@@ -347,7 +346,7 @@ public class VisitTimeDa implements AutoCloseable {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE VISIT_DATE BETWEEN ? AND ? AND EXPERTISE=?");
+                "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE VISIT_DATE BETWEEN ? AND ? AND DOCTOR_EXPERTISE=?");
         preparedStatement.setDate(1, Date.valueOf(FromDate));
         preparedStatement.setDate(2, Date.valueOf(toDate));
         preparedStatement.setString(3, expertise);

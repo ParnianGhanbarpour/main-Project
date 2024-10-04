@@ -146,17 +146,25 @@ public class VisitTimeController implements Initializable {
                 alert.show();
             }
         });
+
         findDoctorBtn.setOnAction(event -> {
+
             try {
-                String doctorName = doctorNameTxt.getText();
-                String doctorFamily = doctorFamilyTxt.getText();
+
+                String doctorName = doctorNameTxt.getText().trim();
+                String doctorFamily = doctorFamilyTxt.getText().trim();
+
+                if (doctorName.isEmpty() || doctorFamily.isEmpty()) {
+                    showAlert("Please enter both Doctor Name and Family.");
+                    return;
+                }
 
                 try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
                     List<VisitTime> visitTimes = visitTimeDa.findByDoctor(doctorName, doctorFamily);
                     if (visitTimes != null && !visitTimes.isEmpty()) {
                         refreshVisitTimeTable(visitTimes);
                     } else {
-                        showAlert("Doctor not found");
+                        showAlert("No visits found for the specified doctor.");
                     }
                 }
             } catch (Exception e) {
@@ -164,6 +172,7 @@ public class VisitTimeController implements Initializable {
                 showAlert("An error occurred: " + e.getMessage());
             }
         });
+
 
 
     }
