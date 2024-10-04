@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Payment  {
     private int paymentId;
     private PaymentMethods paymentMethod;
-    private LocalDateTime paymentTime;
+    private String paymentTime;
     private double paymentAmount;
     private boolean active;
     private String accessLevel;

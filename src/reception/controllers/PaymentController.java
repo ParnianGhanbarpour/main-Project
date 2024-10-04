@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class PaymentController implements Initializable {
     private final Validation validation = new Validation();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @FXML
     private TextField paymentIdTxt,paymentTimeTxt,paymentAmountTxt;
@@ -32,6 +32,8 @@ public class PaymentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         resetForm();
         saveBtn.setOnAction(event -> {
             try (PaymentDa paymentDa = new PaymentDa()) {
@@ -39,8 +41,9 @@ public class PaymentController implements Initializable {
                         Payment
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
+                                .paymentTime(validation.DateAndTimeValidator(paymentTimeTxt.getText()))
                                 //.paymentTime(LocalDateTime.parse(validation.DateAndTimeValidator(paymentTimeTxt.getText())))
-                                .paymentTime(LocalDateTime.parse(paymentTimeTxt.getText(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                                //.paymentTime(LocalDateTime.parse(paymentTimeTxt.getText(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                                 .paymentAmount(Double.parseDouble(validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.save(payment);
@@ -60,7 +63,8 @@ public class PaymentController implements Initializable {
                         Payment
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
-                                .paymentTime(LocalDateTime.parse(paymentTimeTxt.getText(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                                .paymentTime(validation.DateAndTimeValidator(paymentTimeTxt.getText()))
+                                //.paymentTime(LocalDateTime.parse(paymentTimeTxt.getText(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                                 .paymentAmount(Double.parseDouble(validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.edit(payment);

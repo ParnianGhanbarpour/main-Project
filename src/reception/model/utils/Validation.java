@@ -50,7 +50,7 @@ public class Validation {
         }
     }
 
-    public  String DateAndTimeValidator(String time) throws Exception {
+    public String DateAndTimeValidator(String time) throws Exception {
         if(Pattern.matches("^[0-9]{4}-[0-9]{2}-[0-9]-{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$", time)){
             return time;
         }else{
