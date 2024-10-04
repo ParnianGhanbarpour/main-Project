@@ -302,8 +302,13 @@ public class VisitTimeDa implements AutoCloseable {
                     .build();
             visitTimes.add(visitTime);
         }
+
+        System.out.println("Number of doctors found: " + visitTimes.size()); // چاپ تعداد ویزیت‌ها
+
         return visitTimes;
     }
+
+
 
 
     public Optional<VisitTime> findByExpertise(String expertise) throws Exception {

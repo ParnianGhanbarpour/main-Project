@@ -332,13 +332,12 @@ public class VisitTimeController implements Initializable {
                 visitTimeTbl.getColumns().addAll(visitTimeIdCol, visitDateCol, hourCol, minuteCol, expertiseCol);
             }
 
-            // Set the new data to the table
+
             visitTimeTbl.setItems(observableList);
         } else {
             showAlert("No visit times found.");
         }
     }
-
 
 
 

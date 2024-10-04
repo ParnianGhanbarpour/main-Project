@@ -100,6 +100,7 @@ create table VISIT_TIME(
                            Visit_Room_Number number unique ,
                            Visit_Prescription_Id number unique ,
                            Visit_Date date ,
+                           doctor_id number,
                            hour number,
                            minute number,
                            Visit_Duration nvarchar2(20) not null,
