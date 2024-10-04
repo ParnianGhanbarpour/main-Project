@@ -31,6 +31,9 @@ public class MainController implements Initializable {
     @FXML
     private Button workShiftBtn;
 
+//    @FXML
+//    private Button roomsBtn;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         paymentBtn.setOnAction(event -> openMain("Payment.fxml", "Payment Main"));
@@ -38,6 +41,7 @@ public class MainController implements Initializable {
 
         visitTimeBtn.setOnAction(event -> openVisitTime());
         workShiftBtn.setOnAction(event -> openMain("WorkShift.fxml", "Work Shift Main"));
+        //RoomsBtn.setOnAction(event -> openMain("Rooms.fxml", "Rooms Main"));
     }
 
     public void setPatient(Patient patient) {
@@ -74,6 +78,7 @@ public class MainController implements Initializable {
         prescriptionBtn.setVisible(accessLevel.charAt(1) == '1');
         visitTimeBtn.setVisible(accessLevel.charAt(2) == '1');
         workShiftBtn.setVisible(accessLevel.charAt(3) == '1');
+        //roomsBtn.setVisible(accessLevel.charAt(4) == '1')
     }
 
     private void openVisitTime() {

@@ -85,12 +85,12 @@ public class RoomController implements Initializable {
             }
         });
 
-        roomsTbl.setOnMouseReleased(event->{
-            Rooms rooms = roomsTbl.getSelectionModel().getSelectedItem();
-            roomNumberCol.setText(String.valueOf(rooms.getRoomNumber()));
-            locationCol.setText(rooms.getRoomLocation());
-            equipmentsCol.setText(rooms.getEquipments());
-        });
+//        roomsTbl.setOnMouseReleased(event->{
+//            Rooms rooms = roomsTbl.getSelectionModel().getSelectedItem();
+//            roomNumberCol.setText(String.valueOf(rooms.getRoomNumber()));
+//            locationCol.setText(rooms.getRoomLocation());
+//            equipmentsCol.setText(rooms.getEquipments());
+//        });
     }
 
     private void resetForm(){
