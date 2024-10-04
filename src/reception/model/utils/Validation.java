@@ -1,5 +1,8 @@
 package reception.model.utils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Pattern;
 
 public class Validation {
@@ -51,11 +54,19 @@ public class Validation {
     }
 
     public String DateAndTimeValidator(String time) throws Exception {
-        if(Pattern.matches("^[0-9]{4}-[0-9]{2}-[0-9]-{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$", time)){
+        time = time.trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        try{
+            LocalDateTime.parse(time,formatter);
             return time;
-        }else{
-            throw new Exception("Invalid Date and Time");
+        }catch(DateTimeParseException e){
+            throw new Exception("Invalid Date And Time");
         }
+//        if(Pattern.matches("^[0-9]{4}-[0-9]{2}-[0-9]-{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$", time)){
+//            return time;
+//        }else{
+//            throw new Exception("Invalid Date And Time");
+//        }
     }
 
     public String TimeValidator(String time) throws Exception {
