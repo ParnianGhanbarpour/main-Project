@@ -55,13 +55,12 @@ public class WorkShiftController implements Initializable {
                 WorkShift workShift =
                         WorkShift
                                 .builder()
-                                .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
-                                .shiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
-                                .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
+                                .workShiftId(parseIntOrDefault((workShiftIdTxt.getText()),0))
+                                .shiftDoctorId(parseIntOrDefault((doctorIdTxt.getText()),0))
+                                .shiftEmployeeId(parseIntOrDefault((employeeIdTxt.getText()),0))
                                 .ShiftDate(workShiftDate.getValue())
-                                //.ShiftDate(workShiftDate.getValue().atStartOfDay())
-                                .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()))
-                                .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()))
+                                .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()).trim())
+                                .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()).trim())
                                 .build();
                 workShiftDa.save(workShift);
 
@@ -79,13 +78,12 @@ public class WorkShiftController implements Initializable {
                 WorkShift workShift =
                         WorkShift
                                 .builder()
-                                .workShiftId(Integer.parseInt(workShiftIdTxt.getText()))
-                                .shiftDoctorId(Integer.parseInt(doctorIdTxt.getText()))
-                                .shiftEmployeeId(Integer.parseInt(employeeIdTxt.getText()))
+                                .workShiftId(parseIntOrDefault((workShiftIdTxt.getText()),0))
+                                .shiftDoctorId(parseIntOrDefault((doctorIdTxt.getText()),0))
+                                .shiftEmployeeId(parseIntOrDefault((employeeIdTxt.getText()),0))
                                 .ShiftDate(workShiftDate.getValue())
-                                //.ShiftDate(workShiftDate.getValue().atStartOfDay())
-                                .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()))
-                                .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()))
+                                .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()).trim())
+                                .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()).trim())
                                 .build();
                 workShiftDa.edit(workShift);
 
@@ -141,5 +139,16 @@ public class WorkShiftController implements Initializable {
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
 
         workShiftTbl.setItems(doctors);
+    }
+
+    private int parseIntOrDefault(String value, int defaultValue) {
+        if (value == null || value.trim().isEmpty()) {
+            return defaultValue; // Return the default value if the field is empty
+        }
+        try {
+            return Integer.parseInt(value); // Try parsing the input to an integer
+        } catch (NumberFormatException e) {
+            return defaultValue; // Return the default value if parsing fails
+        }
     }
 }
