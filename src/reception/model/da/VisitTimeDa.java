@@ -24,7 +24,7 @@ public class VisitTimeDa implements AutoCloseable {
         visitTime.setVisitTimeId(resultSet.getInt("NEXT_VISIT_TIME_ID"));
         visitTime.setActive(true);
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO VISIT_TIME VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                "INSERT INTO VISIT_TIME VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
 
         );
         preparedStatement.setInt(1, visitTime.getVisitTimeId());
