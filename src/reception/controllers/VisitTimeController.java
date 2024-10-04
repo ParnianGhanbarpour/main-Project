@@ -50,6 +50,7 @@ public class VisitTimeController implements Initializable {
     private Label visitIdLbl, shiftIdLbl, patientIdLbl, paymentIdLbl;
 
     private Person currentUser;
+    private final VisitTimeDa visitTimeDa = new VisitTimeDa();
 
     private final Set<String> selectedTimes = new HashSet<>();
     private final Set<String> selectedDays = new HashSet<>();
@@ -174,8 +175,29 @@ public class VisitTimeController implements Initializable {
         });
 
 
+        findExpertiseBtn.setOnAction(event -> findByExpertise());
+
+
 
     }
+    private void findByExpertise() {
+        String selectedExpertise = expertiseCmb.getValue();
+        if (selectedExpertise != null) {
+            List<VisitTime> visitTimes = null;
+            try {
+                visitTimes = visitTimeDa.findByExpertise(selectedExpertise);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            visitTimeTbl.getItems().clear();
+            visitTimeTbl.getItems().addAll(visitTimes);
+
+            System.out.println("Selected Expertise: .");
+        }
+    }
+
+
+
 
     public void setCurrentUser(Person person) {
         this.currentUser = person;
@@ -351,6 +373,7 @@ public class VisitTimeController implements Initializable {
 
 
 
+
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
@@ -361,4 +384,4 @@ public class VisitTimeController implements Initializable {
 
 
 
-}
+   }
