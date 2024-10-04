@@ -87,13 +87,13 @@ public class PrescriptionController implements Initializable {
                 Prescription prescription=
                         Prescription
                                 .builder()
-                                .prescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
-                                .medicineName(medicineNameTxt.getText())
-                                .drugDose(drugDoseTxt.getText())
-                                .drugDuration(drugDurationTxt.getText())
-                                .explanation(explanationTxt.getText())
-                                .doctorId(Integer.parseInt(doctorIdTxt.getText()))
-                                .patientId(Integer.parseInt(patientIdTxt.getText()))
+                                .prescriptionId(parseIntOrDefault((prescriptionIdTxt.getText()),0))
+                                .medicineName(medicineNameTxt.getText().trim())
+                                .drugDose(drugDoseTxt.getText().trim())
+                                .drugDuration(drugDurationTxt.getText().trim())
+                                .explanation(explanationTxt.getText().trim())
+                                .doctorId(parseIntOrDefault((doctorIdTxt.getText()),0))
+                                .patientId(parseIntOrDefault((patientIdTxt.getText()),0))
                                 .build();
                 prescriptionDa.edit(prescription);
 

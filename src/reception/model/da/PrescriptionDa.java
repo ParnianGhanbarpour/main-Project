@@ -62,15 +62,28 @@ public class PrescriptionDa implements AutoCloseable {
         );
 
 
-        preparedStatement.setInt(1, prescription.getDoctorId());
-        preparedStatement.setInt(2, prescription.getPatientId());
-        preparedStatement.setString(3, prescription.getMedicineName());
-        preparedStatement.setString(4, prescription.getDrugDose());
-        preparedStatement.setString(5, prescription.getDrugDuration());
-        preparedStatement.setString(6, prescription.getExplanation());
+        if (prescription.getDoctorId() != 0) {
+            preparedStatement.setInt(1, prescription.getDoctorId());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
+
+        if (prescription.getPatientId() != 0) {
+            preparedStatement.setInt(2, prescription.getPatientId());
+        }else{
+            preparedStatement.setNull(2, java.sql.Types.INTEGER);
+        }
+        preparedStatement.setString(3, emptyToNull(prescription.getMedicineName()));
+        preparedStatement.setString(4, emptyToNull(prescription.getDrugDose()));
+        preparedStatement.setString(5, emptyToNull(prescription.getDrugDuration()));
+        preparedStatement.setString(6, emptyToNull(prescription.getExplanation()));
         preparedStatement.setString(7, prescription.getAccessLevel());
         preparedStatement.setInt(8, prescription.getDoctorId());
-        preparedStatement.setInt(9, prescription.getPrescriptionId());
+        if (prescription.getPrescriptionId() != 0) {
+            preparedStatement.setInt(9, prescription.getPrescriptionId());
+        }else{
+            preparedStatement.setNull(9, java.sql.Types.INTEGER);
+        }
     }
 
     public void remove(int id) throws SQLException {
