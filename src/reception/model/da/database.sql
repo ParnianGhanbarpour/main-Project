@@ -36,6 +36,7 @@ create table DOCTOR(
                        active number(1),
                        access_level char(4) default '0000'
 );
+
 CREATE SEQUENCE DOCTOR_SEQ START WITH 1 INCREMENT BY 1;
 
 create table EMPLOYEE(
