@@ -30,6 +30,7 @@ public class VisitTime {
     private String accessLevel;
 
 
+
     private WorkShift workShift;
     private Patient patient;
     private Payment payment;

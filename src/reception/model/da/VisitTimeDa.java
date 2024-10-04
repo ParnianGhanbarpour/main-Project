@@ -40,6 +40,7 @@ public class VisitTimeDa implements AutoCloseable {
         preparedStatement.setBoolean(11, visitTime.isActive());
         preparedStatement.setString(12, visitTime.getAccessLevel());
 
+
         preparedStatement.execute();
 
 
@@ -275,38 +276,35 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-    public Optional<VisitTime> findByDoctor(String doctorName, String doctorFamily) throws Exception {
-
+    public List<VisitTime> findByDoctor(String doctorName, String doctorFamily) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-
                 "SELECT * FROM DOCTOR_VISIT_EMP_VIEW WHERE NAME = ? AND FAMILY=?");
 
-        preparedStatement.setString(1, (doctorName));
-        preparedStatement.setString(2, (doctorFamily));
+        preparedStatement.setString(1, doctorName);
+        preparedStatement.setString(2, doctorFamily);
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        Optional<VisitTime> optionalVisitTime = Optional.empty();
-        if (resultSet.next()) {
-            VisitTime visitTime =
-                    VisitTime
-                            .builder()
-                            .visitTimeId(resultSet.getInt("Visit_Time_id"))
-                            .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
-                            .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
-                            .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
-                            .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
-                            .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
-                            .visitDate(resultSet.getDate("Visit_Date_Time").toLocalDate())
-                            .visitDuration(resultSet.getString("Visit_Duration"))
-                            .active(resultSet.getBoolean("Active"))
-                            .accessLevel(resultSet.getString("Access_Level"))
-                            .build();
-            optionalVisitTime = Optional.of(visitTime);
+        List<VisitTime> visitTimes = new ArrayList<>();
+        while (resultSet.next()) {
+            VisitTime visitTime = VisitTime.builder()
+                    .visitTimeId(resultSet.getInt("Visit_Time_id"))
+                    .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
+                    .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
+                    .visitPaymentId(resultSet.getInt("Visit_Payment_Id"))
+                    .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
+                    .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
+                    .visitDate(resultSet.getDate("Visit_Date").toLocalDate())
+                    .visitDuration(resultSet.getString("Visit_Duration"))
+                    .active(resultSet.getBoolean("Active"))
+                    .accessLevel(resultSet.getString("Access_Level"))
+                    .build();
+            visitTimes.add(visitTime);
         }
-        return optionalVisitTime;
+        return visitTimes;
     }
+
 
     public Optional<VisitTime> findByExpertise(String expertise) throws Exception {
 

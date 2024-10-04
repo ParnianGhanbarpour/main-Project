@@ -21,7 +21,7 @@ public class VisitTimeController implements Initializable {
     private final Validation validation = new Validation();
 
     @FXML
-    private TextField idTxt, shiftIdTxt, patientIdTxt, paymentIdTxt, roomNumberTxt, prescriptionIdTxt, durationTxt;
+    private TextField idTxt, shiftIdTxt, patientIdTxt, paymentIdTxt, roomNumberTxt, prescriptionIdTxt, durationTxt,doctorNameTxt,doctorFamilyTxt;
     @FXML
     private DatePicker visitDatePicker;
     @FXML
@@ -29,9 +29,11 @@ public class VisitTimeController implements Initializable {
     @FXML
     private ComboBox<Integer> hourCmb, minutesCmb;
     @FXML
-    private TableView<Doctor> visitTbl;
+    private TableView<VisitTime> visitTimeTbl;
     @FXML
     private TableView<WorkShift> shiftTbl;
+    @FXML
+    private TableView<Doctor> doctorTbl;
     @FXML
     private TableColumn<Doctor, Integer> doctorIdCol;
     @FXML
@@ -81,6 +83,7 @@ public class VisitTimeController implements Initializable {
                         .visitWorkShiftId(Integer.parseInt(shiftIdTxt.getText()))
                         .visitPatientId(Integer.parseInt(patientIdTxt.getText()))
                         .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
+
                         .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
                         .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
                         .visitDate(visitDatePicker.getValue())
@@ -143,6 +146,26 @@ public class VisitTimeController implements Initializable {
                 alert.show();
             }
         });
+        findDoctorBtn.setOnAction(event -> {
+            try {
+                String doctorName = doctorNameTxt.getText();
+                String doctorFamily = doctorFamilyTxt.getText();
+
+                try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
+                    List<VisitTime> visitTimes = visitTimeDa.findByDoctor(doctorName, doctorFamily);
+                    if (visitTimes != null && !visitTimes.isEmpty()) {
+                        refreshVisitTimeTable(visitTimes);
+                    } else {
+                        showAlert("Doctor not found");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+
     }
 
     public void setCurrentUser(Person person) {
@@ -231,7 +254,7 @@ public class VisitTimeController implements Initializable {
     private void refreshTableV(List<Doctor> doctors) {
         if (doctors != null && !doctors.isEmpty()) {
             ObservableList<Doctor> observableList = FXCollections.observableArrayList(doctors);
-            visitTbl.setItems(observableList);
+            doctorTbl.setItems(observableList);
 
             doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
             nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -250,6 +273,84 @@ public class VisitTimeController implements Initializable {
             shiftDateCol.setCellValueFactory(new PropertyValueFactory<>("shiftDate"));
         }
     }
+
+   private void refreshTable(List<VisitTime> visitTimes) {
+        if (visitTimes != null && !visitTimes.isEmpty()) {
+            ObservableList<VisitTime> observableList = FXCollections.observableArrayList(visitTimes);
+
+            visitTimeTbl.setItems(observableList);
+
+            doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
+            skillCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
+            shiftDateCol.setCellValueFactory(new PropertyValueFactory<>("shiftDate"));
+            // va chizaye dige ke Darim
+        } else {
+            visitTimeTbl.setItems(FXCollections.observableArrayList());
+        }
+    }
+
+
+    private void refreshDoctorTable(List<Doctor> doctors) {
+        if (doctors != null && !doctors.isEmpty()) {
+            ObservableList<Doctor> observableList = FXCollections.observableArrayList(doctors);
+            doctorTbl.setItems(observableList);
+            doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
+            skillCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
+        }
+    }
+
+
+    private void refreshVisitTimeTable(List<VisitTime> visitTimes) {
+        if (visitTimes != null && !visitTimes.isEmpty()) {
+            ObservableList<VisitTime> observableList = FXCollections.observableArrayList(visitTimes);
+
+
+            visitTimeTbl.getItems().clear();
+
+
+            if (visitTimeTbl.getColumns().isEmpty()) {
+                TableColumn<VisitTime, Integer> visitTimeIdCol = new TableColumn<>("Visit Time ID");
+                visitTimeIdCol.setCellValueFactory(new PropertyValueFactory<>("visitTimeId"));
+
+                TableColumn<VisitTime, LocalDate> visitDateCol = new TableColumn<>("Visit Date");
+                visitDateCol.setCellValueFactory(new PropertyValueFactory<>("visitDate"));
+
+                TableColumn<VisitTime, Integer> hourCol = new TableColumn<>("Hour");
+                hourCol.setCellValueFactory(new PropertyValueFactory<>("hour"));
+
+                TableColumn<VisitTime, Integer> minuteCol = new TableColumn<>("Minute");
+                minuteCol.setCellValueFactory(new PropertyValueFactory<>("minute"));
+
+                TableColumn<VisitTime, String> expertiseCol = new TableColumn<>("Expertise");
+                expertiseCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
+
+                // Add columns to the table
+                visitTimeTbl.getColumns().addAll(visitTimeIdCol, visitDateCol, hourCol, minuteCol, expertiseCol);
+            }
+
+            // Set the new data to the table
+            visitTimeTbl.setItems(observableList);
+        } else {
+            showAlert("No visit times found.");
+        }
+    }
+
+
+
+
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
 
 }
