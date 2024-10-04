@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.WorkShiftDa;
 import reception.model.da.DoctorDa;
 import reception.model.entity.Doctor;
+import reception.model.entity.Expertise;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
@@ -43,11 +44,8 @@ public class WorkShiftController implements Initializable {
     @FXML
     private TableColumn<WorkShift, String> nameCol, familyCol, skillCol;
 
-//    ComboBox<Integer> hours,minutes
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         resetForm();
         saveBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
@@ -138,7 +136,6 @@ public class WorkShiftController implements Initializable {
         doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctor.id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
-        skillCol.setCellValueFactory(new PropertyValueFactory<>("skill"));
 
         workShiftTbl.setItems(doctors);
     }
