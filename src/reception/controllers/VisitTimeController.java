@@ -177,6 +177,14 @@ public class VisitTimeController implements Initializable {
 
         findExpertiseBtn.setOnAction(event -> findByExpertise());
 
+        findPatientBtn.setOnAction(event -> {
+            try {
+                findByPatient();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
 
 
     }
@@ -193,6 +201,29 @@ public class VisitTimeController implements Initializable {
             visitTimeTbl.getItems().addAll(visitTimes);
 
             System.out.println("Selected Expertise: .");
+        }
+    }
+
+    private void findByPatient() throws Exception {
+
+        String patientIdStr = patientIdTxt.getText();
+
+        if (patientIdStr != null && !patientIdStr.isEmpty()) {
+            int patientId = Integer.parseInt(patientIdStr);
+
+            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByPatient(patientId);
+
+            if (visitTimeOptional.isPresent()) {
+
+                visitTimeTbl.getItems().clear();
+                visitTimeTbl.getItems().add(visitTimeOptional.get());
+            } else {
+
+                System.out.println("Patient not found");
+            }
+        } else {
+
+            System.out.println("Please enter a valid Patient ID");
         }
     }
 
