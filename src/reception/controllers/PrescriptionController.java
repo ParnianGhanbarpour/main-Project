@@ -14,6 +14,7 @@ import reception.model.entity.*;
 
 import java.net.URL;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -61,13 +62,13 @@ public class PrescriptionController implements Initializable {
               Prescription prescription=
                       Prescription
                                 .builder()
-                               .prescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
-                               .medicineName(medicineNameTxt.getText())
-                               .drugDose(drugDoseTxt.getText())
-                               .drugDuration(drugDurationTxt.getText())
-                               .explanation(explanationTxt.getText())
-                               .doctorId(Integer.parseInt(doctorIdTxt.getText()))
-                               .patientId(Integer.parseInt(patientIdTxt.getText()))
+                               .prescriptionId(parseIntOrDefault((prescriptionIdTxt.getText()),0))
+                               .medicineName(medicineNameTxt.getText().trim())
+                               .drugDose(drugDoseTxt.getText().trim())
+                               .drugDuration(drugDurationTxt.getText().trim())
+                               .explanation(explanationTxt.getText().trim())
+                               .doctorId(parseIntOrDefault((doctorIdTxt.getText()),0))
+                               .patientId(parseIntOrDefault((patientIdTxt.getText()),0))
                                 .build();
                 prescriptionDa.save(prescription);
 
@@ -207,5 +208,15 @@ public class PrescriptionController implements Initializable {
         patientListTbl.setItems(patients);
     }
 
+    private int parseIntOrDefault(String value, int defaultValue) {
+        if (value == null || value.trim().isEmpty()) {
+            return defaultValue; // Return the default value if the field is empty
+        }
+        try {
+            return Integer.parseInt(value); // Try parsing the input to an integer
+        } catch (NumberFormatException e) {
+            return defaultValue; // Return the default value if parsing fails
+        }
+    }
     }
 

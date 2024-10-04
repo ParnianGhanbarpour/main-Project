@@ -29,13 +29,27 @@ public class PrescriptionDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO PRESCRIPTION VALUES (?,?,?,?,?,?,?,?,?)"
         );
+        if (prescription.getPrescriptionId() != 0) {
         preparedStatement.setInt(1, prescription.getPrescriptionId());
-        preparedStatement.setInt(2, prescription.getDoctorId());
-        preparedStatement.setInt(3, prescription.getPatientId());
-        preparedStatement.setString(4, prescription.getMedicineName());
-        preparedStatement.setString(5, prescription.getDrugDose());
-        preparedStatement.setString(6, prescription.getDrugDuration());
-        preparedStatement.setString(7, prescription.getExplanation());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
+
+        if (prescription.getDoctorId() != 0) {
+            preparedStatement.setInt(2, prescription.getDoctorId());
+        }else{
+            preparedStatement.setNull(2, java.sql.Types.INTEGER);
+        }
+
+        if (prescription.getPatientId() != 0) {
+            preparedStatement.setInt(3, prescription.getPatientId());
+        }else{
+            preparedStatement.setNull(3, java.sql.Types.INTEGER);
+        }
+        preparedStatement.setString(4, emptyToNull(prescription.getMedicineName()));
+        preparedStatement.setString(5, emptyToNull(prescription.getDrugDose()));
+        preparedStatement.setString(6, emptyToNull(prescription.getDrugDuration()));
+        preparedStatement.setString(7, emptyToNull(prescription.getExplanation()));
         preparedStatement.setBoolean(8,prescription.isActive());
         preparedStatement.setString(9, prescription.getAccessLevel());
         preparedStatement.execute();
@@ -181,9 +195,17 @@ public class PrescriptionDa implements AutoCloseable {
         return optionalPrescription;
     }
 
-
-
-
+//private String emptyToNull(String str) {
+//        if(str == null || str.equals("")) {
+//            str = "empty";
+//            return str;
+//        }else{
+//            return str;
+//        }
+//}
+private String emptyToNull(String str) {
+    return (str == null || str.trim().isEmpty()) ? null : str;
+}
     @Override
     public void close() throws Exception {
         preparedStatement.close();

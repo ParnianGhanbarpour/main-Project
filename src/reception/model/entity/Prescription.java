@@ -22,4 +22,13 @@ public class Prescription {
     private boolean active;
     private String accessLevel;
 
+    public boolean isEmpty() {
+        if (prescriptionId == 0 || doctorId == 0 || patientId == 0) {
+            return true;
+        }
+        return false;
+    }
+    private boolean isStringEmpty(String str) {
+        return str == null || str.trim().isEmpty();
+    }
 }
