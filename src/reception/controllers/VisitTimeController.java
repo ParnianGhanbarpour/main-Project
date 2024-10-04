@@ -30,7 +30,7 @@ public class VisitTimeController implements Initializable {
     @FXML
     private ComboBox<Integer> hourCmb, minutesCmb;
     @FXML
-    private TableView visitTbl, shiftTbl;
+    private TableView doctorTbl, shiftTbl;
     @FXML
     private TableColumn doctorIdCol, nameCol, familyCol, skillCol,
             shiftIdCol, shiftDoctorIdCol, shiftDateCol;
@@ -262,7 +262,7 @@ public class VisitTimeController implements Initializable {
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
         skillCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
 
-        visitTbl.setItems(doctors);
+        doctorTbl.setItems(doctors);
 
     }
 
