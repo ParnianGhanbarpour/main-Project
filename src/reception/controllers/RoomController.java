@@ -136,12 +136,16 @@ public class RoomController implements Initializable {
     }
 
     private void refreshTable(List<Rooms> roomsList) {
-        ObservableList<Rooms> rooms = FXCollections.observableList(roomsList);
+        if (roomsList != null && !roomsList.isEmpty()) {
+            ObservableList<Rooms> rooms = FXCollections.observableList(roomsList);
 
-        roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("room_number"));
-        locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-        equipmentsCol.setCellValueFactory(new PropertyValueFactory<>("equipments"));
+            roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("room_number"));
+            locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+            equipmentsCol.setCellValueFactory(new PropertyValueFactory<>("equipments"));
 
-        roomsTbl.setItems(rooms);
+            roomsTbl.setItems(rooms);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No Rooms Found");
+        }
     }
 }
