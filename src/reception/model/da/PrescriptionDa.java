@@ -1,7 +1,6 @@
 package reception.model.da;
 
 import reception.model.entity.Prescription;
-import reception.model.entity.VisitTime;
 import reception.model.utils.JdbcProvider;
 
 import java.sql.Connection;
@@ -208,17 +207,10 @@ public class PrescriptionDa implements AutoCloseable {
         return optionalPrescription;
     }
 
-//private String emptyToNull(String str) {
-//        if(str == null || str.equals("")) {
-//            str = "empty";
-//            return str;
-//        }else{
-//            return str;
-//        }
-//}
-private String emptyToNull(String str) {
-    return (str == null || str.trim().isEmpty()) ? null : str;
-}
+
+    private String emptyToNull(String str) {
+         return (str == null || str.trim().isEmpty()) ? null : str;
+    }
     @Override
     public void close() throws Exception {
         preparedStatement.close();

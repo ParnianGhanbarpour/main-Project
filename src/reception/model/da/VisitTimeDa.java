@@ -211,7 +211,6 @@ public class VisitTimeDa implements AutoCloseable {
     }
 
     public Optional<VisitTime> findValidTime(LocalDateTime visitDateTime, int duration) throws Exception {
-//        LocalTime.of(hour, minute)
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(

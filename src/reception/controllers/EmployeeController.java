@@ -6,11 +6,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import reception.model.da.DoctorDa;
 import reception.model.da.EmployeeDa;
-import reception.model.entity.Doctor;
 import reception.model.entity.Employee;
-import reception.model.entity.Expertise;
 import reception.model.utils.Validation;
 
 import java.net.URL;

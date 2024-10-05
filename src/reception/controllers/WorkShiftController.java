@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.WorkShiftDa;
 import reception.model.da.DoctorDa;
 import reception.model.entity.Doctor;
-import reception.model.entity.Expertise;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
@@ -19,8 +18,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//workShiftTbl va local date ha
-//atTime(spesificTime)
 
 public class WorkShiftController implements Initializable {
     private final Validation validation = new Validation();
@@ -143,12 +140,12 @@ public class WorkShiftController implements Initializable {
 
     private int parseIntOrDefault(String value, int defaultValue) {
         if (value == null || value.trim().isEmpty()) {
-            return defaultValue; // Return the default value if the field is empty
+            return defaultValue;
         }
         try {
-            return Integer.parseInt(value); // Try parsing the input to an integer
+            return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            return defaultValue; // Return the default value if parsing fails
+            return defaultValue;
         }
     }
 }

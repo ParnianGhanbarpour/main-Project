@@ -33,7 +33,6 @@ public class PaymentDa implements AutoCloseable {
         }
         preparedStatement.setString(2, payment.getPaymentMethod().name());
         preparedStatement.setString(3, payment.getPaymentTime());
-        //preparedStatement.setTimestamp(3, Timestamp.valueOf(payment.getPaymentTime()));
         preparedStatement.setDouble(4, payment.getPaymentAmount());
         preparedStatement.setBoolean(5,payment.isActive());
         preparedStatement.setString(6,payment.getAccessLevel());
@@ -48,7 +47,6 @@ public class PaymentDa implements AutoCloseable {
 
         preparedStatement.setString(1, payment.getPaymentMethod().name());
         preparedStatement.setString(2, payment.getPaymentTime());
-        //preparedStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentTime()));
         preparedStatement.setDouble(3, payment.getPaymentAmount());
         preparedStatement.setBoolean(4,payment.isActive());
         preparedStatement.setString(5, payment.getAccessLevel());
@@ -84,7 +82,6 @@ public class PaymentDa implements AutoCloseable {
                             .paymentId(resultSet.getInt("PAYMENT_ID"))
                             .paymentMethod(PaymentMethods.valueOf(resultSet.getString("PAYMENT_METHOD")))
                             .paymentTime(resultSet.getString("PAYMENT_TIME"))
-                            //.paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
                             .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
@@ -110,7 +107,6 @@ public class PaymentDa implements AutoCloseable {
                             .paymentId(resultSet.getInt("PAYMENT_ID"))
                             .paymentMethod(PaymentMethods.valueOf(resultSet.getString("PAYMENT_METHOD")))
                             .paymentTime(resultSet.getString("PAYMENT_TIME"))
-                            //.paymentTime(resultSet.getTimestamp("PAYMENT_TIME").toLocalDateTime())
                             .paymentAmount(resultSet.getDouble("PAYMENT_AMOUNT"))
                             .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))

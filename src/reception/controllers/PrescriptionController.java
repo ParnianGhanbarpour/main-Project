@@ -3,21 +3,16 @@ package reception.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import reception.model.da.*;
 import reception.model.entity.*;
 
 import java.net.URL;
-
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
+
 
 public class PrescriptionController implements Initializable {
 
@@ -210,12 +205,12 @@ public class PrescriptionController implements Initializable {
 
     private int parseIntOrDefault(String value, int defaultValue) {
         if (value == null || value.trim().isEmpty()) {
-            return defaultValue; // Return the default value if the field is empty
+            return defaultValue;
         }
         try {
-            return Integer.parseInt(value); // Try parsing the input to an integer
+            return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            return defaultValue; // Return the default value if parsing fails
+            return defaultValue;
         }
     }
     }

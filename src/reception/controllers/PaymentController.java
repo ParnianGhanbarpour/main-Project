@@ -4,22 +4,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import reception.model.da.PaymentDa;
-import reception.model.entity.Expertise;
 import reception.model.entity.Payment;
 import reception.model.entity.PaymentMethods;
 import reception.model.utils.Validation;
-import reception.view.dto.FormState;
+
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-//note: payment time momkene be moshkel bokhore va majboor shim be date tabdil konimesh.
+
 
 public class PaymentController implements Initializable {
     private final Validation validation = new Validation();
-    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @FXML
     private TextField paymentIdTxt,paymentTimeTxt,paymentAmountTxt;
@@ -42,8 +38,6 @@ public class PaymentController implements Initializable {
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
                                 .paymentTime(validation.DateAndTimeValidator(paymentTimeTxt.getText()))
-                                //.paymentTime(LocalDateTime.parse(validation.DateAndTimeValidator(paymentTimeTxt.getText())))
-                                //.paymentTime(LocalDateTime.parse(paymentTimeTxt.getText(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                                 .paymentAmount(Double.parseDouble(validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.save(payment);
@@ -64,7 +58,6 @@ public class PaymentController implements Initializable {
                                 .builder()
                                 .paymentMethod(PaymentMethods.valueOf(paymentMethodCmb.getSelectionModel().getSelectedItem()))
                                 .paymentTime(validation.DateAndTimeValidator(paymentTimeTxt.getText()))
-                                //.paymentTime(LocalDateTime.parse(paymentTimeTxt.getText(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                                 .paymentAmount(Double.parseDouble(validation.paymentAmountValidator(paymentAmountTxt.getText())))
                                 .build();
                 paymentDa.edit(payment);
