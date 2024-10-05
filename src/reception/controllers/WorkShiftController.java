@@ -157,7 +157,7 @@ public class WorkShiftController implements Initializable {
         workShiftTbl.setItems(doctors);
     }
 
-    private int parseIntOrDefault(String value, int defaultValue) {
+    private int parseIntOrDefault(String value,  int defaultValue) {
         if (value == null || value.trim().isEmpty()) {
             return defaultValue;
         }
