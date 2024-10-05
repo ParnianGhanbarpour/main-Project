@@ -30,9 +30,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Button workShiftBtn;
+    @FXML
+    private Button roomBtn;
 
-//    @FXML
-//    private Button roomsBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,7 +41,7 @@ public class MainController implements Initializable {
 
         visitTimeBtn.setOnAction(event -> openVisitTime());
         workShiftBtn.setOnAction(event -> openMain("WorkShift.fxml", "Work Shift Main"));
-        //RoomsBtn.setOnAction(event -> openMain("Rooms.fxml", "Rooms Main"));
+        roomBtn.setOnAction(event -> openMain("Rooms.fxml", "Rooms Main"));
     }
 
     public void setPatient(Patient patient) {
