@@ -29,6 +29,8 @@ public class VisitTimeController implements Initializable {
     @FXML
     private ComboBox<Integer> hourCmb, minutesCmb;
     @FXML
+    private DatePicker fromDatePicker,toDatePicker;
+    @FXML
     private TableView<VisitTime> visitTimeTbl;
     @FXML
     private TableView<WorkShift> shiftTbl;
@@ -52,8 +54,10 @@ public class VisitTimeController implements Initializable {
     TableColumn<VisitTime, Integer> minuteCol;
     @FXML
     TableColumn<VisitTime, String> durationCol;
+
     @FXML
-    private Button findExpertiseBtn, findDoctorBtn, findPatientBtn, findDateBtn;
+    private Button findAllBtn,findByExpertiseBtn, findByDoctorBtn, findByPatientBtn, findByDateBtn,
+            findByDateRangeBtn,findByExpertiseAndDateRangeBtn,findByIdBtn;
     @FXML
     private Button saveBtn, editBtn, removeBtn;
     @FXML
@@ -64,6 +68,7 @@ public class VisitTimeController implements Initializable {
 
     private final Set<String> selectedTimes = new HashSet<>();
     private final Set<String> selectedDays = new HashSet<>();
+    private final Set<String> selectedShifts = new HashSet<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -94,14 +99,13 @@ public class VisitTimeController implements Initializable {
                         .visitWorkShiftId(Integer.parseInt(shiftIdTxt.getText()))
                         .visitPatientId(Integer.parseInt(patientIdTxt.getText()))
                         .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
-
                         .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
                         .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
                         .visitDate(visitDatePicker.getValue())
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
                         .visitDuration((durationTxt.getText()))
-                        .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
+
                         .build();
                 visitTimeDa.save(visitTime);
 
@@ -117,7 +121,8 @@ public class VisitTimeController implements Initializable {
         editBtn.setOnAction(event -> {
             try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
                 addTime();
-                VisitTime visitTime = VisitTime.builder()
+                VisitTime visitTime = VisitTime
+                        .builder()
                         .visitTimeId(Integer.parseInt(idTxt.getText()))
                         .visitWorkShiftId(Integer.parseInt(shiftIdTxt.getText()))
                         .visitPatientId(Integer.parseInt(patientIdTxt.getText()))
@@ -128,7 +133,6 @@ public class VisitTimeController implements Initializable {
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
                         .visitDuration((durationTxt.getText()))
-                        .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
                         .build();
                 visitTimeDa.edit(visitTime);
 
@@ -158,26 +162,19 @@ public class VisitTimeController implements Initializable {
             }
         });
 
-        findDoctorBtn.setOnAction(event -> {
+        findAllBtn.setOnAction(event ->{
+            try (VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                refreshVisitTimeTable(visitTimeDa.findAll());
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error3\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        findByDoctorBtn.setOnAction(event -> {
 
             try {
-
-                String doctorName = doctorNameTxt.getText().trim();
-                String doctorFamily = doctorFamilyTxt.getText().trim();
-
-                if (doctorName.isEmpty() || doctorFamily.isEmpty()) {
-                    showAlert("Please enter both Doctor Name and Family.");
-                    return;
-                }
-
-                try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
-                    List<VisitTime> visitTimes = visitTimeDa.findByDoctor(doctorName, doctorFamily);
-                    if (visitTimes != null && !visitTimes.isEmpty()) {
-                        refreshVisitTimeTable(visitTimes);
-                    } else {
-                        showAlert("No visits found for the specified doctor.");
-                    }
-                }
+                findByDoctor();
             } catch (Exception e) {
                 e.printStackTrace();
                 showAlert("An error occurred: " + e.getMessage());
@@ -185,9 +182,16 @@ public class VisitTimeController implements Initializable {
         });
 
 
-        findExpertiseBtn.setOnAction(event -> findByExpertise());
+        findByExpertiseBtn.setOnAction(event -> {
+                try{
+                    findByExpertise();
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("An error occurred: " + e.getMessage());
+                }
+                });
 
-        findPatientBtn.setOnAction(event -> {
+        findByPatientBtn.setOnAction(event -> {
             try {
                 findByPatient();
             } catch (Exception e) {
@@ -195,9 +199,68 @@ public class VisitTimeController implements Initializable {
             }
         });
 
+        findByDateBtn.setOnAction(event -> {
+            try{
+                findByDate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByDateRangeBtn.setOnAction(event -> {
+            try{
+                findByDateRange();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByExpertiseAndDateRangeBtn.setOnAction(event -> {
+            try {
+                findByDateRange();
+                findByExpertise();
+            }catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByIdBtn.setOnAction(event -> {
+            try (VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                refreshVisitTimeTable(visitTimeDa.findById( Integer.parseInt(idTxt.getText())));
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error4\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
 
 
     }
+
+
+    private void findByDoctor() throws Exception {
+
+        String doctorName = doctorNameTxt.getText().trim();
+        String doctorFamily = doctorFamilyTxt.getText().trim();
+
+        if (doctorName.isEmpty() || doctorFamily.isEmpty()) {
+            showAlert("Please enter both Doctor Name and Family.");
+            return;
+        }
+
+        try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
+            List<VisitTime> visitTimes = visitTimeDa.findByDoctor(doctorName, doctorFamily);
+            if (visitTimes != null && !visitTimes.isEmpty()) {
+                refreshVisitTimeTable(visitTimes);
+            } else {
+                showAlert("No visits found for the specified doctor.");
+            }
+        }
+    }
+
     private void findByExpertise() {
         String selectedExpertise = expertiseCmb.getValue();
         if (selectedExpertise != null) {
@@ -229,13 +292,56 @@ public class VisitTimeController implements Initializable {
                 visitTimeTbl.getItems().add(visitTimeOptional.get());
             } else {
 
-                System.out.println("Patient not found");
+                showAlert("Patient not found");
+
             }
         } else {
 
-            System.out.println("Please enter a valid Patient ID");
+            showAlert("Please enter a valid Patient ID");
         }
     }
+
+    private void findByDate() throws Exception {
+
+        LocalDate visitDateF = visitDatePicker.getValue();
+
+        if (visitDateF != null) {
+            LocalDate visitDateT = LocalDate.parse(visitDateF.toString());
+            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByDate(visitDateT);
+            if (visitTimeOptional.isPresent()) {
+                visitTimeTbl.getItems().clear();
+                visitTimeTbl.getItems().add(visitTimeOptional.get());
+            }
+            else{
+               showAlert("Date not found");
+            }
+        } else {
+            showAlert("Please enter a valid Date of Visit");
+        }
+    }
+
+    private void  findByDateRange() throws Exception {
+        LocalDate fromF = fromDatePicker.getValue();
+        LocalDate toF = toDatePicker.getValue();
+
+        if (fromF != null && toF != null) {
+                LocalDate fromT = LocalDate.parse(fromF.toString());
+                LocalDate toT = LocalDate.parse(toF.toString());
+            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByDateRange(fromT,toT);
+            if (visitTimeOptional.isPresent()) {
+                visitTimeTbl.getItems().clear();
+                visitTimeTbl.getItems().add(visitTimeOptional.get());
+            }
+            else{
+                showAlert("Date range not found");
+            }
+        } else {
+            showAlert("Please enter a valid Date range of Visit");
+        }
+        }
+
+
+
 
 
 
@@ -267,9 +373,9 @@ public class VisitTimeController implements Initializable {
         prescriptionIdTxt.setVisible(accessLevel.charAt(4) == '1');
         editBtn.setVisible(accessLevel.charAt(5) == '1');
         removeBtn.setVisible(accessLevel.charAt(6) == '1');
-        findPatientBtn.setVisible(accessLevel.charAt(7) == '1');
-        findDateBtn.setVisible(accessLevel.charAt(8) == '1');
-        findDoctorBtn.setVisible(accessLevel.charAt(9) == '1');
+        findByPatientBtn.setVisible(accessLevel.charAt(7) == '1');
+        findByDateBtn.setVisible(accessLevel.charAt(8) == '1');
+        findByDoctorBtn.setVisible(accessLevel.charAt(9) == '1');
         shiftIdLbl.setVisible(accessLevel.charAt(10) == '1');
         visitIdLbl.setVisible(accessLevel.charAt(11) == '1');
         patientIdLbl.setVisible(accessLevel.charAt(12) == '1');
@@ -313,19 +419,26 @@ public class VisitTimeController implements Initializable {
         Integer hour = hourCmb.getValue();
         Integer minute = minutesCmb.getValue();
         LocalDate day = visitDatePicker.getValue();
+        String shift=shiftIdTxt.getText().toString();
         if (day == null || hour == null || minute == null) {
             throw new IllegalArgumentException("Please select Date and both hour and minute.\n");
         }
-
         String date = day.toString();
         String time = hour + ":" + (minute < 10 ? "0" + minute : minute);
-        if (selectedDays.contains(date)) {
-            if (selectedTimes.contains(time)) {
-                throw new IllegalArgumentException("Error! \n" + " This Time Already Reserved For This Day!");
+        if (selectedShifts.contains(shift)) {
+            if (selectedDays.contains(date)) {
+                if (selectedTimes.contains(time)) {
+                    throw new IllegalArgumentException("Error! \n" + " This Time Already Reserved For This Day!");
+                } else {
+                    selectedTimes.add(time);
+                }
             } else {
+                selectedDays.add(date);
                 selectedTimes.add(time);
             }
-        } else {
+        }
+        else{
+            selectedShifts.add(shift);
             selectedDays.add(date);
             selectedTimes.add(time);
         }
@@ -343,16 +456,25 @@ public class VisitTimeController implements Initializable {
 
             doctorTbl.setItems(doctorList);
         }
+
+        else {
+            showAlert("No doctor found.");
+        }
     }
 
     private void refreshTableSh(List<WorkShift> workShifts) {
         if (workShifts != null && !workShifts.isEmpty()) {
             ObservableList<WorkShift> workShiftList = FXCollections.observableArrayList(workShifts);
-            shiftTbl.setItems(workShiftList);
+
 
             shiftIdCol.setCellValueFactory(new PropertyValueFactory<>("workShiftId"));
-            shiftDoctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+            shiftDoctorIdCol.setCellValueFactory(new PropertyValueFactory<>("shiftDoctorId"));
             shiftDateCol.setCellValueFactory(new PropertyValueFactory<>("shiftDate"));
+
+            shiftTbl.setItems(workShiftList);
+        }
+        else {
+            showAlert("No Work shift found.");
         }
     }
 
@@ -362,24 +484,18 @@ public class VisitTimeController implements Initializable {
         if (visitTimes != null && !visitTimes.isEmpty()) {
             ObservableList<VisitTime> visitTimeList = FXCollections.observableArrayList(visitTimes);
 
-
-            if (visitTimeTbl.getColumns().isEmpty()) {
-
                 visitTimeIdCol.setCellValueFactory(new PropertyValueFactory<>("visitTimeId"));
                 visitDateCol.setCellValueFactory(new PropertyValueFactory<>("visitDate"));
                 hourCol.setCellValueFactory(new PropertyValueFactory<>("hour"));
                 minuteCol.setCellValueFactory(new PropertyValueFactory<>("minute"));
-                durationCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
-
-                // Add columns to the table
-                visitTimeTbl.getColumns().addAll(visitTimeIdCol, visitDateCol, hourCol, minuteCol,durationCol );
-            }
-
+                durationCol.setCellValueFactory(new PropertyValueFactory<>("VisitDuration"));
 
             visitTimeTbl.setItems(visitTimeList);
-        } else {
-            showAlert("No visit times found.");
         }
+        else {
+            showAlert("No VisitTime found.");
+        }
+
     }
 
 
