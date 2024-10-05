@@ -109,7 +109,7 @@ public class RoomController implements Initializable {
             try (RoomsDa roomsDa = new RoomsDa()) {
                 Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Do You Want To Remove This Room?");
                 if (confirmAlert.showAndWait().get() == ButtonType.OK) {
-                    int id = Integer.parseInt(roomNumberCol.getText());
+                    int id = Integer.parseInt(roomNumberTxt.getText());
                     roomsDa.remove(id);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, " Removed Room ");
                     alert.show();
