@@ -7,12 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.RoomsDa;
-import reception.model.da.VisitTimeDa;
-import reception.model.entity.Expertise;
 import reception.model.entity.Room;
 import reception.model.entity.Rooms;
 
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
