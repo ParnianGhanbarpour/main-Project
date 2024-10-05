@@ -37,4 +37,15 @@ public class VisitTime {
     private Employee employee;
     private Room room;
     private List<Prescription> prescription;
+
+    public boolean isEmpty() {
+        if (visitPatientId == 0 || visitPaymentId == 0 || visitTimeId == 0 || visitRoomNumber == 0
+                || visitPrescriptionId == 0 || visitWorkShiftId == 0 || visitDate == null || hour == 0 || minute == 0 || visitDuration == null) {
+            return true;
+        }
+        return false;
+    }
+    private boolean isStringEmpty(String str) {
+        return str == null || str.trim().isEmpty();
+    }
 }

@@ -25,13 +25,26 @@ public class WorkShiftDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO WORK_SHIFT VALUES (?,?,?,?,?,?)"
         );
-        preparedStatement.setInt(1, workShift.getWorkShiftId());
-        preparedStatement.setInt(2, workShift.getShiftDoctorId());
-        preparedStatement.setInt(3, workShift.getShiftEmployeeId());
+        if (workShift.getWorkShiftId() != 0) {
+            preparedStatement.setInt(1, workShift.getWorkShiftId());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
+
+        if (workShift.getShiftDoctorId() != 0) {
+            preparedStatement.setInt(2, workShift.getShiftDoctorId());
+        }else{
+            preparedStatement.setNull(2, java.sql.Types.INTEGER);
+        }
+
+        if (workShift.getShiftEmployeeId() != 0) {
+            preparedStatement.setInt(3, workShift.getShiftEmployeeId());
+        }else{
+            preparedStatement.setNull(3, java.sql.Types.INTEGER);
+        }
         preparedStatement.setDate(4, Date.valueOf(workShift.getShiftDate()));
-        //preparedStatement.setTimestamp(4, Timestamp.valueOf(workShift.getShiftDate()));
-        preparedStatement.setString(5, workShift.getShiftStartingTime());
-        preparedStatement.setString(6, workShift.getShiftFinishingTime());
+        preparedStatement.setString(5, emptyToNull(workShift.getShiftStartingTime()));
+        preparedStatement.setString(6, emptyToNull(workShift.getShiftFinishingTime()));
         preparedStatement.execute();
     }
     public void edit(WorkShift workShift) throws Exception {
@@ -41,13 +54,26 @@ public class WorkShiftDa implements AutoCloseable {
                 "UPDATE WORK_SHIFT SET SHIFT_DOCTOR_ID=?,SHIFT_EMPLOYEE_ID=?,SHIFT_DATE=?,SHIFT_STARTING_TIME=?,SHIFT_FINISHING_TIME=? WHERE WORK_SHIFT_ID=?"
         );
 
-        preparedStatement.setInt(1, workShift.getShiftDoctorId());
-        preparedStatement.setDate(2, Date.valueOf(workShift.getShiftDate()));
-        //preparedStatement.setTimestamp(2, Timestamp.valueOf(workShift.getShiftDate()));
-        preparedStatement.setInt(3, workShift.getShiftEmployeeId());
-        preparedStatement.setString(4, workShift.getShiftStartingTime());
-        preparedStatement.setString(5, workShift.getShiftFinishingTime());
-        preparedStatement.setInt(6, workShift.getWorkShiftId());
+        if (workShift.getShiftDoctorId() != 0) {
+            preparedStatement.setInt(1, workShift.getShiftDoctorId());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
+
+        if (workShift.getShiftEmployeeId() != 0) {
+            preparedStatement.setInt(2, workShift.getShiftEmployeeId());
+        }else{
+            preparedStatement.setNull(2, java.sql.Types.INTEGER);
+        }
+        preparedStatement.setDate(3, Date.valueOf(workShift.getShiftDate()));
+        preparedStatement.setString(4, emptyToNull(workShift.getShiftStartingTime()));
+        preparedStatement.setString(5, emptyToNull(workShift.getShiftFinishingTime()));
+
+        if (workShift.getWorkShiftId() != 0) {
+            preparedStatement.setInt(6, workShift.getWorkShiftId());
+        }else{
+            preparedStatement.setNull(6, java.sql.Types.INTEGER);
+        }
         preparedStatement.execute();
     }
 
@@ -239,7 +265,9 @@ public class WorkShiftDa implements AutoCloseable {
         return optionalWorkShift;
     }
 
-
+    private String emptyToNull(String str) {
+        return (str == null || str.trim().isEmpty()) ? null : str;
+    }
 
 
     @Override

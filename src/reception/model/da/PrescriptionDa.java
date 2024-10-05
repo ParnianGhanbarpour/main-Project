@@ -49,16 +49,16 @@ public class PrescriptionDa implements AutoCloseable {
         preparedStatement.setString(4, emptyToNull(prescription.getMedicineName()));
         preparedStatement.setString(5, emptyToNull(prescription.getDrugDose()));
         preparedStatement.setString(6, emptyToNull(prescription.getDrugDuration()));
-        preparedStatement.setString(7, emptyToNull(prescription.getExplanation()));
-        preparedStatement.setBoolean(8,prescription.isActive());
-        preparedStatement.setString(9, prescription.getAccessLevel());
+        preparedStatement.setBoolean(7,prescription.isActive());
+        preparedStatement.setString(8, prescription.getAccessLevel());
+        preparedStatement.setString(9, emptyToNull(prescription.getExplanation()));
         preparedStatement.execute();
     }
 
     public void edit(Prescription prescription) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PRESCRIPTION SET MEDICINE_NAME=?,DRUG_DOSE=?,DRUG_DURATION=?,EXPLANATION=?,DOCTOR_ID=?,PATIENT_ID=? ,ACCESS_LEVEL=?,ACTIVE=? WHERE PRESCRIPTION_ID=?"
+                "UPDATE PRESCRIPTION SET DOCTOR_ID=?, PATIENT_ID=?, MEDICINE_NAME=?, DRUG_DOSE=?, DRUG_DURATION=?, ACCESS_LEVEL=?, ACTIVE=?, EXPLANATION=? WHERE PRESCRIPTION_ID=?"
         );
 
 
@@ -76,9 +76,9 @@ public class PrescriptionDa implements AutoCloseable {
         preparedStatement.setString(3, emptyToNull(prescription.getMedicineName()));
         preparedStatement.setString(4, emptyToNull(prescription.getDrugDose()));
         preparedStatement.setString(5, emptyToNull(prescription.getDrugDuration()));
-        preparedStatement.setString(6, emptyToNull(prescription.getExplanation()));
+        preparedStatement.setBoolean(6, prescription.isActive());
         preparedStatement.setString(7, prescription.getAccessLevel());
-        preparedStatement.setInt(8, prescription.getDoctorId());
+        preparedStatement.setString(8, emptyToNull(prescription.getExplanation()));
         if (prescription.getPrescriptionId() != 0) {
             preparedStatement.setInt(9, prescription.getPrescriptionId());
         }else{
