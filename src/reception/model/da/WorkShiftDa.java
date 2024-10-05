@@ -252,13 +252,13 @@ public class WorkShiftDa implements AutoCloseable {
                         .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                         .build();
 
-                workShiftList.add(workShift); // Add to the list
+                workShiftList.add(workShift);
             }
         } finally {
             if (preparedStatement != null) preparedStatement.close();
             if (connection != null) connection.close();
         }
-        return workShiftList; // Return the list of work shifts
+        return workShiftList;
     }
 
     public Optional<WorkShift> findByExpertiseAndDateRange(LocalDate FromDate, LocalDate toDate,String expertise) throws Exception {
