@@ -226,7 +226,7 @@ public class VisitTimeController implements Initializable {
         findByExpertiseAndDateRangeBtn.setOnAction(event -> {
             try (VisitTimeDa visitTimeDa=new VisitTimeDa()) {
                 refreshVisitTimeTable(visitTimeDa.findAll());
-            findByDateRange();
+                findByExpertiseAndDateRang();
             }catch (Exception e) {
                 e.printStackTrace();
                 showAlert("An error occurred: " + e.getMessage());
