@@ -61,26 +61,15 @@ public class WorkShiftController implements Initializable {
 
     @FXML
     private TableColumn<WorkShift, String> endingCol;
-    @FXML
-    private ComboBox<String> expertiseCmb;
 
     private final WorkShiftDa workShiftDa = new WorkShiftDa();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         resetForm();
-        for (Expertise expertise : Expertise.values()) {
-            expertiseCmb.getItems().add(expertise.toString());
-        }
 
         saveBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-                String selectedExpertise = expertiseCmb.getSelectionModel().getSelectedItem();
-                if (selectedExpertise == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an expertise.");
-                    alert.show();
-                    return;
-                }
                 WorkShift workShift =
                         WorkShift
                                 .builder()
@@ -90,7 +79,6 @@ public class WorkShiftController implements Initializable {
                                 .ShiftDate(workShiftDate.getValue())
                                 .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()).trim())
                                 .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()).trim())
-                                .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
 
                                 .build();
                 workShiftDa.save(workShift);
@@ -106,12 +94,6 @@ public class WorkShiftController implements Initializable {
 
         editBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-                String selectedExpertise = expertiseCmb.getSelectionModel().getSelectedItem();
-                if (selectedExpertise == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an expertise.");
-                    alert.show();
-                    return;
-                }
                 WorkShift workShift =
                         WorkShift
                                 .builder()
@@ -121,7 +103,6 @@ public class WorkShiftController implements Initializable {
                                 .ShiftDate(workShiftDate.getValue())
                                 .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()).trim())
                                 .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()).trim())
-                                .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
 
                                 .build();
                 workShiftDa.edit(workShift);
@@ -170,21 +151,6 @@ public class WorkShiftController implements Initializable {
                 }
             });
 
-        findByExpertiseBtn.setOnAction(event -> {
-            try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-                String selectedExpertise = expertiseCmb.getValue();
-                if (selectedExpertise != null) {
-                    refreshShiftTable(workShiftDa.findByExpertise(selectedExpertise));
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an expertise.");
-                    alert.show();
-                }
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, " Error3\n" + e.getMessage());
-                alert.show();
-            }
-        });
-
     }
 
 
@@ -214,7 +180,6 @@ public class WorkShiftController implements Initializable {
         workShiftDate.setValue(LocalDate.now());
         startingTimeTxt.clear();
         finishingTimeTxt.clear();
-        expertiseCmb.getSelectionModel().clearSelection();
 
 
         try (DoctorDa doctorDa=new DoctorDa()) {
