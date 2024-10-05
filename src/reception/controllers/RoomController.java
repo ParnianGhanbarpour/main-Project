@@ -60,7 +60,7 @@ public class RoomController implements Initializable {
                 Rooms rooms =
                         Rooms
                                 .builder()
-                                .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
+                                .roomNumber(parseIntOrDefault((roomNumberTxt.getText()),0))
                                 .roomLocation(locationTxt.getText())
                                 .equipments(equipTxt.getText())
                                 .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
@@ -89,7 +89,7 @@ public class RoomController implements Initializable {
                 Rooms rooms =
                         Rooms
                                 .builder()
-                                .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
+                                .roomNumber(parseIntOrDefault((roomNumberTxt.getText()),0))
                                 .roomLocation(locationTxt.getText())
                                 .equipments(equipTxt.getText())
                                 .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
@@ -217,5 +217,16 @@ public class RoomController implements Initializable {
         equipmentsCol.setCellValueFactory(new PropertyValueFactory<>("equipments"));
 
         roomsTbl.setItems(rooms);
+    }
+
+    private int parseIntOrDefault(String value, int defaultValue) {
+        if (value == null || value.trim().isEmpty()) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 }

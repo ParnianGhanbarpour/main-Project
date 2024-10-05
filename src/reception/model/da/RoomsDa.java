@@ -28,7 +28,11 @@ RoomsDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO ROOMS VALUES (?,?,?)"
         );
-        preparedStatement.setInt(1, rooms.getRoomNumber());
+        if (rooms.getRoomNumber() != 0) {
+            preparedStatement.setInt(1, rooms.getRoomNumber());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
         preparedStatement.setString(2, rooms.getRoomLocation());
         preparedStatement.setString(3, rooms.getEquipments());
         preparedStatement.execute();
@@ -39,10 +43,14 @@ RoomsDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "UPDATE ROOMS SET ROOM_LOCATION=?,EQUIPMENTS=? WHERE ROOM_NUMBER=?"
         );
-
         preparedStatement.setString(1, rooms.getRoomLocation() );
         preparedStatement.setString(2, rooms.getEquipments());
-        preparedStatement.setInt(3, rooms.getRoomNumber());
+        if (rooms.getRoomNumber() != 0) {
+            preparedStatement.setInt(3, rooms.getRoomNumber());
+        }else{
+            preparedStatement.setNull(3, java.sql.Types.INTEGER);
+        }
+        //preparedStatement.setInt(3, rooms.getRoomNumber());
         preparedStatement.execute();
     }
 
