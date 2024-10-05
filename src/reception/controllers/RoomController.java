@@ -28,10 +28,11 @@ public class RoomController implements Initializable {
     @FXML
     private TableColumn<Rooms, Integer> roomNumberCol;
     @FXML
-    private TextField roomNumberTxt,locationTxt,equipTxt;
-
+    private TableColumn<Rooms, String> locationCol;
     @FXML
-    private TableColumn<Rooms, String> locationCol, equipmentsCol;
+    private TableColumn<Rooms, String> equipmentsCol;
+    @FXML
+    private TextField roomNumberTxt,locationTxt,equipTxt;
     @FXML
     private Button findAllBtn,findByNumberBtn,findEquipBtn,findByLocationBtn;
     @FXML
@@ -59,7 +60,7 @@ public class RoomController implements Initializable {
                                 .builder()
                                 .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
                                 .roomLocation(locationTxt.getText())
-                                .equipments(equipmentsCol.getText())
+                                .equipments(equipTxt.getText())
                                 .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 roomsDa.save(rooms);
@@ -88,7 +89,7 @@ public class RoomController implements Initializable {
                                 .builder()
                                 .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
                                 .roomLocation(locationTxt.getText())
-                                .equipments(equipmentsCol.getText())
+                                .equipments(equipTxt.getText())
                                 .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 roomsDa.edit(rooms);
@@ -138,10 +139,11 @@ public class RoomController implements Initializable {
     private void refreshTable(List<Rooms> roomsList) {
         ObservableList<Rooms> rooms = FXCollections.observableList(roomsList);
 
-        roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("room_number"));
-        locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
+        locationCol.setCellValueFactory(new PropertyValueFactory<>("roomLocation"));
         equipmentsCol.setCellValueFactory(new PropertyValueFactory<>("equipments"));
 
         roomsTbl.setItems(rooms);
     }
+
 }
