@@ -34,19 +34,38 @@ public class WorkShiftController implements Initializable {
     @FXML
     private Button saveBtn, editBtn, removeBtn;
 
+    @FXML
+    private Button findAllBtn,findByDateBtn,findByExpertiseBtn;
 
     @FXML
     private TableView<Doctor> workShiftTbl;
 
     @FXML
     private TableColumn<WorkShift, Integer> doctorIdCol;
-
     @FXML
     private TableColumn<WorkShift, String> nameCol, familyCol;
+    @FXML
+    private TableColumn<WorkShift, String> expertiseCol;
+    @FXML
+    private TableView<WorkShift> shiftTbl;
+    @FXML
+    private TableColumn<WorkShift, Integer> workShiftIdtCol;
+
+    @FXML
+    private TableColumn<WorkShift, String> dateCol;
+
+    @FXML
+    private TableColumn<WorkShift, String> startCol;
+
+    @FXML
+    private TableColumn<WorkShift, String> EndingCol;
+    @FXML
+    private ComboBox<String> expertiseCmb;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         resetForm();
+
         saveBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
                 WorkShift workShift =
