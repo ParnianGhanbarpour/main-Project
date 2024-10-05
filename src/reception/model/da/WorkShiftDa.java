@@ -205,30 +205,60 @@ public class WorkShiftDa implements AutoCloseable {
         return optionalWorkShift;
     }
 
-    public Optional<WorkShift> findByExpertise (String expertise) throws Exception {
+//    public Optional<WorkShift> findByExpertise (String expertise) throws Exception {
+//
+//        connection = JdbcProvider.getInstance().getConnection();
+//        preparedStatement = connection.prepareStatement(
+//
+//                "SELECT * FROM DOCTOR_SHIFT_EMP_VIEW WHERE EXPERTISE = ?" );
+//        preparedStatement.setString(1, (expertise));
+//
+//        ResultSet resultSet = preparedStatement.executeQuery();
+//        Optional<WorkShift> optionalWorkShift = Optional.empty();
+//        if (resultSet.next()) {
+//            WorkShift workShift=
+//                    WorkShift
+//                            .builder()
+//                            .workShiftId(resultSet.getInt("Work_Shift_Id"))
+//                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+//                            .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
+//                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+//                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+//                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
+//                            .build();
+//            optionalWorkShift=Optional.of(workShift);
+//        }
+//        return optionalWorkShift;
+//    }
 
-        connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement(
+    public List<WorkShift> findByExpertise(String expertise) throws Exception {
+        List<WorkShift> workShiftList = new ArrayList<>();
 
-                "SELECT * FROM DOCTOR_SHIFT_EMP_VIEW WHERE EXPERTISE = ?" );
-        preparedStatement.setString(1, (expertise));
+        try {
+            connection = JdbcProvider.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM DOCTOR_SHIFT_EMP_VIEW WHERE EXPERTISE = ?");
+            preparedStatement.setString(1, expertise);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
-        Optional<WorkShift> optionalWorkShift = Optional.empty();
-        if (resultSet.next()) {
-            WorkShift workShift=
-                    WorkShift
-                            .builder()
-                            .workShiftId(resultSet.getInt("Work_Shift_Id"))
-                            .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
-                            .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
-                            .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
-                            .build();
-            optionalWorkShift=Optional.of(workShift);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                WorkShift workShift = WorkShift.builder()
+                        .workShiftId(resultSet.getInt("Work_Shift_Id"))
+                        .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
+                        .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
+                        .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                        .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
+                        .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
+                        .build();
+
+                workShiftList.add(workShift);
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
         }
-        return optionalWorkShift;
+        return workShiftList;
     }
 
     public Optional<WorkShift> findByExpertiseAndDateRange(LocalDate FromDate, LocalDate toDate,String expertise) throws Exception {

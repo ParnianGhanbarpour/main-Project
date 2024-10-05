@@ -10,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.WorkShiftDa;
 import reception.model.da.DoctorDa;
 import reception.model.entity.Doctor;
-import reception.model.entity.VisitTime;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
@@ -47,7 +46,6 @@ public class WorkShiftController implements Initializable {
     private TableColumn<WorkShift, String> nameCol, familyCol;
     @FXML
     private TableColumn<WorkShift, String> expertiseCol;
-    //expertiseCol,shiftTbl,
     @FXML
     private TableView<WorkShift> shiftTbl;
     @FXML
@@ -131,17 +129,6 @@ public class WorkShiftController implements Initializable {
             }
         });
 
-       findAllBtn.setOnAction(event -> {
-            try (WorkShiftDa workShiftDa=new  WorkShiftDa()) {
-                refreshWorkShiftTable(workShiftDa.findAll());
-            }
-            catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, " Error2\n" + e.getMessage());
-                alert.show();
-            }
-
-        });
-
     }
     private void resetForm(){
         doctorIdTxt.clear();
@@ -158,14 +145,6 @@ public class WorkShiftController implements Initializable {
             alert.show();
         }
 
-       try (WorkShiftDa workShiftDa=new  WorkShiftDa()) {
-            refreshWorkShiftTable(workShiftDa.findAll());
-        }
-        catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, " Error2\n" + e.getMessage());
-            alert.show();
-        }
-
     }
 
     private void refreshTable(List<Doctor> doctorList) {
@@ -177,29 +156,6 @@ public class WorkShiftController implements Initializable {
 
         workShiftTbl.setItems(doctors);
     }
-
-   private void refreshWorkShiftTable(List<WorkShift> workShifts) {
-        if (workShifts != null && !workShifts.isEmpty()) {
-            ObservableList<WorkShift> workShiftsList = FXCollections.observableArrayList(workShifts);
-
-            workShiftIdtCol.setCellValueFactory(new PropertyValueFactory<>("workShiftId"));
-            dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-            startCol.setCellValueFactory(new PropertyValueFactory<>("startingTime"));
-            EndingCol.setCellValueFactory(new PropertyValueFactory<>("endingTime"));
-
-
-            shiftTbl.setItems(workShiftsList);
-        } else {
-            showAlert("No WorkShift found.");
-        }
-    }
-        private void showAlert(String message) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
-        }
 
     private int parseIntOrDefault(String value, int defaultValue) {
         if (value == null || value.trim().isEmpty()) {
