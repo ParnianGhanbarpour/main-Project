@@ -37,7 +37,7 @@ public class WorkShiftController implements Initializable {
     private Button saveBtn, editBtn, removeBtn;
 
     @FXML
-    private Button findAllBtn,findByDateBtn,findByExpertiseBtn;
+    private Button findAllBtn,findByDateBtn;
 
     @FXML
     private TableView<Doctor> workShiftTbl;
@@ -46,8 +46,7 @@ public class WorkShiftController implements Initializable {
     private TableColumn<WorkShift, Integer> doctorIdCol;
     @FXML
     private TableColumn<WorkShift, String> nameCol, familyCol;
-    @FXML
-    private TableColumn<WorkShift, String> expertiseCol;
+
     @FXML
     private TableView<WorkShift> shiftTbl;
     @FXML

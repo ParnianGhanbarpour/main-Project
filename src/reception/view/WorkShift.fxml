@@ -86,9 +86,8 @@
       <TableView fx:id="workShiftTbl" layoutX="361.0" layoutY="103.0" prefHeight="149.0" prefWidth="458.0">
         <columns>
           <TableColumn fx:id="doctorIdCol" prefWidth="96.0" text="DoctorId" />
-          <TableColumn fx:id="nameCol" prefWidth="108.0" text="Name" />
-            <TableColumn fx:id="familyCol" prefWidth="98.0" text="Family" />
-            <TableColumn fx:id="ExpertiseCol" prefWidth="152.0" text="Expertise" />
+          <TableColumn fx:id="nameCol" prefWidth="195.0" text="Name" />
+            <TableColumn fx:id="familyCol" prefWidth="166.0" text="Family" />
         </columns>
       </TableView>
       <HBox layoutX="32.0" layoutY="488.0" prefHeight="31.0" prefWidth="310.0">
@@ -121,8 +120,6 @@
       </HBox>
       <Button fx:id="findAllBtn" layoutX="75.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Find All" />
       <Button fx:id="findByDateBtn" layoutX="187.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Find By Date" />
-      <Button fx:id="findByDateRangeBtn" layoutX="418.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="157.0" text="Find By Date Range" />
-      <Button fx:id="findByExpertiseBtn" layoutX="582.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="147.0" text="Find By Expertise " />
       <TableView fx:id="shiftTbl" layoutX="362.0" layoutY="268.0" prefHeight="248.0" prefWidth="458.0">
          <columns>
             <TableColumn fx:id="workShiftIdCol" prefWidth="96.0" text="WorkShiftId" />
