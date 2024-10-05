@@ -149,6 +149,48 @@ public class RoomController implements Initializable {
                 alert.show();
             }
         });
+
+        findEquipBtn.setOnAction(event -> {
+            try (RoomsDa roomsDa = new RoomsDa()) {
+                String equipment = equipTxt.getText();
+                if (equipment.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter equipment.");
+                    alert.show();
+                    return;
+                }
+                Optional<Rooms> optionalRoom = roomsDa.findByEquip(equipment);
+                if (optionalRoom.isPresent()) {
+                    refreshTable(Collections.singletonList(optionalRoom.get()));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "No Room Found with the given equipment.");
+                    alert.show();
+                }
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error finding room by equipment.\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        findByLocationBtn.setOnAction(event -> {
+            try (RoomsDa roomsDa = new RoomsDa()) {
+                String locations = locationTxt.getText();
+                if (locations.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a room location.");
+                    alert.show();
+                    return;
+                }
+                Optional<Rooms> optionalRoom = roomsDa.findByRoomLocation(locations);
+                if (optionalRoom.isPresent()) {
+                    refreshTable(Collections.singletonList(optionalRoom.get()));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "No Room Found with the given location.");
+                    alert.show();
+                }
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error finding room by location.\n" + e.getMessage());
+                alert.show();
+            }
+        });
     }
 
     private void resetForm(){

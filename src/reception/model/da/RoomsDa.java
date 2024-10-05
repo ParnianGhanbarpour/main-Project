@@ -99,11 +99,11 @@ RoomsDa implements AutoCloseable {
         return optionalRooms;
     }
 
-    public Optional<Rooms> findByRoomLocation(int roomLocation) throws SQLException {
+    public Optional<Rooms> findByRoomLocation(String roomLocation) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE ROOM_LOCATION=?");
-        preparedStatement.setInt(1, roomLocation);
+        preparedStatement.setString(1, roomLocation);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<Rooms> optionalRooms = Optional.empty();
@@ -122,11 +122,11 @@ RoomsDa implements AutoCloseable {
         return optionalRooms;
     }
 
-    public Optional<Rooms> findByEquip(int equipments) throws SQLException {
+    public Optional<Rooms> findByEquip(String equipments) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE EQUIPMENTS=?");
-        preparedStatement.setInt(1, equipments);
+        preparedStatement.setString(1, equipments);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<Rooms> optionalRooms = Optional.empty();
