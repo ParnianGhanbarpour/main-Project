@@ -173,7 +173,8 @@ public class VisitTimeController implements Initializable {
 
         findByDoctorBtn.setOnAction(event -> {
 
-            try {
+            try(VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                refreshVisitTimeTable(visitTimeDa.findAll());
                 findByDoctor();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -183,7 +184,8 @@ public class VisitTimeController implements Initializable {
 
 
         findByExpertiseBtn.setOnAction(event -> {
-                try{
+                try(VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                    refreshVisitTimeTable(visitTimeDa.findAll());
                     findByExpertise();
                 }catch (Exception e) {
                     e.printStackTrace();
@@ -192,15 +194,18 @@ public class VisitTimeController implements Initializable {
                 });
 
         findByPatientBtn.setOnAction(event -> {
-            try {
+            try (VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                refreshVisitTimeTable(visitTimeDa.findAll());
                 findByPatient();
             } catch (Exception e) {
                 e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
             }
         });
 
         findByDateBtn.setOnAction(event -> {
-            try{
+            try(VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                refreshVisitTimeTable(visitTimeDa.findAll());
                 findByDate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -209,7 +214,8 @@ public class VisitTimeController implements Initializable {
         });
 
         findByDateRangeBtn.setOnAction(event -> {
-            try{
+            try(VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                refreshVisitTimeTable(visitTimeDa.findAll());
                 findByDateRange();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -218,9 +224,9 @@ public class VisitTimeController implements Initializable {
         });
 
         findByExpertiseAndDateRangeBtn.setOnAction(event -> {
-            try {
-                findByDateRange();
-                findByExpertise();
+            try (VisitTimeDa visitTimeDa=new VisitTimeDa()) {
+                refreshVisitTimeTable(visitTimeDa.findAll());
+            findByDateRange();
             }catch (Exception e) {
                 e.printStackTrace();
                 showAlert("An error occurred: " + e.getMessage());
@@ -325,20 +331,45 @@ public class VisitTimeController implements Initializable {
         LocalDate toF = toDatePicker.getValue();
 
         if (fromF != null && toF != null) {
-                LocalDate fromT = LocalDate.parse(fromF.toString());
-                LocalDate toT = LocalDate.parse(toF.toString());
-            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByDateRange(fromT,toT);
+            LocalDate fromT = LocalDate.parse(fromF.toString());
+            LocalDate toT = LocalDate.parse(toF.toString());
+            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByDateRange(fromT, toT);
             if (visitTimeOptional.isPresent()) {
                 visitTimeTbl.getItems().clear();
                 visitTimeTbl.getItems().add(visitTimeOptional.get());
-            }
-            else{
+            } else {
                 showAlert("Date range not found");
             }
         } else {
             showAlert("Please enter a valid Date range of Visit");
         }
-        }
+    }
+
+    private void findByExpertiseAndDateRang() throws Exception{
+        LocalDate fromF = fromDatePicker.getValue();
+        LocalDate toF = toDatePicker.getValue();
+        String selectedExpertise = expertiseCmb.getValue();
+        try {
+        if (fromF != null && toF != null && selectedExpertise != null) {
+            LocalDate fromT = LocalDate.parse(fromF.toString());
+            LocalDate toT = LocalDate.parse(toF.toString());
+            Optional<VisitTime> visitTimes = null;
+
+            visitTimes = visitTimeDa.findByExpertiseAndDateRange(fromT, toT, selectedExpertise);
+
+                if (visitTimes.isPresent()) {
+                    visitTimeTbl.getItems().clear();
+                    visitTimeTbl.getItems().add(visitTimes.get());
+                } else {
+                    showAlert("not found");
+                }
+            }else {
+                    showAlert("Please enter a valid Date range of Visit and Expertise");
+            }
+        } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+    }
 
 
 
