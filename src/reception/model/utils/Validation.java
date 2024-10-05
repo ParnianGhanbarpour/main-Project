@@ -73,4 +73,12 @@ public class Validation {
         }
     }
 
+    public  String durationValidator(String duration) throws Exception {
+        if(Pattern.matches("^[0-9]{2}$", duration) && Integer.parseInt(duration)<=30 && Integer.parseInt(duration)>=0){
+            return duration;
+        }else{
+            throw new Exception("Invalid duration");
+        }
+    }
+
 }
