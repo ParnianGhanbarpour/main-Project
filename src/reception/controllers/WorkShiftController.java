@@ -7,18 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import reception.model.da.VisitTimeDa;
 import reception.model.da.WorkShiftDa;
 import reception.model.da.DoctorDa;
 import reception.model.entity.Doctor;
-import reception.model.entity.VisitTime;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -64,8 +61,6 @@ public class WorkShiftController implements Initializable {
     private TableColumn<WorkShift, String> endingCol;
     @FXML
     private ComboBox<String> expertiseCmb;
-
-    private final WorkShiftDa workShiftDa = new WorkShiftDa();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -145,38 +140,6 @@ public class WorkShiftController implements Initializable {
 
         });
 
-        findByDateBtn.setOnAction(event -> {
-            try (WorkShiftDa workShiftDa=new  WorkShiftDa()){
-                refreshShiftTable(workShiftDa.findAll());
-                findByDate();
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("An error occurred: " + e.getMessage());
-            }
-        });
-
-
-
-
-    }
-
-    private void findByDate() throws Exception  {
-
-        LocalDate shiftDateF = workShiftDate.getValue();
-
-        if (shiftDateF != null) {
-            LocalDate shiftDateT = LocalDate.parse(shiftDateF.toString());
-            Optional<WorkShift> workShiftOptional = workShiftDa.findByDate(shiftDateT);
-            if (workShiftOptional.isPresent()) {
-                shiftTbl.getItems().clear();
-                shiftTbl.getItems().add(workShiftOptional.get());
-            }
-            else{
-                showAlert("Date not found");
-            }
-        } else {
-            showAlert("Please enter a valid Date of Visit");
-        }
     }
     private void resetForm(){
         doctorIdTxt.clear();
@@ -223,15 +186,6 @@ public class WorkShiftController implements Initializable {
         endingCol.setCellValueFactory(new PropertyValueFactory<>("ShiftFinishingTime"));
 
         shiftTbl.setItems(workShifts);
-    }
-
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
 
