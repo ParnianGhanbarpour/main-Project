@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import reception.model.da.VisitTimeDa;
 import reception.model.da.WorkShiftDa;
 import reception.model.da.DoctorDa;
 import reception.model.entity.Doctor;
+import reception.model.entity.VisitTime;
 import reception.model.entity.WorkShift;
 import reception.model.utils.Validation;
 
@@ -140,6 +142,16 @@ public class WorkShiftController implements Initializable {
 
         });
 
+        findByExpertiseBtn.setOnAction(event -> {
+            try(DoctorDa doctorDa = new DoctorDa()) {
+                refreshTable(doctorDa.findAll());
+                findByExpertise();
+            }catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
     }
     private void resetForm(){
         doctorIdTxt.clear();
@@ -165,6 +177,23 @@ public class WorkShiftController implements Initializable {
         }
 
 
+    }
+
+    private void findByExpertise() {
+        String selectedExpertise = expertiseCmb.getValue();
+        if (selectedExpertise != null) {
+            List<WorkShift> workShifts = null;
+            try {
+                WorkShiftDa workShiftDa = new WorkShiftDa();
+                workShifts = workShiftDa.findByExpertise(selectedExpertise);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            shiftTbl.getItems().clear();
+            shiftTbl.getItems().addAll(workShifts);
+
+            System.out.println("Selected Expertise: .");
+        }
     }
 
     private void refreshTable(List<Doctor> doctorList) {
@@ -198,5 +227,13 @@ public class WorkShiftController implements Initializable {
         } catch (NumberFormatException e) {
             return defaultValue;
         }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
