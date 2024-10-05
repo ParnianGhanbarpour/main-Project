@@ -7,8 +7,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.RoomsDa;
+import reception.model.entity.Expertise;
+import reception.model.entity.Room;
 import reception.model.entity.Rooms;
 
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,19 +27,40 @@ public class RoomController implements Initializable {
 
     @FXML
     private TableColumn<Rooms, Integer> roomNumberCol;
+    @FXML
+    private TextField roomNumberTxt,locationTxt,equipTxt;
 
     @FXML
     private TableColumn<Rooms, String> locationCol, equipmentsCol;
+    @FXML
+    private Button findAllBtn,findByNumberBtn,findEquipBtn,findByLocationBtn;
+    @FXML
+    private ComboBox<String> roomCmb;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         resetForm();
+
+        for (Room roomType: Room.values()) {
+            roomCmb.getItems().add(roomType.toString());
+        }
+
         saveBtn.setOnAction(event -> {
             try (RoomsDa roomsDa = new RoomsDa()) {
+
+                String selectedRoom = roomCmb.getSelectionModel().getSelectedItem();
+                if (selectedRoom == null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an Room Type.");
+                    alert.show();
+                    return;
+                }
                 Rooms rooms =
                         Rooms
                                 .builder()
-                                //
+                                .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
+                                .roomLocation(locationTxt.getText())
+                                .equipments(equipmentsCol.getText())
+                                .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 roomsDa.save(rooms);
 
@@ -51,10 +75,21 @@ public class RoomController implements Initializable {
 
         editBtn.setOnAction(event -> {
             try (RoomsDa roomsDa = new RoomsDa()) {
+
+                String selectedRoom = roomCmb.getSelectionModel().getSelectedItem();
+                if (selectedRoom == null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an Room Type.");
+                    alert.show();
+                    return;
+                }
+
                 Rooms rooms =
                         Rooms
                                 .builder()
-                                //
+                                .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
+                                .roomLocation(locationTxt.getText())
+                                .equipments(equipmentsCol.getText())
+                                .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 roomsDa.edit(rooms);
 
@@ -86,6 +121,10 @@ public class RoomController implements Initializable {
     }
 
     private void resetForm(){
+        locationTxt.clear();
+        equipTxt.clear();
+        roomNumberTxt.clear();
+        roomCmb.getSelectionModel().clearSelection();
 
         try (RoomsDa roomsDa = new RoomsDa()) {
             refreshTable(roomsDa.findAll());
