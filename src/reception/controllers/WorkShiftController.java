@@ -138,9 +138,9 @@ public class WorkShiftController implements Initializable {
                 return;
             }
 
-            try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-                List<WorkShift> workShifts = workShiftDa.findByExpertise(selectedExpertise);
-                refreshShiftTable(workShifts);
+            try (DoctorDa doctorDa = new DoctorDa()) {
+                List<Doctor> doctors = doctorDa.findByExpertise(selectedExpertise);
+                refreshTable(doctors);
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error fetching work shifts by expertise\n" + e.getMessage());
                 alert.show();

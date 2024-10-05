@@ -2,6 +2,7 @@ package reception.model.da;
 
 import reception.model.entity.Doctor;
 import reception.model.entity.Expertise;
+import reception.model.entity.WorkShift;
 import reception.model.utils.JdbcProvider;
 
 import java.sql.Connection;
@@ -269,6 +270,39 @@ public class DoctorDa implements AutoCloseable {
         return optionalDoctor;
     }
 
+    public List<Doctor> findByExpertise(String expertise) throws Exception {
+        List<Doctor> doctorList = new ArrayList<>();
+
+        try {
+            connection = JdbcProvider.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM DOCTOR_SHIFT_EMP_VIEW WHERE EXPERTISE = ?");
+            preparedStatement.setString(1, expertise);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Doctor doctor = Doctor.builder()
+                        .doctorId(resultSet.getInt("DOCTOR_ID"))
+                        .username(resultSet.getString("USERNAME"))
+                        .password(resultSet.getString("PASSWORD"))
+                        .nationalId(resultSet.getString("NATIONAL_ID"))
+                        .name(resultSet.getString("NAME"))
+                        .family(resultSet.getString("FAMILY"))
+                        .phoneNumber(resultSet.getString("PHONE_NUMBER"))
+                        .expertise(Expertise.valueOf(resultSet.getString("EXPERTISE")))
+                        .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+                        .active(resultSet.getBoolean("ACTIVE"))
+                        .build();
+
+                doctorList.add(doctor);
+            }
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+        return doctorList;
+    }
 
     @Override
     public void close() throws Exception {
