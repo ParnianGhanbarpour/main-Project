@@ -3,10 +3,7 @@ package reception.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import reception.model.da.DoctorDa;
 import reception.model.da.PatientDa;
-import reception.model.entity.Doctor;
-import reception.model.entity.Expertise;
 import reception.model.entity.Patient;
 import reception.model.utils.Validation;
 

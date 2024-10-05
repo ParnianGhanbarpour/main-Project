@@ -2,7 +2,6 @@ package reception.test;
 
 
 import reception.model.da.VisitTimeDa;
-import reception.model.entity.VisitTime;
 
 import java.time.LocalDateTime;
 

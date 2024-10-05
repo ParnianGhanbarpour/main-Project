@@ -99,7 +99,6 @@ public class WorkShiftDa implements AutoCloseable {
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
@@ -124,7 +123,6 @@ public class WorkShiftDa implements AutoCloseable {
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
@@ -149,7 +147,6 @@ public class WorkShiftDa implements AutoCloseable {
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
@@ -174,7 +171,6 @@ public class WorkShiftDa implements AutoCloseable {
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
@@ -201,7 +197,6 @@ public class WorkShiftDa implements AutoCloseable {
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
@@ -228,7 +223,6 @@ public class WorkShiftDa implements AutoCloseable {
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();
@@ -256,7 +250,6 @@ public class WorkShiftDa implements AutoCloseable {
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
                             .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
-                            //.ShiftDate(resultSet.getTimestamp("shift_Date").toLocalDateTime())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();

@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//room enum bayad combo box beshe ehtemalan. location beshe cmb.
 
 public class RoomController implements Initializable {
 
@@ -84,13 +83,6 @@ public class RoomController implements Initializable {
                 alert.show();
             }
         });
-
-//        roomsTbl.setOnMouseReleased(event->{
-//            Rooms rooms = roomsTbl.getSelectionModel().getSelectedItem();
-//            roomNumberCol.setText(String.valueOf(rooms.getRoomNumber()));
-//            locationCol.setText(rooms.getRoomLocation());
-//            equipmentsCol.setText(rooms.getEquipments());
-//        });
     }
 
     private void resetForm(){
