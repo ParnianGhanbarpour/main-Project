@@ -55,7 +55,7 @@ public class RoomsDa implements AutoCloseable {
     public List<Rooms> findAll() throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM ROOMS ORDER BY ROOMS_SEQ.NEXTVAL"
+                "SELECT * FROM ROOMS ORDER BY ROOM_NUMBER"
         );
 
         ResultSet resultSet = preparedStatement.executeQuery();
