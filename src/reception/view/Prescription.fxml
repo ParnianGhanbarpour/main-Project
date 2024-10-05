@@ -120,6 +120,6 @@
       <Button fx:id="findAllBtn" layoutX="361.0" layoutY="376.0" mnemonicParsing="false" text="Find All" />
       <Button fx:id="findByIdBtn" layoutX="430.0" layoutY="376.0" mnemonicParsing="false" text="Find By ID" />
       <Button fx:id="findByPatientIdBtn" layoutX="517.0" layoutY="376.0" mnemonicParsing="false" text="Find By Patient ID" />
-      <Button fx:id="findBydoctorIdBtn" layoutX="654.0" layoutY="376.0" mnemonicParsing="false" text="Find By Doctor ID" />
+      <Button fx:id="findByDoctorIdBtn" layoutX="654.0" layoutY="376.0" mnemonicParsing="false" text="Find By Doctor ID" />
    </children>
 </Pane>
