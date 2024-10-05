@@ -129,6 +129,24 @@ public class WorkShiftController implements Initializable {
             }
         });
 
+        findByExpertiseBtn.setOnAction(event -> {
+            String selectedExpertise = expertiseCmb.getValue();
+
+            if (selectedExpertise == null || selectedExpertise.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an expertise.");
+                alert.show();
+                return;
+            }
+
+            try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
+                List<WorkShift> workShifts = workShiftDa.findByExpertise(selectedExpertise);
+                refreshShiftTable(workShifts);
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error fetching work shifts by expertise\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
     }
     private void resetForm(){
         doctorIdTxt.clear();
@@ -155,6 +173,17 @@ public class WorkShiftController implements Initializable {
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
 
         workShiftTbl.setItems(doctors);
+    }
+
+    private void refreshShiftTable(List<WorkShift> workShiftList) {
+        ObservableList<WorkShift> workShifts = FXCollections.observableArrayList(workShiftList);
+
+        workShiftIdtCol.setCellValueFactory(new PropertyValueFactory<>("workShiftId"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("ShiftDate"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("ShiftStartingTime"));
+        EndingCol.setCellValueFactory(new PropertyValueFactory<>("ShiftFinishingTime"));
+
+        shiftTbl.setItems(workShifts);
     }
 
     private int parseIntOrDefault(String value, int defaultValue) {
