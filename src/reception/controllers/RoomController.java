@@ -7,13 +7,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import reception.model.da.RoomsDa;
+import reception.model.da.VisitTimeDa;
 import reception.model.entity.Expertise;
 import reception.model.entity.Room;
 import reception.model.entity.Rooms;
 
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -115,6 +118,34 @@ public class RoomController implements Initializable {
 
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, " Room Remove Error\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        findAllBtn.setOnAction(event ->{
+            try (RoomsDa roomsDa=new RoomsDa()) {
+                refreshTable(roomsDa.findAll());
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error1\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        findByNumberBtn.setOnAction(event -> {
+            try (RoomsDa roomsDa = new RoomsDa()) {
+                int roomNumber = Integer.parseInt(roomNumberTxt.getText());
+                Optional<Rooms> optionalRoom = roomsDa.findByRoomNumber(roomNumber);
+                if (optionalRoom.isPresent()) {
+                    refreshTable(Collections.singletonList(optionalRoom.get()));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "No Room Found with the given number.");
+                    alert.show();
+                }
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid room number format. Please enter a valid number.");
+                alert.show();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error finding room by number.\n" + e.getMessage());
                 alert.show();
             }
         });
