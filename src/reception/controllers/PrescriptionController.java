@@ -27,6 +27,8 @@ public class PrescriptionController implements Initializable {
 
     @FXML
     private Button saveBtn, editBtn, removeBtn;
+    @FXML
+    private Button findAllBtn,findByPatientIdBtn,findByDoctorIdBtn,findByIdBtn;
 
     @FXML
     private TableView<Patient> patientListTbl;
