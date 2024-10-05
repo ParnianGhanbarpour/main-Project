@@ -129,6 +129,17 @@ public class WorkShiftController implements Initializable {
             }
         });
 
+        findAllBtn.setOnAction(event -> {
+            try (WorkShiftDa workShiftDa=new  WorkShiftDa()) {
+                refreshShiftTable(workShiftDa.findAll());
+            }
+            catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error2\n" + e.getMessage());
+                alert.show();
+            }
+
+        });
+
     }
     private void resetForm(){
         doctorIdTxt.clear();
@@ -145,6 +156,15 @@ public class WorkShiftController implements Initializable {
             alert.show();
         }
 
+        try (WorkShiftDa workShiftDa=new  WorkShiftDa()) {
+            refreshShiftTable(workShiftDa.findAll());
+        }
+        catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, " Error2\n" + e.getMessage());
+            alert.show();
+        }
+
+
     }
 
     private void refreshTable(List<Doctor> doctorList) {
@@ -156,6 +176,18 @@ public class WorkShiftController implements Initializable {
 
         workShiftTbl.setItems(doctors);
     }
+
+    private void refreshShiftTable(List<WorkShift> workShiftList) {
+        ObservableList<WorkShift> workShifts = FXCollections.observableArrayList(workShiftList);
+
+        workShiftIdtCol.setCellValueFactory(new PropertyValueFactory<>("workShiftId"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("ShiftDate"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("ShiftStartingTime"));
+        EndingCol.setCellValueFactory(new PropertyValueFactory<>("ShiftFinishingTime"));
+
+        shiftTbl.setItems(workShifts);
+    }
+
 
     private int parseIntOrDefault(String value,  int defaultValue) {
         if (value == null || value.trim().isEmpty()) {
