@@ -33,51 +33,53 @@ public class PrescriptionDa implements AutoCloseable {
         }else{
             preparedStatement.setNull(1, java.sql.Types.INTEGER);
         }
-
+        preparedStatement.setString(2, emptyToNull(prescription.getMedicineName()));
+        preparedStatement.setString(3, emptyToNull(prescription.getDrugDose()));
+        preparedStatement.setString(4, emptyToNull(prescription.getDrugDuration()));
+        preparedStatement.setString(5, emptyToNull(prescription.getExplanation()));
         if (prescription.getDoctorId() != 0) {
-            preparedStatement.setInt(2, prescription.getDoctorId());
+            preparedStatement.setInt(6, prescription.getDoctorId());
         }else{
-            preparedStatement.setNull(2, java.sql.Types.INTEGER);
+            preparedStatement.setNull(6, java.sql.Types.INTEGER);
         }
 
         if (prescription.getPatientId() != 0) {
-            preparedStatement.setInt(3, prescription.getPatientId());
+            preparedStatement.setInt(7, prescription.getPatientId());
         }else{
-            preparedStatement.setNull(3, java.sql.Types.INTEGER);
+            preparedStatement.setNull(7, java.sql.Types.INTEGER);
         }
-        preparedStatement.setString(4, emptyToNull(prescription.getMedicineName()));
-        preparedStatement.setString(5, emptyToNull(prescription.getDrugDose()));
-        preparedStatement.setString(6, emptyToNull(prescription.getDrugDuration()));
-        preparedStatement.setBoolean(7,prescription.isActive());
-        preparedStatement.setString(8, prescription.getAccessLevel());
-        preparedStatement.setString(9, emptyToNull(prescription.getExplanation()));
+
+        preparedStatement.setBoolean(8,prescription.isActive());
+        preparedStatement.setString(9, prescription.getAccessLevel());
+
         preparedStatement.execute();
     }
 
     public void edit(Prescription prescription) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "UPDATE PRESCRIPTION SET DOCTOR_ID=?, PATIENT_ID=?, MEDICINE_NAME=?, DRUG_DOSE=?, DRUG_DURATION=?, ACCESS_LEVEL=?, ACTIVE=?, EXPLANATION=? WHERE PRESCRIPTION_ID=?"
+                "UPDATE PRESCRIPTION SET  MEDICINE_NAME=?, DRUG_DOSE=?, DRUG_DURATION=?, EXPLANATION=?,DOCTOR_ID=?, PATIENT_ID=? , ACCESS_LEVEL=?, ACTIVE=?WHERE PRESCRIPTION_ID=?"
         );
 
 
+        preparedStatement.setString(1, emptyToNull(prescription.getMedicineName()));
+        preparedStatement.setString(2, emptyToNull(prescription.getDrugDose()));
+        preparedStatement.setString(3, emptyToNull(prescription.getDrugDuration()));
+        preparedStatement.setString(4, emptyToNull(prescription.getExplanation()));
         if (prescription.getDoctorId() != 0) {
-            preparedStatement.setInt(1, prescription.getDoctorId());
+            preparedStatement.setInt(5, prescription.getDoctorId());
         }else{
-            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+            preparedStatement.setNull(5, java.sql.Types.INTEGER);
         }
 
         if (prescription.getPatientId() != 0) {
-            preparedStatement.setInt(2, prescription.getPatientId());
+            preparedStatement.setInt(6, prescription.getPatientId());
         }else{
-            preparedStatement.setNull(2, java.sql.Types.INTEGER);
+            preparedStatement.setNull(6, java.sql.Types.INTEGER);
         }
-        preparedStatement.setString(3, emptyToNull(prescription.getMedicineName()));
-        preparedStatement.setString(4, emptyToNull(prescription.getDrugDose()));
-        preparedStatement.setString(5, emptyToNull(prescription.getDrugDuration()));
-        preparedStatement.setBoolean(6, prescription.isActive());
-        preparedStatement.setString(7, prescription.getAccessLevel());
-        preparedStatement.setString(8, emptyToNull(prescription.getExplanation()));
+        preparedStatement.setBoolean(7, prescription.isActive());
+        preparedStatement.setString(8, prescription.getAccessLevel());
+
         if (prescription.getPrescriptionId() != 0) {
             preparedStatement.setInt(9, prescription.getPrescriptionId());
         }else{
@@ -95,7 +97,7 @@ public class PrescriptionDa implements AutoCloseable {
     public List<Prescription> findAll() throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM PRESCRIPTION ORDER BY PRESCRIPTION_SEQ.NEXTVAL"
+                "SELECT * FROM PRESCRIPTION "
         );
 
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -113,23 +115,27 @@ public class PrescriptionDa implements AutoCloseable {
                             .explanation(resultSet.getString("EXPLANATION"))
                             .doctorId(resultSet.getInt("DOCTOR_ID"))
                             .patientId(resultSet.getInt("PATIENT_ID"))
-                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+
                             .build();
             prescriptionList.add(prescription);
         }
         return prescriptionList;
     }
 
-    public Optional<Prescription> findById(int id) throws SQLException {
+    public List<Prescription> findById(int id) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM PRESCRIPTION WHERE PRESCRIPTION_ID=?");
         preparedStatement.setInt(1, id);
+
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        Optional<Prescription> optionalPrescription = Optional.empty();
-        if (resultSet.next()) {
+        List<Prescription> prescriptionList = new ArrayList<>();
+
+        while (resultSet.next()) {
+
             Prescription prescription =
                     Prescription
                             .builder()
@@ -140,14 +146,13 @@ public class PrescriptionDa implements AutoCloseable {
                             .explanation(resultSet.getString("EXPLANATION"))
                             .doctorId(resultSet.getInt("DOCTOR_ID"))
                             .patientId(resultSet.getInt("PATIENT_ID"))
-                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+
                             .build();
-
-            optionalPrescription = Optional.of(prescription);
+            prescriptionList.add(prescription);
         }
-
-        return optionalPrescription;
+        return prescriptionList;
     }
 
     public Optional<Prescription>findByPatientId(int patientId) throws Exception {
@@ -168,8 +173,9 @@ public class PrescriptionDa implements AutoCloseable {
                             .explanation(resultSet.getString("EXPLANATION"))
                             .doctorId(resultSet.getInt("DOCTOR_ID"))
                             .patientId(resultSet.getInt("PATIENT_ID"))
-                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                             .active(resultSet.getBoolean("ACTIVE"))
+                            .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+
                             .build();
 
             optionalPrescription = Optional.of(prescription);
@@ -195,8 +201,9 @@ public class PrescriptionDa implements AutoCloseable {
                                 .explanation(resultSet.getString("EXPLANATION"))
                                 .doctorId(resultSet.getInt("DOCTOR_ID"))
                                 .patientId(resultSet.getInt("PATIENT_ID"))
-                                .accessLevel(resultSet.getString("ACCESS_LEVEL"))
                                 .active(resultSet.getBoolean("ACTIVE"))
+                                .accessLevel(resultSet.getString("ACCESS_LEVEL"))
+
                                 .build();
 
                 optionalPrescription = Optional.of(prescription);

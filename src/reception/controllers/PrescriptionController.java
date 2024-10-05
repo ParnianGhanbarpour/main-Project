@@ -11,6 +11,7 @@ import reception.model.entity.*;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -32,25 +33,32 @@ public class PrescriptionController implements Initializable {
     private TableView<Doctor> doctorListTbl;
 
     @FXML
+    private TableView<Prescription> prescriptionTbl;
+
+    @FXML
     private TableColumn<WorkShift, Integer> doctorIdCol,
             patientIdCol;
 
     @FXML
     private TableColumn<WorkShift, String> doctorNameCol, doctorFamilyCol, skillCol ,
             patientNameCol,patientFamilyCol,diseaseCol;
+    @FXML
+    private TableColumn<Prescription,String>prescriptionCol,medicineNameCol,drugDoseCol
+            ,drugDurationCol,explanationCol,doctorTIdCol,patientTIdCol;
 
     @FXML
     private Label pIdLbl,mNameLbl,doseLbl,durationLbl,explanationLbl;
 
     private Person currentUser;
 
-
+    private final PrescriptionDa prescriptionDa = new PrescriptionDa();
 
     @Override
     public void initialize(URL location, ResourceBundle resources ) {
 
         resetForm();
         configureAccess(currentUser);
+
 
 
         saveBtn.setOnAction(event -> {
@@ -121,7 +129,89 @@ public class PrescriptionController implements Initializable {
                 alert.show();
             }
         });
+
+        findAllBtn.setOnAction(event ->{
+            try (PrescriptionDa prescriptionDa= new PrescriptionDa()) {
+                refreshPrescriptionTable(prescriptionDa.findAll());
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error3\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        findByPatientIdBtn.setOnAction(event -> {
+            try (PrescriptionDa prescriptionDa= new PrescriptionDa()) {
+                refreshPrescriptionTable(prescriptionDa.findAll());
+                findByPatientId();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByDoctorIdBtn.setOnAction(event -> {
+            try (PrescriptionDa prescriptionDa= new PrescriptionDa()) {
+                refreshPrescriptionTable(prescriptionDa.findAll());
+                findByDoctorId();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByIdBtn.setOnAction(event -> {
+            try (PrescriptionDa prescriptionDa= new PrescriptionDa()) {
+                refreshPrescriptionTable(prescriptionDa.findById( Integer.parseInt(prescriptionIdTxt.getText())));
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error3\n" + e.getMessage());
+                alert.show();
+            }
+        });
     }
+
+    private void findByPatientId() throws Exception {
+
+        String patientIdStr = patientIdTxt.getText();
+
+        if (patientIdStr != null && !patientIdStr.isEmpty()) {
+            int patientId = Integer.parseInt(patientIdStr);
+
+            Optional <Prescription> prescriptionOptional =prescriptionDa.findByPatientId(patientId) ;
+
+            if (prescriptionOptional.isPresent()) {
+
+                prescriptionTbl.getItems().clear();
+                prescriptionTbl.getItems().add(prescriptionOptional.get());
+            } else {
+                showAlert("Patient not found");
+            }
+        } else {
+            showAlert("Please enter a valid Patient ID");
+        }
+    }
+
+    private void findByDoctorId() throws Exception {
+
+        String doctorIdStr = doctorIdTxt.getText();
+
+        if ( doctorIdStr!= null && !doctorIdStr.isEmpty()) {
+            int doctorId = Integer.parseInt(doctorIdStr);
+
+            Optional<Prescription> prescriptionOptional =prescriptionDa.findByDoctorId(doctorId) ;
+
+            if (prescriptionOptional.isPresent()) {
+
+                prescriptionTbl.getItems().clear();
+                prescriptionTbl.getItems().add(prescriptionOptional.get());
+            } else {
+                showAlert("Doctor not found");
+            }
+        } else {
+            showAlert("Please enter a valid Doctor ID");
+        }
+    }
+
+
     public void setCurrentUser(Person person) {
         this.currentUser = person;
         configureAccess(person);
@@ -181,7 +271,14 @@ public class PrescriptionController implements Initializable {
             alert.show();
         }
 
+        try (PrescriptionDa prescriptionDa= new PrescriptionDa()) {
+            refreshPrescriptionTable(prescriptionDa.findAll());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, " Error3\n" + e.getMessage());
+            alert.show();
+        }
     }
+
 
     private void refreshTableD(List<Doctor> doctorList) {
         ObservableList<Doctor> doctors= FXCollections.observableList(doctorList);
@@ -189,7 +286,7 @@ public class PrescriptionController implements Initializable {
         doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
         doctorNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
         doctorFamilyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
-        skillCol.setCellValueFactory(new PropertyValueFactory<>("skill"));
+        skillCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
 
         doctorListTbl.setItems(doctors);
 
@@ -205,6 +302,35 @@ public class PrescriptionController implements Initializable {
         patientListTbl.setItems(patients);
     }
 
+    private void refreshPrescriptionTable(List<Prescription> prescriptions) {
+        if (prescriptions != null && !prescriptions.isEmpty()) {
+            ObservableList<Prescription> prescriptionList = FXCollections.observableArrayList(prescriptions);
+
+            prescriptionCol.setCellValueFactory(new PropertyValueFactory<>("PrescriptionId"));
+            medicineNameCol.setCellValueFactory(new PropertyValueFactory<>("MedicineName"));
+            drugDoseCol.setCellValueFactory(new PropertyValueFactory<>("DrugDose"));
+            drugDurationCol.setCellValueFactory(new PropertyValueFactory<>("DrugDuration"));
+            explanationCol.setCellValueFactory(new PropertyValueFactory<>("Explanation"));
+            doctorTIdCol.setCellValueFactory(new PropertyValueFactory<>("DoctorId"));
+            patientTIdCol.setCellValueFactory(new PropertyValueFactory<>("PatientId"));
+
+            prescriptionTbl.setItems(prescriptionList);
+        }
+        else {
+            showAlert("No Prescription found.");
+        }
+
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
     private int parseIntOrDefault(String value, int defaultValue) {
         if (value == null || value.trim().isEmpty()) {
             return defaultValue;
@@ -215,5 +341,7 @@ public class PrescriptionController implements Initializable {
             return defaultValue;
         }
     }
+
+
     }
 

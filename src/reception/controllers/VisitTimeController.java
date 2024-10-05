@@ -241,9 +241,6 @@ public class VisitTimeController implements Initializable {
                 alert.show();
             }
         });
-
-
-
     }
 
 
