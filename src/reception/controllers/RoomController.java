@@ -62,7 +62,7 @@ public class RoomController implements Initializable {
                                 .builder()
                                 .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
                                 .roomLocation(locationTxt.getText())
-                                .equipments(equipmentsCol.getText())
+                                .equipments(equipTxt.getText())
                                 .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 roomsDa.save(rooms);
@@ -91,7 +91,7 @@ public class RoomController implements Initializable {
                                 .builder()
                                 .roomNumber(Integer.parseInt(roomNumberTxt.getText()))
                                 .roomLocation(locationTxt.getText())
-                                .equipments(equipmentsCol.getText())
+                                .equipments(equipTxt.getText())
                                 .room(Room.valueOf(roomCmb.getSelectionModel().getSelectedItem()))
                                 .build();
                 roomsDa.edit(rooms);
@@ -171,7 +171,7 @@ public class RoomController implements Initializable {
         if (roomsList != null && !roomsList.isEmpty()) {
             ObservableList<Rooms> rooms = FXCollections.observableList(roomsList);
 
-            roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("room_number"));
+            roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
             locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
             equipmentsCol.setCellValueFactory(new PropertyValueFactory<>("equipments"));
 
