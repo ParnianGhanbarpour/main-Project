@@ -128,7 +128,7 @@
             <TableColumn fx:id="workShiftIdCol" prefWidth="96.0" text="WorkShiftId" />
             <TableColumn fx:id="dateCol" prefWidth="139.0" text="Date" />
             <TableColumn fx:id="startCol" prefWidth="105.0" text="StartingTime" />
-            <TableColumn fx:id="EndingCol" prefWidth="117.0" text="EndingTime" />
+            <TableColumn fx:id="endingCol" prefWidth="117.0" text="EndingTime" />
          </columns>
       </TableView>
    </children>

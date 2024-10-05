@@ -98,7 +98,7 @@ public class WorkShiftDa implements AutoCloseable {
                             .workShiftId(resultSet.getInt("Work_Shift_Id"))
                             .shiftDoctorId(resultSet.getInt("Shift_Doctor_Id"))
                             .shiftEmployeeId(resultSet.getInt("Shift_Employee_Id"))
-                            .ShiftDate(resultSet.getDate("shift_Date").toLocalDate())
+                            .ShiftDate(resultSet.getDate("Shift_Date").toLocalDate())
                             .ShiftStartingTime(resultSet.getString("Shift_Starting_Time"))
                             .ShiftFinishingTime(resultSet.getString("Shift_Finishing_Time"))
                             .build();

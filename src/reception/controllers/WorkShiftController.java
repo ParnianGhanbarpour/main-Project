@@ -49,7 +49,7 @@ public class WorkShiftController implements Initializable {
     @FXML
     private TableView<WorkShift> shiftTbl;
     @FXML
-    private TableColumn<WorkShift, Integer> workShiftIdtCol;
+    private TableColumn<WorkShift, Integer> workShiftIdCol;
 
     @FXML
     private TableColumn<WorkShift, String> dateCol;
@@ -58,7 +58,7 @@ public class WorkShiftController implements Initializable {
     private TableColumn<WorkShift, String> startCol;
 
     @FXML
-    private TableColumn<WorkShift, String> EndingCol;
+    private TableColumn<WorkShift, String> endingCol;
     @FXML
     private ComboBox<String> expertiseCmb;
 
@@ -180,10 +180,10 @@ public class WorkShiftController implements Initializable {
     private void refreshShiftTable(List<WorkShift> workShiftList) {
         ObservableList<WorkShift> workShifts = FXCollections.observableArrayList(workShiftList);
 
-        workShiftIdtCol.setCellValueFactory(new PropertyValueFactory<>("workShiftId"));
+        workShiftIdCol.setCellValueFactory(new PropertyValueFactory<>("WorkShiftId"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("ShiftDate"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("ShiftStartingTime"));
-        EndingCol.setCellValueFactory(new PropertyValueFactory<>("ShiftFinishingTime"));
+        endingCol.setCellValueFactory(new PropertyValueFactory<>("ShiftFinishingTime"));
 
         shiftTbl.setItems(workShifts);
     }
