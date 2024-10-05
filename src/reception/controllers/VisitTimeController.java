@@ -94,17 +94,18 @@ public class VisitTimeController implements Initializable {
         saveBtn.setOnAction(event -> {
             try (VisitTimeDa visitTimeDa = new VisitTimeDa()) {
                 addTime();
-                VisitTime visitTime = VisitTime.builder()
-                        .visitTimeId(Integer.parseInt(idTxt.getText()))
-                        .visitWorkShiftId(Integer.parseInt(shiftIdTxt.getText()))
-                        .visitPatientId(Integer.parseInt(patientIdTxt.getText()))
-                        .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
-                        .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
-                        .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
+                VisitTime visitTime = VisitTime
+                        .builder()
+                        .visitTimeId(parseIntOrDefault((idTxt.getText()),0))
+                        .visitWorkShiftId(parseIntOrDefault((shiftIdTxt.getText()),0))
+                        .visitPatientId(parseIntOrDefault((patientIdTxt.getText()),0))
+                        .visitPaymentId(parseIntOrDefault((paymentIdTxt.getText()),0))
+                        .visitRoomNumber(parseIntOrDefault((roomNumberTxt.getText()),0))
+                        .visitPrescriptionId(parseIntOrDefault((prescriptionIdTxt.getText()),0))
                         .visitDate(visitDatePicker.getValue())
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
-                        .visitDuration((durationTxt.getText()))
+                        .visitDuration(validation.durationValidator((durationTxt.getText())))
 
                         .build();
                 visitTimeDa.save(visitTime);
@@ -123,16 +124,16 @@ public class VisitTimeController implements Initializable {
                 addTime();
                 VisitTime visitTime = VisitTime
                         .builder()
-                        .visitTimeId(Integer.parseInt(idTxt.getText()))
-                        .visitWorkShiftId(Integer.parseInt(shiftIdTxt.getText()))
-                        .visitPatientId(Integer.parseInt(patientIdTxt.getText()))
-                        .visitPaymentId(Integer.parseInt(paymentIdTxt.getText()))
-                        .visitRoomNumber(Integer.parseInt(roomNumberTxt.getText()))
-                        .visitPrescriptionId(Integer.parseInt(prescriptionIdTxt.getText()))
+                        .visitTimeId(parseIntOrDefault((idTxt.getText()),0))
+                        .visitWorkShiftId(parseIntOrDefault((shiftIdTxt.getText()),0))
+                        .visitPatientId(parseIntOrDefault((patientIdTxt.getText()),0))
+                        .visitPaymentId(parseIntOrDefault((paymentIdTxt.getText()),0))
+                        .visitRoomNumber(parseIntOrDefault((roomNumberTxt.getText()),0))
+                        .visitPrescriptionId(parseIntOrDefault((prescriptionIdTxt.getText()),0))
                         .visitDate(visitDatePicker.getValue())
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
-                        .visitDuration((durationTxt.getText()))
+                        .visitDuration(validation.durationValidator((durationTxt.getText())))
                         .build();
                 visitTimeDa.edit(visitTime);
 
@@ -538,6 +539,15 @@ public class VisitTimeController implements Initializable {
         alert.showAndWait();
     }
 
-
+    private int parseIntOrDefault(String value, int defaultValue) {
+        if (value == null || value.trim().isEmpty()) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
 
    }

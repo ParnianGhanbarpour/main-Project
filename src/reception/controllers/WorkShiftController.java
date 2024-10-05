@@ -131,7 +131,7 @@ public class WorkShiftController implements Initializable {
     private void refreshTable(List<Doctor> doctorList) {
         ObservableList<Doctor> doctors = FXCollections.observableList(doctorList);
 
-        doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctor.id"));
+        doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
 

@@ -1,34 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="600.0" style="-fx-background-color: #A8A9AD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.RoomController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="1007.0" style="-fx-background-color: #A8A9AD;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.RoomController">
    <children>
-      <TableView fx:id="roomsTbl" layoutX="73.0" layoutY="92.0" prefHeight="222.0" prefWidth="458.0" style="-fx-background-color: #99A3A3;">
+      <TableView fx:id="roomsTbl" layoutX="518.0" layoutY="109.0" prefHeight="222.0" prefWidth="461.0" style="-fx-background-color: #99A3A3;">
         <columns>
           <TableColumn fx:id="roomNumberCol" prefWidth="114.0" text="Room Number" />
           <TableColumn fx:id="locationCol" minWidth="0.0" prefWidth="170.0" style="-fc-background-color: #3cb371;" text="Location" />
             <TableColumn fx:id="equipmentsCol" minWidth="0.0" prefWidth="173.0" text="Equipments" />
         </columns>
       </TableView>
-      <Button fx:id="saveBtn" layoutX="73.0" layoutY="332.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Save" textFill="#2b8275" />
-      <Button fx:id="editBtn" layoutX="251.0" layoutY="332.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Edit" textFill="#2b8275" />
-      <Button fx:id="removeBtn" layoutX="432.0" layoutY="332.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Remove" textFill="#2b8275" />
-      <Label layoutX="225.0" layoutY="10.0" text="Rooms" textFill="#2b8275">
+      <Label layoutX="171.0" layoutY="19.0" prefHeight="77.0" prefWidth="176.0" text="Rooms" textFill="#2b8275">
          <font>
-            <Font name="System Bold Italic" size="48.0" />
+            <Font name="System Bold Italic" size="53.0" />
          </font>
       </Label>
-      <Line endX="-99.0" endY="222.0" layoutX="172.0" layoutY="92.0" startX="-100.0" />
-      <Line endX="-121.00006103515625" layoutX="652.0" layoutY="91.0" startX="-121.0" startY="1.0" />
-      <Line endX="11.70721435546875" endY="250.0" layoutX="520.0" layoutY="64.0" startX="11.7071533203125" startY="28.707122802734375" />
-      <Line endX="-2.70709228515625" endY="269.70709228515625" layoutX="74.0" layoutY="45.0" startX="457.00006103515625" startY="269.0" />
-      <Line endX="418.0" endY="30.0" layoutX="115.0" layoutY="63.0" startX="-43.70709228515625" startY="28.29290771484375" />
+      <Line endX="-99.0" endY="222.0" layoutX="617.0" layoutY="109.0" startX="-100.0" />
+      <Line endX="-121.00006103515625" layoutX="1097.0" layoutY="108.0" startX="-121.0" startY="1.0" />
+      <Line endX="11.70721435546875" endY="250.0" layoutX="965.0" layoutY="81.0" startX="11.7071533203125" startY="28.707122802734375" />
+      <Line endX="-2.70709228515625" endY="269.70709228515625" layoutX="519.0" layoutY="62.0" startX="457.00006103515625" startY="269.0" />
+      <Line endX="418.0" endY="30.0" layoutX="560.0" layoutY="80.0" startX="-43.70709228515625" startY="28.29290771484375" />
+      <Button fx:id="findByLocationBtn" layoutX="33.0" layoutY="301.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="133.0" text="Find By Location" textFill="#2b8275" />
+      <Button fx:id="findAllBtn" layoutX="166.0" layoutY="301.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="76.0" text="Find All" textFill="#2b8275" />
+      <Button fx:id="findEquipBtn" layoutX="241.0" layoutY="301.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="133.0" text="Find Equipment" textFill="#2b8275" />
+      <Button fx:id="findByNumberBtn" layoutX="363.0" layoutY="301.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="133.0" text="Find By Number" textFill="#2b8275" />
+      <Button fx:id="saveBtn" layoutX="534.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Save" textFill="#2b8275" />
+      <Button fx:id="editBtn" layoutX="690.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Edit" textFill="#2b8275" />
+      <Button fx:id="removeBtn" layoutX="844.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="Remove" textFill="#2b8275" />
+      <TextField fx:id="roomNumberTxt" layoutX="181.0" layoutY="140.0" prefHeight="31.0" prefWidth="308.0" promptText="Enter Room Number" />
+      <TextField fx:id="equipTxt" layoutX="181.0" layoutY="180.0" prefHeight="31.0" prefWidth="308.0" promptText="Enter Equipment" />
+      <TextField fx:id="locationTxt" layoutX="182.0" layoutY="221.0" prefHeight="31.0" prefWidth="308.0" promptText="Enter Location" />
+      <Label layoutX="31.0" layoutY="145.0" text="Room Number :">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="31.0" layoutY="226.0" text="Location :">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="183.0" prefHeight="21.0" prefWidth="105.0" text="Equipment :">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="roomCmb" layoutX="181.0" layoutY="258.0" prefHeight="31.0" prefWidth="308.0" promptText="choose type of room" />
+      <Label layoutX="33.0" layoutY="263.0" text="Room Type :" />
+      <Line endX="389.0" endY="30.0" layoutX="99.0" layoutY="80.0" startX="-69.0" startY="30.0" />
    </children>
 </Pane>

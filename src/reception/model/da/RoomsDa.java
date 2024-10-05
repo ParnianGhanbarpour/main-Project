@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RoomsDa implements AutoCloseable {
+public class
+RoomsDa implements AutoCloseable {
     private Connection connection;
     private PreparedStatement preparedStatement;
 
@@ -27,7 +28,11 @@ public class RoomsDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO ROOMS VALUES (?,?,?)"
         );
-        preparedStatement.setInt(1, rooms.getRoomNumber());
+        if (rooms.getRoomNumber() != 0) {
+            preparedStatement.setInt(1, rooms.getRoomNumber());
+        }else{
+            preparedStatement.setNull(1, java.sql.Types.INTEGER);
+        }
         preparedStatement.setString(2, rooms.getRoomLocation());
         preparedStatement.setString(3, rooms.getEquipments());
         preparedStatement.execute();
@@ -38,10 +43,14 @@ public class RoomsDa implements AutoCloseable {
         preparedStatement = connection.prepareStatement(
                 "UPDATE ROOMS SET ROOM_LOCATION=?,EQUIPMENTS=? WHERE ROOM_NUMBER=?"
         );
-
         preparedStatement.setString(1, rooms.getRoomLocation() );
         preparedStatement.setString(2, rooms.getEquipments());
-        preparedStatement.setInt(3, rooms.getRoomNumber());
+        if (rooms.getRoomNumber() != 0) {
+            preparedStatement.setInt(3, rooms.getRoomNumber());
+        }else{
+            preparedStatement.setNull(3, java.sql.Types.INTEGER);
+        }
+        //preparedStatement.setInt(3, rooms.getRoomNumber());
         preparedStatement.execute();
     }
 
@@ -55,7 +64,7 @@ public class RoomsDa implements AutoCloseable {
     public List<Rooms> findAll() throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM ROOMS ORDER BY ROOMS_SEQ.NEXTVAL"
+                "SELECT * FROM ROOMS ORDER BY ROOM_NUMBER"
         );
 
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -98,11 +107,11 @@ public class RoomsDa implements AutoCloseable {
         return optionalRooms;
     }
 
-    public Optional<Rooms> findByRoomLocation(int roomLocation) throws SQLException {
+    public Optional<Rooms> findByRoomLocation(String roomLocation) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE ROOM_LOCATION=?");
-        preparedStatement.setInt(1, roomLocation);
+        preparedStatement.setString(1, roomLocation);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<Rooms> optionalRooms = Optional.empty();
@@ -121,11 +130,11 @@ public class RoomsDa implements AutoCloseable {
         return optionalRooms;
     }
 
-    public Optional<Rooms> findByEquip(int equipments) throws SQLException {
+    public Optional<Rooms> findByEquip(String equipments) throws SQLException {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE EQUIPMENTS=?");
-        preparedStatement.setInt(1, equipments);
+        preparedStatement.setString(1, equipments);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Optional<Rooms> optionalRooms = Optional.empty();
