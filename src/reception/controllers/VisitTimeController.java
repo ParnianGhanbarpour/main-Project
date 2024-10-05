@@ -104,7 +104,7 @@ public class VisitTimeController implements Initializable {
                         .visitDate(visitDatePicker.getValue())
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
-                        .visitDuration((durationTxt.getText()))
+                        .visitDuration(validation.durationValidator((durationTxt.getText())))
 
                         .build();
                 visitTimeDa.save(visitTime);
@@ -132,7 +132,7 @@ public class VisitTimeController implements Initializable {
                         .visitDate(visitDatePicker.getValue())
                         .hour(hourCmb.getSelectionModel().getSelectedItem())
                         .minute(minutesCmb.getSelectionModel().getSelectedItem())
-                        .visitDuration((durationTxt.getText()))
+                        .visitDuration(validation.durationValidator((durationTxt.getText())))
                         .build();
                 visitTimeDa.edit(visitTime);
 
