@@ -301,7 +301,7 @@ public class VisitTimeController implements Initializable {
         }
     }
 
-    private void findByDate() throws Exception {
+    private void findByDate() throws Exception  {
 
         LocalDate visitDateF = visitDatePicker.getValue();
 
