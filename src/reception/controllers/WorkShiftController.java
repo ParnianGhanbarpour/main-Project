@@ -151,7 +151,7 @@ public class WorkShiftController implements Initializable {
         try (DoctorDa doctorDa=new DoctorDa()) {
             refreshTable(doctorDa.findAll());
         }
-        catch (Exception e) {
+        catch ( Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, " Error1\n" + e.getMessage());
             alert.show();
         }
