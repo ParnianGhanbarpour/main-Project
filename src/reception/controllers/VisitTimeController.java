@@ -54,7 +54,6 @@ public class VisitTimeController implements Initializable {
     TableColumn<VisitTime, Integer> minuteCol;
     @FXML
     TableColumn<VisitTime, String> durationCol;
-
     @FXML
     private Button findAllBtn,findByExpertiseBtn, findByDoctorBtn, findByPatientBtn, findByDateBtn,
             findByDateRangeBtn,findByExpertiseAndDateRangeBtn,findByIdBtn;
@@ -242,6 +241,7 @@ public class VisitTimeController implements Initializable {
                 alert.show();
             }
         });
+
     }
 
 
@@ -288,7 +288,7 @@ public class VisitTimeController implements Initializable {
         if (patientIdStr != null && !patientIdStr.isEmpty()) {
             int patientId = Integer.parseInt(patientIdStr);
 
-            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByPatient(patientId);
+            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByPatientId(patientId);
 
             if (visitTimeOptional.isPresent()) {
 
@@ -307,68 +307,76 @@ public class VisitTimeController implements Initializable {
 
     private void findByDate() throws Exception  {
 
-        LocalDate visitDateF = visitDatePicker.getValue();
+        LocalDate selectedVisitDate = visitDatePicker.getValue();
 
-        if (visitDateF != null) {
-            LocalDate visitDateT = LocalDate.parse(visitDateF.toString());
-            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByDate(visitDateT);
-            if (visitTimeOptional.isPresent()) {
+        if (selectedVisitDate != null) {
+            List<VisitTime> visitTimes = null;
+            try {
+              visitTimes = visitTimeDa.findByDate(selectedVisitDate);
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            if (visitTimes!=null) {
                 visitTimeTbl.getItems().clear();
-                visitTimeTbl.getItems().add(visitTimeOptional.get());
+                visitTimeTbl.getItems().addAll(visitTimes);
             }
-            else{
-               showAlert("Date not found");
+
+           else {
+                    showAlert("Please enter a valid Date of WorkShift");}
             }
-        } else {
-            showAlert("Please enter a valid Date of Visit");
-        }
+        else{
+                showAlert("Date Not found");}
     }
 
     private void  findByDateRange() throws Exception {
-        LocalDate fromF = fromDatePicker.getValue();
-        LocalDate toF = toDatePicker.getValue();
+        LocalDate selectedFromF = fromDatePicker.getValue();
+        LocalDate selectedToF = toDatePicker.getValue();
 
-        if (fromF != null && toF != null) {
-            LocalDate fromT = LocalDate.parse(fromF.toString());
-            LocalDate toT = LocalDate.parse(toF.toString());
-            Optional<VisitTime> visitTimeOptional = visitTimeDa.findByDateRange(fromT, toT);
-            if (visitTimeOptional.isPresent()) {
+        if (selectedToF != null && selectedFromF != null ) {
+            List<VisitTime> visitTimes = null;
+            try {
+                visitTimes = visitTimeDa.findByDateRange(selectedFromF, selectedToF);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            if (visitTimes != null && !visitTimes.isEmpty()) {
                 visitTimeTbl.getItems().clear();
-                visitTimeTbl.getItems().add(visitTimeOptional.get());
+                visitTimeTbl.getItems().addAll(visitTimes);
             } else {
-                showAlert("Date range not found");
+                showAlert("not found");
             }
         } else {
-            showAlert("Please enter a valid Date range of Visit");
+            showAlert("Please enter a valid Date range of Visit ");
         }
     }
 
-    private void findByExpertiseAndDateRang() throws Exception{
-        LocalDate fromF = fromDatePicker.getValue();
-        LocalDate toF = toDatePicker.getValue();
+
+
+
+    private void findByExpertiseAndDateRang() throws Exception {
+        LocalDate selectedFromF = fromDatePicker.getValue();
+        LocalDate selectedToF = toDatePicker.getValue();
         String selectedExpertise = expertiseCmb.getValue();
-        try {
-        if (fromF != null && toF != null && selectedExpertise != null) {
-            LocalDate fromT = LocalDate.parse(fromF.toString());
-            LocalDate toT = LocalDate.parse(toF.toString());
-            Optional<VisitTime> visitTimes = null;
 
-            visitTimes = visitTimeDa.findByExpertiseAndDateRange(fromT, toT, selectedExpertise);
-
-                if (visitTimes.isPresent()) {
-                    visitTimeTbl.getItems().clear();
-                    visitTimeTbl.getItems().add(visitTimes.get());
-                } else {
-                    showAlert("not found");
-                }
-            }else {
-                    showAlert("Please enter a valid Date range of Visit and Expertise");
-            }
-        } catch (Exception e) {
+        if (selectedToF != null && selectedFromF != null && selectedExpertise != null) {
+            List<VisitTime> visitTimes = null;
+            try {
+                visitTimes = visitTimeDa.findByExpertiseAndDateRange(selectedFromF, selectedToF, selectedExpertise);
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+            if (visitTimes != null && !visitTimes.isEmpty()) {
+                visitTimeTbl.getItems().clear();
+                visitTimeTbl.getItems().addAll(visitTimes);
+            } else {
+                showAlert("not found");
+            }
+        } else {
+            showAlert("Please enter a valid Date range of Visit and Expertise");
+        }
     }
-
 
 
 

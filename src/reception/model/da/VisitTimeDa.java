@@ -242,7 +242,7 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-    public Optional<VisitTime> findByPatient(int patientId) throws Exception {
+    public Optional<VisitTime> findByPatientId(int patientId) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
                 "SELECT * FROM PATIENT_VISIT_EMP_VIEW WHERE VISIT_PATIENT_ID=? AND ACTIVE=1");
@@ -271,46 +271,16 @@ public class VisitTimeDa implements AutoCloseable {
         return optionalVisitTime;
     }
 
-    public Optional<VisitTime> findByDateTime(LocalDateTime visitDateTime) throws Exception {
 
-        connection = JdbcProvider.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement(
-                "SELECT * FROM VISIT_TIME WHERE VISIT_DATE = ?");
-        preparedStatement.setTimestamp(1, Timestamp.valueOf(visitDateTime));
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        Optional<VisitTime> optionalVisitTime = Optional.empty();
-        if (resultSet.next()) {
-            VisitTime visitTime =
-                    VisitTime
-                            .builder()
-                            .visitTimeId(resultSet.getInt("Visit_Time_Id"))
-                            .visitWorkShiftId(resultSet.getInt("Visit_Work_Shift_Id"))
-                            .visitPatientId(resultSet.getInt("Visit_Patient_Id"))
-                            .visitPatientId(resultSet.getInt("Visit_Payment_Id"))
-                            .visitRoomNumber(resultSet.getInt("Visit_Room_Number"))
-                            .visitPrescriptionId(resultSet.getInt("Visit_Prescription_Id"))
-                            .visitDate(resultSet.getDate("Visit_Date").toLocalDate())
-                            .hour(resultSet.getInt("Hour"))
-                            .minute(resultSet.getInt("Minute"))
-                            .visitDuration(resultSet.getString("Visit_Duration"))
-                            .active(resultSet.getBoolean("active"))
-                            .accessLevel(resultSet.getString("access_level"))
-                            .build();
-            optionalVisitTime = Optional.of(visitTime);
-        }
-        return optionalVisitTime;
-    }
-
-    public Optional<VisitTime> findByDate(LocalDate visitDate) throws Exception {
+    public List<VisitTime> findByDate(LocalDate visitDate) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
                 "SELECT * FROM VISIT_TIME WHERE VISIT_DATE = ?");
         preparedStatement.setDate(1, Date.valueOf(visitDate));
         ResultSet resultSet = preparedStatement.executeQuery();
-        Optional<VisitTime> optionalVisitTime = Optional.empty();
-        if (resultSet.next()) {
+        List<VisitTime> visitTimeList = new ArrayList<>();
+        while (resultSet.next()) {
             VisitTime visitTime =
                     VisitTime
                             .builder()
@@ -327,22 +297,21 @@ public class VisitTimeDa implements AutoCloseable {
                             .active(resultSet.getBoolean("active"))
                             .accessLevel(resultSet.getString("access_level"))
                             .build();
-            optionalVisitTime = Optional.of(visitTime);
+            visitTimeList.add(visitTime);
         }
-        return optionalVisitTime;
+        return visitTimeList;
     }
-
-    public Optional<VisitTime> findByDateRange(LocalDate FromDate, LocalDate toDate) throws Exception {
+    public List<VisitTime> findByDateRange(LocalDate FromDate, LocalDate toDate) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
                 "SELECT * FROM VISIT_TIME WHERE VISIT_DATE BETWEEN ? AND ?");
         preparedStatement.setDate(1, Date.valueOf(FromDate));
         preparedStatement.setDate(2, Date.valueOf(toDate));
-        ResultSet resultSet = preparedStatement.executeQuery();
 
-        Optional<VisitTime> optionalVisitTime = Optional.empty();
-        if (resultSet.next()) {
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<VisitTime> visitTimeList = new ArrayList<>();
+        while (resultSet.next()) {
             VisitTime visitTime =
                     VisitTime
                             .builder()
@@ -359,11 +328,10 @@ public class VisitTimeDa implements AutoCloseable {
                             .active(resultSet.getBoolean("active"))
                             .accessLevel(resultSet.getString("access_level"))
                             .build();
-            optionalVisitTime = Optional.of(visitTime);
+            visitTimeList.add(visitTime);
         }
-        return optionalVisitTime;
+        return visitTimeList;
     }
-
     public List <VisitTime> findByDoctor(String doctorName, String doctorFamily) throws Exception {
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
@@ -395,10 +363,6 @@ public class VisitTimeDa implements AutoCloseable {
         return visitTimes;
     }
 
-
-
-
-
     public List<VisitTime> findByExpertise(String expertise) throws Exception {
         List<VisitTime> visitTimes = new ArrayList<>();
         connection = JdbcProvider.getInstance().getConnection();
@@ -428,7 +392,7 @@ public class VisitTimeDa implements AutoCloseable {
         return visitTimes;
     }
 
-    public Optional<VisitTime> findByExpertiseAndDateRange(LocalDate FromDate, LocalDate toDate, String expertise) throws Exception {
+    public List<VisitTime> findByExpertiseAndDateRange(LocalDate FromDate, LocalDate toDate, String expertise) throws Exception {
 
         connection = JdbcProvider.getInstance().getConnection();
         preparedStatement = connection.prepareStatement(
@@ -437,9 +401,8 @@ public class VisitTimeDa implements AutoCloseable {
         preparedStatement.setDate(2, Date.valueOf(toDate));
         preparedStatement.setString(3, expertise);
         ResultSet resultSet = preparedStatement.executeQuery();
-
-        Optional<VisitTime> optionalVisitTime = Optional.empty();
-        if (resultSet.next()) {
+        List<VisitTime> visitTimeList = new ArrayList<>();
+        while (resultSet.next()) {
             VisitTime visitTime =
                     VisitTime
                             .builder()
@@ -456,9 +419,9 @@ public class VisitTimeDa implements AutoCloseable {
                             .active(resultSet.getBoolean("active"))
                             .accessLevel(resultSet.getString("access_level"))
                             .build();
-            optionalVisitTime = Optional.of(visitTime);
+            visitTimeList.add(visitTime);
         }
-        return optionalVisitTime;
+        return visitTimeList;
     }
 
     private String emptyToNull(String str) {

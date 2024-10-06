@@ -2,6 +2,14 @@
 select * from VISIT_TIME
 where VISIT_DATE between to_date('2024-09-15 16:00:00'  , 'YYYY-MM-DD HH24:MI:SS') and to_date('2024-09-15 16:30:00' , 'YYYY-MM-DD HH24:MI:SS');
 
+create view doctor_work_shift_emp_view as
+select*
+
+FROM
+    DOCTOR D
+        JOIN WORK_SHIFT W
+             ON D.DOCTOR_ID=W.SHIFT_DOCTOR_ID;
+
 create view doctor_shift_emp_view as
 SELECT
     W.WORK_SHIFT_ID,
@@ -20,6 +28,7 @@ FROM
 
 
 
+
 CREATE OR REPLACE VIEW doctor_visit_emp_view AS
 SELECT
     V.VISIT_TIME_ID,
@@ -34,7 +43,7 @@ SELECT
     V.VISIT_DURATION,
     V.ACTIVE,
     V.ACCESS_LEVEL,
-    DSh.DOCTOR_ID AS SHIFT_DOCTOR_ID,
+    DSh.SHIFT_DOCTOR_ID AS SHIFT_DOCTOR_ID,
     DSh.NAME AS DOCTOR_NAME,
     DSh.FAMILY AS DOCTOR_FAMILY,
     DSh.EXPERTISE AS DOCTOR_EXPERTISE,

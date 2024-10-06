@@ -22,7 +22,7 @@ public class WorkShift  {
     private String ShiftStartingTime;
     private String ShiftFinishingTime;
 
-    private Expertise expertise;
+
     private Doctor doctor;
     private Employee employee;
 

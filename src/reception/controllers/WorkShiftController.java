@@ -38,21 +38,18 @@ public class WorkShiftController implements Initializable {
     private Button saveBtn, editBtn, removeBtn;
 
     @FXML
-    private Button findAllBtn,findByDateBtn,findByExpertiseBtn;
+    private Button findAllBtn,findByDateBtn,findByExpertiseBtn,findByDateRangeBtn,findByDoctorBtn,findByIdBtn,findByExpertiseAndDateRangeBtn;
 
     @FXML
-    private TableView<Doctor> workShiftTbl;
-
+    private TableView<Doctor> doctorTbl;
     @FXML
-    private TableColumn<WorkShift, Integer> doctorIdCol;
+    private TableColumn<Doctor, Integer> doctorIdCol;
     @FXML
-    private TableColumn<WorkShift, String> nameCol, familyCol;
-    @FXML
-    private TableColumn<WorkShift, String> expertiseCol;
+    private TableColumn<Doctor, String> nameCol, familyCol, expertiseCol;
     @FXML
     private TableView<WorkShift> shiftTbl;
     @FXML
-    private TableColumn<WorkShift, Integer> workShiftIdCol;
+    private TableColumn<WorkShift, Integer> shiftIdCol;
 
     @FXML
     private TableColumn<WorkShift, String> dateCol;
@@ -64,24 +61,26 @@ public class WorkShiftController implements Initializable {
     private TableColumn<WorkShift, String> endingCol;
     @FXML
     private ComboBox<String> expertiseCmb;
+    @FXML
+    private DatePicker fromDatePicker,toDatePicker;
 
     private final WorkShiftDa workShiftDa = new WorkShiftDa();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        resetForm();
+        try {
+            resetForm();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         for (Expertise expertise : Expertise.values()) {
             expertiseCmb.getItems().add(expertise.toString());
         }
 
         saveBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-                String selectedExpertise = expertiseCmb.getSelectionModel().getSelectedItem();
-                if (selectedExpertise == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an expertise.");
-                    alert.show();
-                    return;
-                }
+
                 WorkShift workShift =
                         WorkShift
                                 .builder()
@@ -91,7 +90,7 @@ public class WorkShiftController implements Initializable {
                                 .ShiftDate(workShiftDate.getValue())
                                 .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()).trim())
                                 .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()).trim())
-                                .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
+
 
                                 .build();
                 workShiftDa.save(workShift);
@@ -107,12 +106,7 @@ public class WorkShiftController implements Initializable {
 
         editBtn.setOnAction(event -> {
             try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-                String selectedExpertise = expertiseCmb.getSelectionModel().getSelectedItem();
-                if (selectedExpertise == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an expertise.");
-                    alert.show();
-                    return;
-                }
+
                 WorkShift workShift =
                         WorkShift
                                 .builder()
@@ -122,7 +116,7 @@ public class WorkShiftController implements Initializable {
                                 .ShiftDate(workShiftDate.getValue())
                                 .ShiftStartingTime(validation.TimeValidator(startingTimeTxt.getText()).trim())
                                 .ShiftFinishingTime(validation.TimeValidator(finishingTimeTxt.getText()).trim())
-                                .expertise(Expertise.valueOf(expertiseCmb.getSelectionModel().getSelectedItem()))
+
 
                                 .build();
                 workShiftDa.edit(workShift);
@@ -161,7 +155,7 @@ public class WorkShiftController implements Initializable {
                         alert.show();
                     }
                 });
-            findByDateBtn.setOnAction(event -> {
+        findByDateBtn.setOnAction(event -> {
                 try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
                     refreshShiftTable(workShiftDa.findAll());
                     findByDate();
@@ -170,45 +164,167 @@ public class WorkShiftController implements Initializable {
                     showAlert("An error occurred: " + e.getMessage());
                 }
             });
-
+        
         findByExpertiseBtn.setOnAction(event -> {
-            try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
-                String selectedExpertise = expertiseCmb.getValue();
-                if (selectedExpertise != null) {
-                    refreshShiftTable(workShiftDa.findByExpertise(selectedExpertise));
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an expertise.");
-                    alert.show();
-                }
+            try(WorkShiftDa workShiftDa = new WorkShiftDa()) {
+                refreshShiftTable(workShiftDa.findAll());
+                findByExpertise();
+            }catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByDateRangeBtn.setOnAction(event -> {
+            try(WorkShiftDa workShiftDa = new WorkShiftDa()) {
+                refreshShiftTable(workShiftDa.findAll());
+                findByDateRange();
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, " Error3\n" + e.getMessage());
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByExpertiseAndDateRangeBtn.setOnAction(event -> {
+            try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
+                refreshShiftTable(workShiftDa.findAll());
+                findByExpertiseAndDateRange();
+            }catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
+            }
+        });
+
+        findByIdBtn.setOnAction(event -> {
+            try (WorkShiftDa workShiftDa = new WorkShiftDa()) {
+                refreshShiftTable(workShiftDa.findById( Integer.parseInt(workShiftIdTxt.getText())));
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, " Error2\n" + e.getMessage());
                 alert.show();
+            }
+        });
+
+        findByDoctorBtn.setOnAction(event -> {
+
+            try(WorkShiftDa workShiftDa = new WorkShiftDa()) {
+                refreshShiftTable(workShiftDa.findAll());
+                findByDoctorId();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred: " + e.getMessage());
             }
         });
 
     }
 
-
-
-
-
-    private void findByDate() throws Exception {
-
-        LocalDate shiftDateF = workShiftDate.getValue();
-
-        if (shiftDateF != null) {
-            LocalDate shiftDateT = LocalDate.parse(shiftDateF.toString());
-            Optional<WorkShift> workShiftOptional = workShiftDa.findByDate(shiftDateT);
-            if (workShiftOptional.isPresent()) {
-                shiftTbl.getItems().clear();
-                shiftTbl.getItems().add(workShiftOptional.get());
-            } else {
-                showAlert("Date not found");
+    private void findByExpertise() {
+        String selectedExpertise = expertiseCmb.getValue();
+        if (selectedExpertise != null) {
+            List<WorkShift> workShifts = null;
+            try {
+                workShifts = workShiftDa.findByExpertise(selectedExpertise);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        } else {
-            showAlert("Please enter a valid Date of Visit");
+            shiftTbl.getItems().clear();
+            shiftTbl.getItems().addAll(workShifts);
+
         }
     }
+
+    private void findByDate() throws Exception {
+        LocalDate selectedDate = workShiftDate.getValue();
+        if (selectedDate != null) {
+            List<WorkShift> workShifts = null;
+        try {
+            workShifts=workShiftDa.findByDate(selectedDate);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (workShifts != null) {
+            shiftTbl.getItems().clear();
+            shiftTbl.getItems().addAll(workShifts);
+        }
+        else {
+            showAlert("Please enter a valid Date of WorkShift");}
+        }
+        else{
+            showAlert("Date Not found");}
+    }
+
+    private void  findByDateRange() throws Exception {
+            LocalDate selectedFromF = fromDatePicker.getValue();
+            LocalDate selectedToF = toDatePicker.getValue();
+
+            if (selectedToF != null && selectedFromF != null) {
+                List<WorkShift> workShifts = null;
+               try {
+                   workShifts = workShiftDa.findByDateRange(selectedFromF, selectedToF);
+               }
+               catch (Exception e) {
+                   throw new RuntimeException(e);
+               }
+                if (workShifts != null) {
+                    shiftTbl.getItems().clear();
+                    shiftTbl.getItems().addAll(workShifts);
+                } else {
+                    showAlert("Date range not found");
+                }
+            } else {
+                showAlert("Please enter a valid Date range of WorkShift");
+            }
+    }
+
+    private void findByExpertiseAndDateRange() throws Exception {
+        LocalDate selectedFromF = fromDatePicker.getValue();
+        LocalDate selectedToF = toDatePicker.getValue();
+        String selectedExpertise = expertiseCmb.getValue();
+
+        if (selectedToF != null && selectedFromF != null&& selectedExpertise != null) {
+            List<WorkShift> workShifts = null;
+            try {
+                workShifts = workShiftDa.findByExpertiseAndDateRange(selectedFromF, selectedToF,selectedExpertise);
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            if (workShifts != null) {
+                shiftTbl.getItems().clear();
+                shiftTbl.getItems().addAll(workShifts);
+            } else {
+                showAlert("Date range Whit this Doctor Expertise not found");
+            }
+        } else {
+            showAlert("Please enter a valid Date range of WorkShift & Expertise");
+        }
+    }
+
+    private void findByDoctorId() throws Exception {
+        String selectedDoctorId = doctorIdTxt.getText();
+
+        if (selectedDoctorId != null) {
+            List<WorkShift> workShifts = null;
+            Integer selectedDoctorIdF=Integer.parseInt(doctorIdTxt.getText());
+            try {
+                workShifts = workShiftDa.findByDoctorId(selectedDoctorIdF);
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            if (workShifts != null) {
+                shiftTbl.getItems().clear();
+                shiftTbl.getItems().addAll(workShifts);
+            } else {
+                showAlert("Date range Whit this Doctor Expertise not found");
+            }
+        } else {
+            showAlert("Please enter a valid Date range of WorkShift & Expertise");
+        }
+    }
+        
+
+
     private void resetForm(){
         doctorIdTxt.clear();
         employeeIdTxt.clear();
@@ -243,14 +359,15 @@ public class WorkShiftController implements Initializable {
         doctorIdCol.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
+        expertiseCol.setCellValueFactory(new PropertyValueFactory<>("expertise"));
 
-        workShiftTbl.setItems(doctors);
+        doctorTbl.setItems(doctors);
     }
 
     private void refreshShiftTable(List<WorkShift> workShiftList) {
         ObservableList<WorkShift> workShifts = FXCollections.observableArrayList(workShiftList);
 
-        workShiftIdCol.setCellValueFactory(new PropertyValueFactory<>("WorkShiftId"));
+        shiftIdCol.setCellValueFactory(new PropertyValueFactory<>("WorkShiftId"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("ShiftDate"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("ShiftStartingTime"));
         endingCol.setCellValueFactory(new PropertyValueFactory<>("ShiftFinishingTime"));

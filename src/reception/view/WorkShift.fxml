@@ -16,15 +16,15 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="857.0" style="-fx-background-color: #665740;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.WorkShiftController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="926.0" style="-fx-background-color: #665740;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reception.controllers.WorkShiftController">
    <children>
-      <Label layoutX="75.0" layoutY="14.0" text="Work Shift" textFill="WHITE">
+      <Label layoutX="75.0" layoutY="10.0" text="Work Shift" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="48.0" />
          </font>
       </Label>
-      <Line endX="192.5390625" layoutX="148.0" layoutY="92.0" startX="-115.0" stroke="#fafcf7" />
-      <GridPane layoutX="32.0" layoutY="103.0" prefHeight="365.0" prefWidth="310.0">
+      <Line endX="192.5390625" layoutX="148.0" layoutY="88.0" startX="-115.0" stroke="#fafcf7" />
+      <GridPane layoutX="32.0" layoutY="97.0" prefHeight="365.0" prefWidth="310.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="171.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="122.0" />
@@ -83,15 +83,15 @@
             </Label>
          </children>
       </GridPane>
-      <TableView fx:id="workShiftTbl" layoutX="361.0" layoutY="103.0" prefHeight="149.0" prefWidth="458.0">
+      <TableView fx:id="doctorTbl" layoutX="361.0" layoutY="57.0" prefHeight="149.0" prefWidth="533.0">
         <columns>
           <TableColumn fx:id="doctorIdCol" prefWidth="96.0" text="DoctorId" />
           <TableColumn fx:id="nameCol" prefWidth="108.0" text="Name" />
             <TableColumn fx:id="familyCol" prefWidth="98.0" text="Family" />
-            <TableColumn fx:id="ExpertiseCol" prefWidth="152.0" text="Expertise" />
+            <TableColumn fx:id="expertiseCol" prefWidth="152.0" text="Expertise" />
         </columns>
       </TableView>
-      <HBox layoutX="32.0" layoutY="488.0" prefHeight="31.0" prefWidth="310.0">
+      <HBox layoutX="32.0" layoutY="522.0" prefHeight="31.0" prefWidth="310.0">
          <children>
             <Button fx:id="saveBtn" mnemonicParsing="false" prefHeight="0.0" prefWidth="95.0" text="save">
                <opaqueInsets>
@@ -119,17 +119,32 @@
             </Button>
          </children>
       </HBox>
-      <Button fx:id="findAllBtn" layoutX="75.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Find All" />
-      <Button fx:id="findByDateBtn" layoutX="187.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Find By Date" />
-      <Button fx:id="findByDateRangeBtn" layoutX="418.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="157.0" text="Find By Date Range" />
-      <Button fx:id="findByExpertiseBtn" layoutX="582.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="147.0" text="Find By Expertise " />
-      <TableView fx:id="shiftTbl" layoutX="362.0" layoutY="268.0" prefHeight="248.0" prefWidth="458.0">
+      <Button fx:id="findAllBtn" layoutX="361.0" layoutY="480.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Find All" />
+      <Button fx:id="findByDateBtn" layoutX="470.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Find By Date" />
+      <Button fx:id="findByDateRangeBtn" layoutX="584.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="157.0" text="Find By Date Range" />
+      <Button fx:id="findByExpertiseBtn" layoutX="748.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="147.0" text="Find By Expertise " />
+      <TableView fx:id="shiftTbl" layoutX="362.0" layoutY="222.0" prefHeight="248.0" prefWidth="533.0">
          <columns>
-            <TableColumn fx:id="workShiftIdCol" prefWidth="96.0" text="WorkShiftId" />
+            <TableColumn fx:id="shiftIdCol" prefWidth="96.0" text="WorkShiftId" />
             <TableColumn fx:id="dateCol" prefWidth="139.0" text="Date" />
             <TableColumn fx:id="startCol" prefWidth="105.0" text="StartingTime" />
             <TableColumn fx:id="endingCol" prefWidth="117.0" text="EndingTime" />
          </columns>
       </TableView>
+      <DatePicker fx:id="fromDatePicker" layoutX="82.0" layoutY="477.0" prefHeight="31.0" prefWidth="92.0" />
+      <DatePicker fx:id="toDatePicker" layoutX="234.0" layoutY="477.0" prefHeight="31.0" prefWidth="106.0" />
+      <Label layoutX="9.0" layoutY="475.0" text="From :" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="193.0" layoutY="475.0" text="to :" textFill="#fffefe">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="findByExpertiseAndDateRangeBtn" layoutX="605.0" layoutY="522.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="290.0" text="Find By Expertise And Date Range" />
+      <Button fx:id="findByDoctorBtn" layoutX="470.0" layoutY="522.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="127.0" text="Find By Doctor" />
+      <Button fx:id="findByIdBtn" layoutX="362.0" layoutY="522.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Find By Id" />
    </children>
 </Pane>
