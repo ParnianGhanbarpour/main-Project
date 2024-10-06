@@ -553,7 +553,7 @@ public class VisitTimeController implements Initializable {
         }
         try {
             return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
+        } catch ( NumberFormatException e) {
             return defaultValue;
         }
     }
